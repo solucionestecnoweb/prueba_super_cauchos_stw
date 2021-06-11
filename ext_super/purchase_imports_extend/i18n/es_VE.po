@@ -1,0 +1,439 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* purchase_imports_extend
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 13.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-04-24 02:57+0000\n"
+"PO-Revision-Date: 2021-04-24 02:57+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: purchase_imports_extend
+#: model:ir.model.fields,field_description:purchase_imports_extend.field_purchase_order__aduana_payment_ids
+msgid " Aduana Payment"
+msgstr "Pago de Aduana"
+
+#. module: purchase_imports_extend
+#: model:ir.model.fields,field_description:purchase_imports_extend.field_purchase_order_imports__percent_100
+msgid "100%"
+msgstr ""
+
+#. module: purchase_imports_extend
+#: model:ir.model.fields,field_description:purchase_imports_extend.field_purchase_order_imports__percent_30
+msgid "30%"
+msgstr ""
+
+#. module: purchase_imports_extend
+#: model:ir.model.fields,field_description:purchase_imports_extend.field_purchase_order_imports__percent_70
+msgid "70%"
+msgstr ""
+
+#. module: purchase_imports_extend
+#: model:ir.model.fields,field_description:purchase_imports_extend.field_purchase_order__acumulated
+msgid "Acumulated"
+msgstr "Acumulado"
+
+#. module: purchase_imports_extend
+#: model:ir.model.fields,field_description:purchase_imports_extend.field_purchase_order__aduana_agency_id
+msgid "Aduana Agency"
+msgstr "Agencia de Aduana"
+
+#. module: purchase_imports_extend
+#: model:ir.model.fields,field_description:purchase_imports_extend.field_purchase_order__aduana_costs
+msgid "Aduana Estimated Costs"
+msgstr "Costes Estimados de Aduana"
+
+#. module: purchase_imports_extend
+#: model:ir.model.fields,field_description:purchase_imports_extend.field_purchase_order__aduana_date
+msgid "Aduana Estimated Date"
+msgstr "Fecha Estimada de Aduana"
+
+#. module: purchase_imports_extend
+#: model_terms:ir.ui.view,arch_db:purchase_imports_extend.purchase_order_imports_form
+msgid "Aduana Payment Plans"
+msgstr "Plan de Pagos de Aduana"
+
+#. module: purchase_imports_extend
+#: model_terms:ir.ui.view,arch_db:purchase_imports_extend.purchase_order_imports_form
+msgid "Aduana Selection"
+msgstr "Selección de Aduana"
+
+#. module: purchase_imports_extend
+#: model:ir.model.fields,field_description:purchase_imports_extend.field_purchase_order_imports_aduana__name
+msgid "Aduana name"
+msgstr ""
+
+#. module: purchase_imports_extend
+#: model:ir.model.fields,field_description:purchase_imports_extend.field_purchase_order_imports_containers__agency
+msgid "Agency"
+msgstr "Agencia"
+
+#. module: purchase_imports_extend
+#: model:ir.model.fields,field_description:purchase_imports_extend.field_purchase_order_imports__import_amount
+msgid "Amount"
+msgstr "Monto"
+
+#. module: purchase_imports_extend
+#: model:ir.model.fields,field_description:purchase_imports_extend.field_purchase_order_imports_aduana_payment__payment_approve
+msgid "Approve?"
+msgstr "¿Aprobado?"
+
+#. module: purchase_imports_extend
+#: model:ir.model.fields,field_description:purchase_imports_extend.field_purchase_order__aduana_doc
+#: model:ir.model.fields,field_description:purchase_imports_extend.field_purchase_order_imports_aduana_payment__payment_doc
+msgid "Attach Document"
+msgstr "Adjuntar Documento"
+
+#. module: purchase_imports_extend
+#: model:ir.model.fields,field_description:purchase_imports_extend.field_purchase_order_imports_traffic__availability
+msgid "Availability"
+msgstr "Disponibilidad"
+
+#. module: purchase_imports_extend
+#: model:ir.model.fields,field_description:purchase_imports_extend.field_purchase_order__bl_date
+msgid "BL Date"
+msgstr "Fecha BL"
+
+#. module: purchase_imports_extend
+#: model:ir.model.fields,field_description:purchase_imports_extend.field_purchase_order__cycle_brand
+#: model:ir.model.fields,field_description:purchase_imports_extend.field_purchase_order_imports__import_brand
+#: model:ir.model.fields,field_description:purchase_imports_extend.field_purchase_order_imports_containers__container_brand
+msgid "Brand"
+msgstr "Marca"
+
+#. module: purchase_imports_extend
+#: model:ir.model.fields,field_description:purchase_imports_extend.field_purchase_order__cont
+#: model:ir.model.fields,field_description:purchase_imports_extend.field_purchase_order_imports_containers__cont
+msgid "CONT"
+msgstr ""
+
+#. module: purchase_imports_extend
+#: model:ir.model.fields,field_description:purchase_imports_extend.field_purchase_order_imports__create_uid
+#: model:ir.model.fields,field_description:purchase_imports_extend.field_purchase_order_imports_aduana__create_uid
+#: model:ir.model.fields,field_description:purchase_imports_extend.field_purchase_order_imports_aduana_payment__create_uid
+#: model:ir.model.fields,field_description:purchase_imports_extend.field_purchase_order_imports_containers__create_uid
+#: model:ir.model.fields,field_description:purchase_imports_extend.field_purchase_order_imports_traffic__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: purchase_imports_extend
+#: model:ir.model.fields,field_description:purchase_imports_extend.field_purchase_order_imports__create_date
+#: model:ir.model.fields,field_description:purchase_imports_extend.field_purchase_order_imports_aduana__create_date
+#: model:ir.model.fields,field_description:purchase_imports_extend.field_purchase_order_imports_aduana_payment__create_date
+#: model:ir.model.fields,field_description:purchase_imports_extend.field_purchase_order_imports_containers__create_date
+#: model:ir.model.fields,field_description:purchase_imports_extend.field_purchase_order_imports_traffic__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: purchase_imports_extend
+#: model:ir.model.fields,field_description:purchase_imports_extend.field_purchase_order_imports_aduana_payment__currency_id
+msgid "Currency"
+msgstr "Moneda"
+
+#. module: purchase_imports_extend
+#: model:ir.model.fields,field_description:purchase_imports_extend.field_purchase_order_imports__display_name
+#: model:ir.model.fields,field_description:purchase_imports_extend.field_purchase_order_imports_aduana__display_name
+#: model:ir.model.fields,field_description:purchase_imports_extend.field_purchase_order_imports_aduana_payment__display_name
+#: model:ir.model.fields,field_description:purchase_imports_extend.field_purchase_order_imports_containers__display_name
+#: model:ir.model.fields,field_description:purchase_imports_extend.field_purchase_order_imports_traffic__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: purchase_imports_extend
+#: model:ir.model.fields,field_description:purchase_imports_extend.field_purchase_order__eta
+#: model:ir.model.fields,field_description:purchase_imports_extend.field_purchase_order_imports__eta
+msgid "ETA"
+msgstr ""
+
+#. module: purchase_imports_extend
+#: model:ir.model.fields,field_description:purchase_imports_extend.field_purchase_order_imports_containers__eta_ven
+msgid "ETA/VEN"
+msgstr ""
+
+#. module: purchase_imports_extend
+#: model:ir.model.fields,field_description:purchase_imports_extend.field_purchase_order_imports__etd
+msgid "ETD"
+msgstr ""
+
+#. module: purchase_imports_extend
+#: model_terms:ir.ui.view,arch_db:purchase_imports_extend.purchase_order_imports_form
+msgid "Foreign Provider Information"
+msgstr "Información del Proveedor Extranjero"
+
+#. module: purchase_imports_extend
+#: model:ir.model.fields,field_description:purchase_imports_extend.field_purchase_order_imports_containers__harbor
+msgid "Harbor"
+msgstr ""
+
+#. module: purchase_imports_extend
+#: model:ir.model.fields,field_description:purchase_imports_extend.field_purchase_order_imports__id
+#: model:ir.model.fields,field_description:purchase_imports_extend.field_purchase_order_imports_aduana__id
+#: model:ir.model.fields,field_description:purchase_imports_extend.field_purchase_order_imports_aduana_payment__id
+#: model:ir.model.fields,field_description:purchase_imports_extend.field_purchase_order_imports_containers__id
+#: model:ir.model.fields,field_description:purchase_imports_extend.field_purchase_order_imports_traffic__id
+msgid "ID"
+msgstr ""
+
+#. module: purchase_imports_extend
+#: model_terms:ir.ui.view,arch_db:purchase_imports_extend.purchase_order_imports_form
+msgid "Import Cycle"
+msgstr "Ciclo de Importación"
+
+#. module: purchase_imports_extend
+#: model:ir.ui.menu,name:purchase_imports_extend.purchase_order_menu_root_extend
+msgid "Importations"
+msgstr "Importaciones"
+
+#. module: purchase_imports_extend
+#: model_terms:ir.ui.view,arch_db:purchase_imports_extend.purchase_order_imports_form
+msgid "Imports"
+msgstr "Importaciones"
+
+#. module: purchase_imports_extend
+#: model:ir.model.fields,field_description:purchase_imports_extend.field_purchase_order__invoice_id
+msgid "Invoice"
+msgstr "Factura"
+
+#. module: purchase_imports_extend
+#: model:ir.model.fields,field_description:purchase_imports_extend.field_purchase_order_imports_containers__invoice_number
+msgid "Invoice Number"
+msgstr "Número de Factura"
+
+#. module: purchase_imports_extend
+#: model:ir.model.fields,field_description:purchase_imports_extend.field_purchase_order_imports__invoice_number
+msgid "Invoice Number / Proforma"
+msgstr "Número de Factura / Proforma"
+
+#. module: purchase_imports_extend
+#: model:ir.ui.menu,name:purchase_imports_extend.purchase_order_landed_cost_menu
+msgid "Landed Cost"
+msgstr "Costo de Envío"
+
+#. module: purchase_imports_extend
+#: model:ir.model.fields,field_description:purchase_imports_extend.field_purchase_order__landed_date
+msgid "Landed Date"
+msgstr "Fecha de Envío"
+
+#. module: purchase_imports_extend
+#: model:ir.model.fields,field_description:purchase_imports_extend.field_purchase_order_imports____last_update
+#: model:ir.model.fields,field_description:purchase_imports_extend.field_purchase_order_imports_aduana____last_update
+#: model:ir.model.fields,field_description:purchase_imports_extend.field_purchase_order_imports_aduana_payment____last_update
+#: model:ir.model.fields,field_description:purchase_imports_extend.field_purchase_order_imports_containers____last_update
+#: model:ir.model.fields,field_description:purchase_imports_extend.field_purchase_order_imports_traffic____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: purchase_imports_extend
+#: model:ir.model.fields,field_description:purchase_imports_extend.field_purchase_order_imports__write_uid
+#: model:ir.model.fields,field_description:purchase_imports_extend.field_purchase_order_imports_aduana__write_uid
+#: model:ir.model.fields,field_description:purchase_imports_extend.field_purchase_order_imports_aduana_payment__write_uid
+#: model:ir.model.fields,field_description:purchase_imports_extend.field_purchase_order_imports_containers__write_uid
+#: model:ir.model.fields,field_description:purchase_imports_extend.field_purchase_order_imports_traffic__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: purchase_imports_extend
+#: model:ir.model.fields,field_description:purchase_imports_extend.field_purchase_order_imports__write_date
+#: model:ir.model.fields,field_description:purchase_imports_extend.field_purchase_order_imports_aduana__write_date
+#: model:ir.model.fields,field_description:purchase_imports_extend.field_purchase_order_imports_aduana_payment__write_date
+#: model:ir.model.fields,field_description:purchase_imports_extend.field_purchase_order_imports_containers__write_date
+#: model:ir.model.fields,field_description:purchase_imports_extend.field_purchase_order_imports_traffic__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: purchase_imports_extend
+#: model:ir.model.fields,field_description:purchase_imports_extend.field_purchase_order__load_plan
+msgid "Load Plan"
+msgstr "Plan de Carga"
+
+#. module: purchase_imports_extend
+#: model:ir.model.fields,field_description:purchase_imports_extend.field_purchase_order_imports_traffic__measures
+msgid "Measures"
+msgstr "Medidas"
+
+#. module: purchase_imports_extend
+#: model:ir.model.fields,field_description:purchase_imports_extend.field_purchase_order__merchandise_available_load
+msgid "Merchandise Available for Load"
+msgstr "Mercancía Disponible para la Carga"
+
+#. module: purchase_imports_extend
+#: model:ir.model.fields,field_description:purchase_imports_extend.field_purchase_order_imports__import_model
+msgid "Model"
+msgstr "Modelo"
+
+#. module: purchase_imports_extend
+#: model:ir.model.fields,field_description:purchase_imports_extend.field_purchase_order_imports_traffic__traffic_models
+msgid "Models"
+msgstr "Modelos"
+
+#. module: purchase_imports_extend
+#: model:ir.model.fields,field_description:purchase_imports_extend.field_purchase_order_imports_containers__nbl_container
+msgid "N BL / Container"
+msgstr "N BL / Contenedor"
+
+#. module: purchase_imports_extend
+#: model:ir.model.fields,field_description:purchase_imports_extend.field_purchase_order__nac
+msgid "NAC"
+msgstr ""
+
+#. module: purchase_imports_extend
+#: model:ir.model.fields,field_description:purchase_imports_extend.field_purchase_order_imports_aduana_payment__payment_observation
+msgid "Observation"
+msgstr "Observación"
+
+#. module: purchase_imports_extend
+#: model:ir.model.fields,field_description:purchase_imports_extend.field_purchase_order_imports_traffic__pr
+msgid "PR"
+msgstr ""
+
+#. module: purchase_imports_extend
+#: model:ir.model.fields,field_description:purchase_imports_extend.field_purchase_order__package_list
+msgid "Package List"
+msgstr "Lista de Paquetes"
+
+#. module: purchase_imports_extend
+#: model:ir.model.fields,field_description:purchase_imports_extend.field_purchase_order_imports_aduana_payment__payment_amount
+msgid "Payment Amount"
+msgstr "Monto del Pago"
+
+#. module: purchase_imports_extend
+#: model:ir.model.fields,field_description:purchase_imports_extend.field_purchase_order_imports_aduana_payment__payment_concept
+msgid "Payment Concept"
+msgstr "Concepto del Pago"
+
+#. module: purchase_imports_extend
+#: model:ir.model.fields,field_description:purchase_imports_extend.field_purchase_order_imports__payment_date
+#: model:ir.model.fields,field_description:purchase_imports_extend.field_purchase_order_imports_aduana_payment__payment_date
+msgid "Payment Date"
+msgstr "Fecha del Pago"
+
+#. module: purchase_imports_extend
+#: model:ir.model.fields,field_description:purchase_imports_extend.field_purchase_order_imports_traffic__price
+msgid "Price"
+msgstr "Precio"
+
+#. module: purchase_imports_extend
+#: model:ir.model.fields,field_description:purchase_imports_extend.field_purchase_order__invoice_number
+msgid "Proforma"
+msgstr ""
+
+#. module: purchase_imports_extend
+#: model:ir.model.fields,field_description:purchase_imports_extend.field_purchase_order__prof_date
+msgid "Proforma Date"
+msgstr "Fecha de la Proforma"
+
+#. module: purchase_imports_extend
+#: model:ir.model.fields,field_description:purchase_imports_extend.field_purchase_order_imports_traffic__pronto_pago
+msgid "Pronto Pago Promotion"
+msgstr "Promoción Pronto Pago"
+
+#. module: purchase_imports_extend
+#: model:ir.model,name:purchase_imports_extend.model_purchase_order
+#: model:ir.model.fields,field_description:purchase_imports_extend.field_purchase_order_imports_aduana_payment__purchase_order_id
+msgid "Purchase Order"
+msgstr "Pedido de compra"
+
+#. module: purchase_imports_extend
+#: model:ir.model.fields,field_description:purchase_imports_extend.field_purchase_order_imports__import_qty
+msgid "Quantity"
+msgstr "Cantidad"
+
+#. module: purchase_imports_extend
+#: model:ir.model.fields,field_description:purchase_imports_extend.field_purchase_order_imports_traffic__apart_qty_available
+msgid "Set Apart Quantity Available"
+msgstr ""
+
+#. module: purchase_imports_extend
+#: model:ir.model.fields,field_description:purchase_imports_extend.field_purchase_order_imports_traffic__apart_to_seller
+msgid "Set Apart to Seller"
+msgstr ""
+
+#. module: purchase_imports_extend
+#: model:ir.model.fields,field_description:purchase_imports_extend.field_purchase_order_imports_containers__shipping_company
+msgid "Shipping Company"
+msgstr ""
+
+#. module: purchase_imports_extend
+#: model:ir.model.fields,field_description:purchase_imports_extend.field_purchase_order_imports__status
+#: model:ir.model.fields,field_description:purchase_imports_extend.field_purchase_order_imports_containers__status_v
+#: model:ir.model.fields,field_description:purchase_imports_extend.field_purchase_order_imports_containers__status_w
+msgid "Status"
+msgstr "Estado"
+
+#. module: purchase_imports_extend
+#: model:ir.model.fields,field_description:purchase_imports_extend.field_purchase_order_imports_traffic__super_promo
+msgid "Super Promo Promotion"
+msgstr "Promoción Super Promo"
+
+#. module: purchase_imports_extend
+#: model:ir.model.fields,field_description:purchase_imports_extend.field_purchase_order_imports__partner_id
+msgid "Supplier"
+msgstr "Proveedor"
+
+#. module: purchase_imports_extend
+#: model:ir.model.fields,field_description:purchase_imports_extend.field_purchase_order_imports_containers__tires
+msgid "Tires"
+msgstr ""
+
+#. module: purchase_imports_extend
+#: model:ir.model.fields,field_description:purchase_imports_extend.field_purchase_order__total
+msgid "Total"
+msgstr ""
+
+#. module: purchase_imports_extend
+#: model:ir.model.fields,field_description:purchase_imports_extend.field_purchase_order__traffic
+msgid "Traffic"
+msgstr "Tránsito"
+
+#. module: purchase_imports_extend
+#: model:ir.model.fields,field_description:purchase_imports_extend.field_purchase_order__transc
+msgid "Transc"
+msgstr ""
+
+#. module: purchase_imports_extend
+#: model:ir.model.fields,field_description:purchase_imports_extend.field_purchase_order__cycle_type
+#: model:ir.model.fields,field_description:purchase_imports_extend.field_purchase_order_imports_containers__container_type
+msgid "Type"
+msgstr "Tipo"
+
+#. module: purchase_imports_extend
+#: model:ir.model.fields,field_description:purchase_imports_extend.field_purchase_order_imports_containers__vessel
+msgid "Vessel"
+msgstr ""
+
+#. module: purchase_imports_extend
+#: model:ir.model.fields,field_description:purchase_imports_extend.field_purchase_order_imports_containers__warehouse
+msgid "Warehouse"
+msgstr "Deposito"
+
+#. module: purchase_imports_extend
+#: model:ir.model,name:purchase_imports_extend.model_purchase_order_imports
+msgid "purchase.order.imports"
+msgstr ""
+
+#. module: purchase_imports_extend
+#: model:ir.model,name:purchase_imports_extend.model_purchase_order_imports_aduana
+msgid "purchase.order.imports.aduana"
+msgstr ""
+
+#. module: purchase_imports_extend
+#: model:ir.model,name:purchase_imports_extend.model_purchase_order_imports_aduana_payment
+msgid "purchase.order.imports.aduana.payment"
+msgstr ""
+
+#. module: purchase_imports_extend
+#: model:ir.model,name:purchase_imports_extend.model_purchase_order_imports_containers
+msgid "purchase.order.imports.containers"
+msgstr ""
+
+#. module: purchase_imports_extend
+#: model:ir.model,name:purchase_imports_extend.model_purchase_order_imports_traffic
+msgid "purchase.order.imports.traffic"
+msgstr ""

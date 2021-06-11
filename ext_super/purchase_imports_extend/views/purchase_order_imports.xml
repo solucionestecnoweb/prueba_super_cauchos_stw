@@ -1,0 +1,88 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <data noupdate="0">
+        <!-- Add you code here -->
+
+        <!-- purchase.order inherit form view -->
+        <record id="purchase_order_imports_form" model="ir.ui.view">
+            <field name="name">purchase.order.inherit.view.form</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form"/>
+            <field name="arch" type="xml">
+                <!-- Add your xpath here -->
+                <xpath expr="//page[@name='purchase_delivery_invoice']" position="after">
+                    <page name="imports" string="Imports">
+                        <group>
+                            <group name="import_cycle" string="Import Cycle">
+                                <field name="cycle_brand"/>
+                                <field name="invoice_number"/>
+                                <field name="cycle_type"/>
+                                <field name="prof_date"/>
+                                <field name="invoice_id"/>
+                                <field name="cont"/>
+                                <field name="bl_date"/>
+                                <field name="transc"/>
+                                <field name="acumulated"/>
+                                <field name="eta"/>
+                                <field name="traffic"/>
+                                <field name="nac"/>
+                                <field name="total"/>
+                            </group>
+                            <group name="foreign_provider" string="Foreign Provider Information">
+                                <field name="load_plan"/>
+                                <field name="package_list"/>
+                                <field name="landed_date"/>
+                                <field name="merchandise_available_load"/>
+                            </group>
+                            <group name="aduana_selection" string="Aduana Selection">
+                                <field name="aduana_agency_id"/>
+                                <field name="aduana_costs"/>
+                                <field name="aduana_date"/>
+                                <field name="aduana_doc"/>
+                            </group>
+                        </group>
+                    </page>
+                    <page name="aduana_payments" string="Aduana Payment Plans">
+                        <field name="aduana_payment_ids">
+                            <tree editable="bottom">
+                                <field name="payment_date"/>
+                                <field name="payment_concept"/>
+                                <field name="payment_amount" widget="monetary"/>
+                                <field name="payment_approve"/>
+                                <field name="payment_doc"/>
+                                <field name="payment_observation"/>
+                                <field name="currency_id" invisible="1" readonly="1"/>
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- purchase.order.imports.aduana.payment form view -->
+        <record id="purchase_order_imports_aduana_payment_view_form" model="ir.ui.view">
+            <field name="name">purchase.order.imports.aduana.payment.view.form</field>
+            <field name="model">purchase.order.imports.aduana.payment</field>
+            <field name="arch" type="xml">
+                <form string="">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="payment_date"/>
+                                <field name="payment_concept"/>
+                                <field name="payment_amount" widget="monetary"/>
+                                <field name="currency_id" invisible="1" readonly="1"/>
+                            </group>
+                            <group>
+                                <field name="payment_approve"/>
+                                <field name="payment_doc"/>
+                                <field name="payment_observation"/>                                
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+    </data>
+</odoo>
