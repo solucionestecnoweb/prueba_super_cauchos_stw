@@ -18,7 +18,8 @@
     # always loaded
     'data': [
         'report/reporte_view.xml',
-        'wizard/wizard.xml'
+        'wizard/wizard.xml',
+        'security/ir.model.access.csv',
     ],
     'application': True,
     'active':False,

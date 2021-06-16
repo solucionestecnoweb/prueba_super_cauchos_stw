@@ -42,6 +42,7 @@ class ResumenAlicuota(models.Model):
     tipo_doc = fields.Char()
     fecha_fact= fields.Date()
     fecha_comprobante= fields.Date()
+    company_id = fields.Many2one('res.company', string='Company',default=lambda self: self.env.company)#loca14
 
 
     def _nro_comp(self):
@@ -170,6 +171,7 @@ class AccountMove(models.Model):
                 'retenido_general':retenido_general,
                 'retenido_reducida':retenido_reducida,
                 'retenido_adicional':retenido_adicional,
+                'company_id':det_m.company_id.id,#loca14
                 }
                 det_m.env['account.move.line.resumen'].create(values)
 
@@ -262,9 +264,9 @@ class AccountMove(models.Model):
                 retenido_adicional=-1*retenido_adicional
 
             values={
-            'total_con_iva':total,
-            'total_base':base,
-            'total_valor_iva':total_impuesto,
+            'total_con_iva':total,#listo
+            'total_base':base,#listo
+            'total_valor_iva':total_impuesto,#listo
             'tax_id':det_fac.tax_ids.id,
             'invoice_id':self.id,
             'vat_ret_id':self.vat_ret_id.id,
@@ -275,18 +277,19 @@ class AccountMove(models.Model):
             'state':self.state,
             'state_voucher_iva':self.vat_ret_id.state,
             'tipo_doc':tipo_doc,
-            'total_exento':total_exento,
-            'alicuota_reducida':alicuota_reducida,
-            'alicuota_adicional':alicuota_adicional,
-            'alicuota_general':alicuota_general,
+            'total_exento':total_exento,#listo
+            'alicuota_reducida':alicuota_reducida,#listo
+            'alicuota_adicional':alicuota_adicional,#listo
+            'alicuota_general':alicuota_general,#listo
             'fecha_fact':self.date,
             'fecha_comprobante':self.vat_ret_id.voucher_delivery_date,
-            'base_adicional':base_adicional,
-            'base_reducida':base_reducida,
-            'base_general':base_general,
+            'base_adicional':base_adicional,#listo
+            'base_reducida':base_reducida,#listo
+            'base_general':base_general,#listo
             'retenido_general':retenido_general,
             'retenido_reducida':retenido_reducida,
             'retenido_adicional':retenido_adicional,
+            'company_id':self.company_id.id,#loca14
             }
             self.env['account.move.line.resumen'].create(values)
 

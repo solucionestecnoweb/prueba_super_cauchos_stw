@@ -49,7 +49,8 @@ class libro_compras(models.TransientModel):
             ('fecha_fact','>=',self.date_from),
             ('fecha_fact','<=',self.date_to),
             ('state','in',('posted','cancel' )),
-            ('type','in',('in_invoice','in_refund','in_receipt'))
+            ('type','in',('in_invoice','in_refund','in_receipt')),
+            ('company_id','=',self.env.company.id)#loca14
             ])
         for det in cursor_resumen:
             if det.invoice_id.ocultar_libros!=True:
@@ -83,6 +84,7 @@ class libro_compras(models.TransientModel):
 	            'vat_ret_id':det.vat_ret_id.id,
 	            'invoice_id':det.invoice_id.id,
 	            'tax_id':det.tax_id.id,
+                'company_id':det.company_id.id,#loca14
                 }
                 pdf_id = t.create(values)
         #   temp = self.env['account.wizard.pdf.ventas'].search([])
@@ -119,7 +121,8 @@ class libro_ventas(models.TransientModel):
                 ('fecha_fact','>=',self.date_from),
                 ('fecha_fact','<=',self.date_to),
                 ('state','in',('posted','cancel' )),
-                ('type','in',('out_invoice','out_refund','out_receipt'))
+                ('type','in',('out_invoice','out_refund','out_receipt')),
+                ('company_id','=',self.env.company.id)#loca14
                 ])
         if accion=="voucher":
             cursor_resumen = self.env['account.move.line.resumen'].search([
@@ -128,7 +131,8 @@ class libro_ventas(models.TransientModel):
                 ('fecha_fact','<',self.date_from),
                 #('fecha_fact','>=',self.date_to),
                 ('state_voucher_iva','=','posted'),
-                ('type','in',('out_invoice','out_refund','out_receipt'))
+                ('type','in',('out_invoice','out_refund','out_receipt')),
+                ('company_id','=',self.env.company.id)#loca14
                 ])
         for det in cursor_resumen:
             if det.invoice_id.ocultar_libros!=True:
@@ -180,6 +184,7 @@ class libro_ventas(models.TransientModel):
 	            'retenido_general':self.conv_div_nac(det.retenido_general,det),
 	            'vat_ret_id':det.vat_ret_id.id,
 	            'invoice_id':det.invoice_id.id,
+                'company_id':det.company_id.id,#loca14
 	            }
                 pdf_id = t.create(values)
         #   temp = self.env['account.wizard.pdf.ventas'].search([])
