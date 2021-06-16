@@ -64,13 +64,13 @@ class AccountMove(models.Model):
             cuenta_clien_cobrar=self.partner_id.property_account_receivable_id.id
             cuenta_prove_pagar = self.partner_id.property_account_payable_id.id
         if tipo_factt=="proveedor":
-            if self.company_id.confg_ret_proveedores=="c":
-                porcentaje_ret=self.company_id.partner_id.vat_retention_rate #usar para meterlo en la tabla vat.retention
-                cuenta_ret_cobrar=self.company_id.partner_id.account_ret_receivable_id.id # USAR PARA COMPARAR CON EL CAMPO ACCOUNT_ID DE LA TABLA ACCOUNT_MOVE_LINE
-                cuenta_ret_pagar = self.company_id.partner_id.account_ret_payable_id.id # USAR PARA COMPARAR CON EL CAMPO ACCOUNT_ID DE LA TABLA ACCOUNT_MOVE_LINE
-                cuenta_clien_cobrar=self.company_id.partner_id.property_account_receivable_id.id
-                cuenta_prove_pagar = self.company_id.partner_id.property_account_payable_id.id
-            if self.company_id.confg_ret_proveedores=="p":
+            if self.env.company.confg_ret_proveedores=="c": #loca14
+                porcentaje_ret=self.env.company.partner_id.vat_retention_rate # loca14 usar para meterlo en la tabla vat.retention
+                cuenta_ret_cobrar=self.env.company.partner_id.account_ret_receivable_id.id # loca 14 USAR PARA COMPARAR CON EL CAMPO ACCOUNT_ID DE LA TABLA ACCOUNT_MOVE_LINE
+                cuenta_ret_pagar = self.env.company.partner_id.account_ret_payable_id.id # loca14 USAR PARA COMPARAR CON EL CAMPO ACCOUNT_ID DE LA TABLA ACCOUNT_MOVE_LINE
+                cuenta_clien_cobrar=self.env.company.partner_id.property_account_receivable_id.id #loca14
+                cuenta_prove_pagar = self.env.company.partner_id.property_account_payable_id.id #loca14
+            if self.env.company.confg_ret_proveedores=="p": #loca14
                 porcentaje_ret=self.partner_id.vat_retention_rate #usar para meterlo en la tabla vat.retention
                 cuenta_ret_cobrar=self.partner_id.account_ret_receivable_id.id # USAR PARA COMPARAR CON EL CAMPO ACCOUNT_ID DE LA TABLA ACCOUNT_MOVE_LINE
                 cuenta_ret_pagar = self.partner_id.account_ret_payable_id.id # USAR PARA COMPARAR CON EL CAMPO ACCOUNT_ID DE LA TABLA ACCOUNT_MOVE_LINE

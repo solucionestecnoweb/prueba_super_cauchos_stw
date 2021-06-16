@@ -290,6 +290,7 @@ class AccountMove(models.Model):
             # NUEVO CODIGO PARA CONCILIAR MOVIMIENTOS SECUNDARIOS 
             id_payment.id
             busca_line_mov3 = self.env['account.move.line'].search([('payment_id','=',id_payment.id),('account_internal_type','=',type_internal),('parent_state','!=','cancel')])
+            #raise UserError(_('valor = %s')%id_payment)
             for det_line_move3 in busca_line_mov3:
                 if det_line_move3.credit==0:
                     id_move_debit=det_line_move3.id

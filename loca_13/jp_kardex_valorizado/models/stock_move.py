@@ -17,7 +17,7 @@ class StockMove(models.Model):
         total = 0 
         for item in self.valoracion : 
             total += item.value
-        self.kardex_price_unit = total / self.product_qty 
+        self.kardex_price_unit = total / (self.product_qty+0.0000000000000000000000000001) 
         self.kardex_price_unit =  self.kardex_price_unit - self.price_unit 
         
     def _create_in_svl(self, forced_quantity=None):

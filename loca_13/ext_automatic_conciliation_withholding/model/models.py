@@ -27,12 +27,13 @@ class RetentionVat(models.Model):
         #raise UserError(_('busca_movimientos = %s')%busca_movimientos)
         for det_movimientos in busca_movimientos:
             busca_line_mov = self.env['account.move.line'].search([('move_id','=',det_movimientos.id),('account_internal_type','=',type_internal)])
-            if busca_line_mov.credit==0:
-                id_move_debit=busca_line_mov.id
-                monto_debit=busca_line_mov.debit
-            if busca_line_mov.debit==0:
-                id_move_credit=busca_line_mov.id
-                monto_credit=busca_line_mov.credit
+            for b_line_mov in busca_line_mov: #loca14
+                if b_line_mov.credit==0:#loca14
+                    id_move_debit=b_line_mov.id#loca14
+                    monto_debit=b_line_mov.debit#loca14
+                if b_line_mov.debit==0:#loca14
+                    id_move_credit=b_line_mov.id#loca14
+                    monto_credit=b_line_mov.credit#loca14
         if tipo_empresa=="in_invoice" or tipo_empresa=="out_refund" or tipo_empresa=="in_receipt":
             monto=monto_debit
         if tipo_empresa=="out_invoice" or tipo_empresa=="in_refund" or tipo_empresa=="out_receipt":
