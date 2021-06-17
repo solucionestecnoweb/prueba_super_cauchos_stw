@@ -51,7 +51,7 @@ class AccountMove(models.Model):
                 idv_move=id_move.id
                 valor=self.registro_movimiento_linea_anticipo(idv_move,monto_anticipo,nombre_anti,det,acum)
                 moves= self.env['account.move'].search([('id','=',idv_move)])
-                #self.valida_saldo_pendiente(det)
+                ##self.valida_saldo_pendiente(det)
                 moves.filtered(lambda move: move.journal_id.post_at != 'bank_rec').post()
                 self.concilio_saldo_pendiente_anti(idv_move,det,cont,acum)
                 cursor_payment = self.env['account.payment'].search([('id','=',det.id)])
@@ -146,13 +146,13 @@ class AccountMove(models.Model):
                  #'partner_id': 45,
                  'journal_id': self.journal_id.id,
                  'account_id': cuenta_a,# aqui va cuenta de anticipo 
-                 'amount_currency': 0.0,
                  'date_maturity': False,
-                 #'credit': float(amount_itf),
-                 #'debit': 0.0,
-                 'credit': valores,
+                 'credit': self.conv_div_extranjera(valores),#loca14
                  'debit': 0.0, # aqi va cero
-                 'balance':-valores,
+                 'balance':-1*self.conv_div_extranjera(valores),#loca14
+                 'currency_id':self.moneda(), #loca14
+                 'amount_currency': -1*self.amount_currency(valores), #loca14
+                 'amount_residual_currency': -1*self.amount_currency(valores), #loca14
 
             }
             
@@ -162,9 +162,47 @@ class AccountMove(models.Model):
 
             value['account_id'] = cuenta_b # aqui va cuenta pxp proveedores
             value['credit'] = 0.0 # aqui va cero
-            value['debit'] = valores
-            value['balance'] = valores
+            value['debit'] = self.conv_div_extranjera(valores)#loca14
+            value['balance'] = self.conv_div_extranjera(valores)#loca14
+            value['balance'] = self.currency_id.id #loca14
+            value['currency_id'] = self.moneda() #loca14
+            value['amount_currency'] = self.amount_currency(valores) #loca14
+            value['amount_residual_currency'] = self.amount_currency(valores) #loca14
             move_line_id2 = move_line_obj.create(value)
+
+    def conv_div_extranjera(self,valor):#loca14 COPIAR ESTE CODIGO COMPLETO
+        self.currency_id.id
+        fecha_contable_doc=self.date
+        monto_factura=self.amount_total
+        valor_aux=0
+        #raise UserError(_('moneda compañia: %s')%self.company_id.currency_id.id)
+        if self.currency_id.id!=self.env.company.currency_id.id:
+            tasa= self.env['res.currency.rate'].search([('currency_id','=',self.currency_id.id),('name','<=',self.date)],order="name asc")
+            for det_tasa in tasa:
+                if fecha_contable_doc>=det_tasa.name:
+                    valor_aux=det_tasa.rate
+            rate=round(1/valor_aux,2)  # LANTA
+            #rate=round(valor_aux,2)  # ODOO SH
+            resultado=valor*rate
+        else:
+            resultado=valor
+        #raise UserError(_('moneda compañia: %s')%resultado)
+        return resultado
+
+    def amount_currency(self,valor): #loca14 COPIAR ESTE CODIGO COMPLETO
+        if self.currency_id.id!=self.env.company.currency_id.id:
+            resultado=valor
+        else:
+            resultado=0.0
+        return resultado
+
+    def moneda(self): #loca14 COPIAR ESTE CODIGO COMPLETO
+        resultado=''
+        if self.currency_id.id!=self.env.company.currency_id.id:
+            resultado=self.currency_id.id
+            return resultado
+
+
 
 
     def valida_saldo_pendiente(self,id_payment):

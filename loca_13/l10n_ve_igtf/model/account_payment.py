@@ -141,7 +141,7 @@ class account_payment(models.Model):
 
         #raise UserError(_('El Ide es= %s')%id_pago)
         #raise UserError(_('nombre = %s')%self.display_name+"[ Bs. "+str(33)+"]")
-        company_id=self._get_company().id
+        company_id=self.env.company.id #loca14
         lista_company=self.env['res.company'].search([('id','=',company_id)])
         for det_company in lista_company:
             porcentage_igtf=det_company.wh_porcentage
@@ -234,7 +234,7 @@ class account_payment(models.Model):
         move_line_obj = self.env['account.move.line']
         move_line_id1 = move_line_obj.create(value)
 
-        value['account_id'] = self._get_company().account_wh_itf_id.id
+        value['account_id'] = self.env.company.account_wh_itf_id.id #loca14
         value['credit'] = 0.0 # aqui va cero
         value['debit'] = valores
         value['balance'] = valores
@@ -285,20 +285,20 @@ class account_payment(models.Model):
 
         self.ensure_one()
         SEQUENCE_CODE = 'l10n_ve_cuenta_retencion_itf'
-        company_id = self._get_company()
-        IrSequence = self.env['ir.sequence'].with_context(force_company=company_id.id)
+        company_id = self.env.company.id #loca14 self._get_company()
+        IrSequence = self.env['ir.sequence'].with_context(force_company=self.env.company.id) #loca14
         name = IrSequence.next_by_code(SEQUENCE_CODE)
 
         # si aún no existe una secuencia para esta empresa, cree una
         if not name:
             IrSequence.sudo().create({
                 'prefix': 'WITF',
-                'name': 'Localización Venezolana impuesto ITF %s' % company_id.id,
+                'name': 'Localización Venezolana impuesto ITF %s' % self.env.company.id,#loca14
                 'code': SEQUENCE_CODE,
                 'implementation': 'no_gap',
                 'padding': 8,
                 'number_increment': 1,
-                'company_id': company_id.id,
+                'company_id': self.env.company.id,#loca14
             })
             name = IrSequence.next_by_code(SEQUENCE_CODE)
         return name
