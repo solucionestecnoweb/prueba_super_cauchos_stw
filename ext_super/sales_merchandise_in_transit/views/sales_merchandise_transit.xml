@@ -12,7 +12,7 @@
                 <field name="product_qty" readonly="1"/>
                 <field name="product_uom" readonly="1"/>
                 <field name="pr" readonly="1"/>
-                <field name="product_template_id" string="Product" readonly="1"/>
+                <!--field name="product_template_id" string="Product" readonly="1"/-->
                 <field name="price_unit" widget="monetary" readonly="1"/>
                 <field name="currency_id" invisible="1" readonly="1"/>
                 <field name="pronto_pago" readonly="1"/>
