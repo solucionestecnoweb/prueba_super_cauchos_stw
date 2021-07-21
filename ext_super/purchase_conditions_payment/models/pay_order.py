@@ -14,13 +14,19 @@ class PurchasePayOrder(models.Model):
     request_date = fields.Date(string='Request Date', default=fields.Date.today())
     cancel_date = fields.Date(string='Cancel Date')
     company_id = fields.Many2one(comodel_name='res.company', string='Company', default=lambda self: self.env.user.company_id)
-    payment_reference = fields.Selection(string='Payment Reference', selection=[('invoice', 'Invoice'), ('purchase_order', 'Purchase Order'),])
+    payment_reference = fields.Selection(string='Payment Reference', selection=[('invoice', 'Invoice'), ('purchase_order', 'Purchase Order')], default='invoice')
     invoice_id = fields.Many2one(comodel_name='account.move', string='Invoice')
     order_id = fields.Many2one(comodel_name='purchase.order', string='Purchase Order')
     currency_id = fields.Many2one('res.currency', string='Currency', default=lambda self: self.env.user.company_id.currency_id)
     
     pay_order_lines_ids = fields.One2many(comodel_name='purchase.pay.order.lines', inverse_name='pay_order_id', string='Requisition Lines')
     amount_total = fields.Float(string='Amount Total', compute='_compute_amount_total')
+    
+    total_debt_invoice = fields.Monetary(string='Total Debt', store=True, related='invoice_id.amount_total')
+    currency_invoice = fields.Many2one(comodel_name='res.currency', string='Currency', related='invoice_id.currency_id')    
+    total_debt_order = fields.Monetary(string='Total Debt', store=True, related='order_id.amount_total')
+    currency_order = fields.Many2one(comodel_name='res.currency', string='Currency', related='order_id.currency_id')
+    
     state = fields.Selection([ ('draft', 'Draft'), ('confirmed', 'Confirmed'), ('done', 'Done'), ('cancel', 'Cancelled')], default='draft')
     
     def _compute_amount_total(self):
@@ -29,6 +35,12 @@ class PurchasePayOrder(models.Model):
             for line in item.pay_order_lines_ids:
                 amount += line.amount
             item.amount_total = amount
+
+
+    @api.onchange('payment_reference')
+    def _clean_reference(self):
+        self.invoice_id = False
+        self.order_id = False
 
     @api.constrains('amount_total', 'pay_order_lines_ids')
     def _constrains_amount_total(self):

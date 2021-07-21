@@ -40,8 +40,8 @@ msgstr "<span style=\"font-size:14px;\">Descripción</span>"
 
 #. module: purchase_compare_multiple
 #: model_terms:ir.ui.view,arch_db:purchase_compare_multiple.compared_prices_list
-msgid "<span style=\"font-size:14px;\">Price $</span>"
-msgstr "<span style=\"font-size:14px;\">Precio $</span>"
+msgid "<span style=\"font-size:14px;\">Price</span>"
+msgstr "<span style=\"font-size:14px;\">Precio</span>"
 
 #. module: purchase_compare_multiple
 #: model_terms:ir.ui.view,arch_db:purchase_compare_multiple.compared_prices_list

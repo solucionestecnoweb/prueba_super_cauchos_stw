@@ -6,14 +6,20 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 13.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-05-06 16:28+0000\n"
-"PO-Revision-Date: 2021-05-06 16:28+0000\n"
+"POT-Creation-Date: 2021-07-03 20:25+0000\n"
+"PO-Revision-Date: 2021-07-03 20:25+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
+
+#. module: purchase_conditions_payment
+#: model:ir.model.fields,field_description:purchase_conditions_payment.field_res_partner__payment_ids
+#: model:ir.model.fields,field_description:purchase_conditions_payment.field_res_users__payment_ids
+msgid " Supplier Payment Plan"
+msgstr " Plan de Pago Proveedor"
 
 #. module: purchase_conditions_payment
 #: model:ir.model.fields,field_description:purchase_conditions_payment.field_purchase_pay_order__message_needaction
@@ -37,8 +43,14 @@ msgstr "Estado de la Actividad"
 
 #. module: purchase_conditions_payment
 #: model:ir.model.fields,field_description:purchase_conditions_payment.field_purchase_pay_order_lines__amount
+#: model:ir.model.fields,field_description:purchase_conditions_payment.field_res_supplier_payment_plan__amount
 msgid "Amount"
 msgstr "Monto"
+
+#. module: purchase_conditions_payment
+#: model:ir.model.fields,field_description:purchase_conditions_payment.field_res_supplier_payment_plan__amount_payable
+msgid "Amount Payable"
+msgstr "Monto por Pagar"
 
 #. module: purchase_conditions_payment
 #: model:ir.model.fields,field_description:purchase_conditions_payment.field_purchase_pay_order__amount_total
@@ -86,26 +98,58 @@ msgid "Contact"
 msgstr "Contacto"
 
 #. module: purchase_conditions_payment
+#: model:ir.model.fields,field_description:purchase_conditions_payment.field_res_supplier_payment_plan__cost
+msgid "Cost"
+msgstr "Costo"
+
+#. module: purchase_conditions_payment
 #: model:ir.model.fields,field_description:purchase_conditions_payment.field_purchase_pay_order__create_uid
 #: model:ir.model.fields,field_description:purchase_conditions_payment.field_purchase_pay_order_lines__create_uid
+#: model:ir.model.fields,field_description:purchase_conditions_payment.field_res_supplier_payment_plan__create_uid
 msgid "Created by"
 msgstr ""
 
 #. module: purchase_conditions_payment
 #: model:ir.model.fields,field_description:purchase_conditions_payment.field_purchase_pay_order__create_date
 #: model:ir.model.fields,field_description:purchase_conditions_payment.field_purchase_pay_order_lines__create_date
+#: model:ir.model.fields,field_description:purchase_conditions_payment.field_res_supplier_payment_plan__create_date
 msgid "Created on"
 msgstr ""
 
 #. module: purchase_conditions_payment
+#: model:ir.model.fields,field_description:purchase_conditions_payment.field_res_supplier_payment_plan__crossing
+#: model:ir.model.fields.selection,name:purchase_conditions_payment.selection__res_supplier_payment_plan__status_cxp__crossing
+msgid "Crossing"
+msgstr "Cruce"
+
+#. module: purchase_conditions_payment
+#: model:ir.model.fields.selection,name:purchase_conditions_payment.selection__res_supplier_payment_plan__status_cxp__crossing_payable
+msgid "Crossing Payable"
+msgstr "Cruce por Pagar"
+
+#. module: purchase_conditions_payment
 #: model:ir.model.fields,field_description:purchase_conditions_payment.field_purchase_pay_order__currency_id
+#: model:ir.model.fields,field_description:purchase_conditions_payment.field_purchase_pay_order__currency_invoice
+#: model:ir.model.fields,field_description:purchase_conditions_payment.field_purchase_pay_order__currency_order
 #: model:ir.model.fields,field_description:purchase_conditions_payment.field_purchase_pay_order_lines__currency_id
+#: model:ir.model.fields,field_description:purchase_conditions_payment.field_res_supplier_payment_plan__currency_id
 msgid "Currency"
 msgstr "Moneda"
 
 #. module: purchase_conditions_payment
+#: model:ir.model.fields,field_description:purchase_conditions_payment.field_res_supplier_payment_plan__date_start
+msgid "Date"
+msgstr "Fecha"
+
+#. module: purchase_conditions_payment
+#: model:ir.model.fields,field_description:purchase_conditions_payment.field_res_supplier_payment_plan__description
+msgid "Description"
+msgstr "Descripción"
+
+#. module: purchase_conditions_payment
 #: model:ir.model.fields,field_description:purchase_conditions_payment.field_purchase_pay_order__display_name
 #: model:ir.model.fields,field_description:purchase_conditions_payment.field_purchase_pay_order_lines__display_name
+#: model:ir.model.fields,field_description:purchase_conditions_payment.field_res_supplier_payment_plan__display_name
 msgid "Display Name"
 msgstr ""
 
@@ -119,6 +163,16 @@ msgstr "Realizado"
 #: model:ir.model.fields.selection,name:purchase_conditions_payment.selection__purchase_pay_order__state__draft
 msgid "Draft"
 msgstr "Borrador"
+
+#. module: purchase_conditions_payment
+#: model:ir.model.fields,field_description:purchase_conditions_payment.field_res_supplier_payment_plan__end_date
+msgid "End Date"
+msgstr "Fecha de Expiración"
+
+#. module: purchase_conditions_payment
+#: model:ir.model.fields,field_description:purchase_conditions_payment.field_res_supplier_payment_plan__filler
+msgid "Filler"
+msgstr ""
 
 #. module: purchase_conditions_payment
 #: model:ir.model.fields,field_description:purchase_conditions_payment.field_purchase_pay_order__message_follower_ids
@@ -136,8 +190,14 @@ msgid "Followers (Partners)"
 msgstr ""
 
 #. module: purchase_conditions_payment
+#: model:ir.model.fields,field_description:purchase_conditions_payment.field_res_supplier_payment_plan__group
+msgid "Group"
+msgstr "Grupo"
+
+#. module: purchase_conditions_payment
 #: model:ir.model.fields,field_description:purchase_conditions_payment.field_purchase_pay_order__id
 #: model:ir.model.fields,field_description:purchase_conditions_payment.field_purchase_pay_order_lines__id
+#: model:ir.model.fields,field_description:purchase_conditions_payment.field_res_supplier_payment_plan__id
 msgid "ID"
 msgstr ""
 
@@ -182,18 +242,21 @@ msgstr "Asientos contables"
 #. module: purchase_conditions_payment
 #: model:ir.model.fields,field_description:purchase_conditions_payment.field_purchase_pay_order____last_update
 #: model:ir.model.fields,field_description:purchase_conditions_payment.field_purchase_pay_order_lines____last_update
+#: model:ir.model.fields,field_description:purchase_conditions_payment.field_res_supplier_payment_plan____last_update
 msgid "Last Modified on"
 msgstr ""
 
 #. module: purchase_conditions_payment
 #: model:ir.model.fields,field_description:purchase_conditions_payment.field_purchase_pay_order__write_uid
 #: model:ir.model.fields,field_description:purchase_conditions_payment.field_purchase_pay_order_lines__write_uid
+#: model:ir.model.fields,field_description:purchase_conditions_payment.field_res_supplier_payment_plan__write_uid
 msgid "Last Updated by"
 msgstr ""
 
 #. module: purchase_conditions_payment
 #: model:ir.model.fields,field_description:purchase_conditions_payment.field_purchase_pay_order__write_date
 #: model:ir.model.fields,field_description:purchase_conditions_payment.field_purchase_pay_order_lines__write_date
+#: model:ir.model.fields,field_description:purchase_conditions_payment.field_res_supplier_payment_plan__write_date
 msgid "Last Updated on"
 msgstr ""
 
@@ -258,6 +321,16 @@ msgid "Orders"
 msgstr "Ordenes"
 
 #. module: purchase_conditions_payment
+#: model:ir.model.fields.selection,name:purchase_conditions_payment.selection__res_supplier_payment_plan__status_cxp__paid
+msgid "Paid"
+msgstr "Pagado"
+
+#. module: purchase_conditions_payment
+#: model:ir.model.fields.selection,name:purchase_conditions_payment.selection__res_supplier_payment_plan__status_cxp__paid_crossing
+msgid "Paid Crossing"
+msgstr "Cruce Pagado"
+
+#. module: purchase_conditions_payment
 #: model:ir.model.fields,field_description:purchase_conditions_payment.field_purchase_pay_order_lines__pay_date
 msgid "Pay Date"
 msgstr "Fecha de Pago"
@@ -282,6 +355,12 @@ msgid "Pay Orders"
 msgstr "Ordenes de Pago"
 
 #. module: purchase_conditions_payment
+#: model:ir.model.fields,field_description:purchase_conditions_payment.field_res_supplier_payment_plan__payment
+#: model:ir.model.fields.selection,name:purchase_conditions_payment.selection__res_supplier_payment_plan__status_cxp__payment
+msgid "Payment"
+msgstr "Abono"
+
+#. module: purchase_conditions_payment
 #: model:ir.model.fields,field_description:purchase_conditions_payment.field_purchase_pay_order__payment_reference
 msgid "Payment Reference"
 msgstr "Referencia de Pago"
@@ -292,6 +371,16 @@ msgstr "Referencia de Pago"
 #: model:ir.model.fields.selection,name:purchase_conditions_payment.selection__purchase_pay_order__payment_reference__purchase_order
 msgid "Purchase Order"
 msgstr "Pedido de compra"
+
+#. module: purchase_conditions_payment
+#: model:ir.model.fields,field_description:purchase_conditions_payment.field_res_supplier_payment_plan__purchase_id
+msgid "Purchase order"
+msgstr "Orden de Compra"
+
+#. module: purchase_conditions_payment
+#: model:ir.model.fields,field_description:purchase_conditions_payment.field_res_supplier_payment_plan__qty
+msgid "Qty"
+msgstr "Cant."
 
 #. module: purchase_conditions_payment
 #: model:ir.model.fields,field_description:purchase_conditions_payment.field_purchase_pay_order__request_date
@@ -334,6 +423,11 @@ msgid "State"
 msgstr "Estado"
 
 #. module: purchase_conditions_payment
+#: model:ir.model.fields,field_description:purchase_conditions_payment.field_res_supplier_payment_plan__status_cxp
+msgid "Status CXP"
+msgstr "Estado CXP"
+
+#. module: purchase_conditions_payment
 #: model:ir.model.fields,help:purchase_conditions_payment.field_purchase_pay_order__activity_state
 msgid ""
 "Status based on activities\n"
@@ -341,6 +435,16 @@ msgid ""
 "Today: Activity date is today\n"
 "Planned: Future activities."
 msgstr ""
+
+#. module: purchase_conditions_payment
+#: model:ir.model.fields,field_description:purchase_conditions_payment.field_res_supplier_payment_plan__name
+msgid "Supplier"
+msgstr "Proveedor"
+
+#. module: purchase_conditions_payment
+#: model_terms:ir.ui.view,arch_db:purchase_conditions_payment.res_partner_extra_fields_form_view
+msgid "Supplier Payment Plan"
+msgstr "Plan de Pago Proveedor"
 
 #. module: purchase_conditions_payment
 #: code:addons/extra-addons/oasis/purchase_conditions_payment/models/pay_order.py:0
@@ -355,6 +459,17 @@ msgstr "El monto total no concuerda con la factura"
 #, python-format
 msgid "The total amount does not match the purchase order"
 msgstr "El monto total no concuerda con la orden de compra"
+
+#. module: purchase_conditions_payment
+#: model:ir.model.fields.selection,name:purchase_conditions_payment.selection__res_supplier_payment_plan__status_cxp__to_pay
+msgid "To Pay"
+msgstr "Por Pagar"
+
+#. module: purchase_conditions_payment
+#: model:ir.model.fields,field_description:purchase_conditions_payment.field_purchase_pay_order__total_debt_invoice
+#: model:ir.model.fields,field_description:purchase_conditions_payment.field_purchase_pay_order__total_debt_order
+msgid "Total Debt"
+msgstr "Deuda Total"
 
 #. module: purchase_conditions_payment
 #: model:ir.model.fields,field_description:purchase_conditions_payment.field_res_partner__trading_conditions
@@ -401,4 +516,9 @@ msgstr ""
 #. module: purchase_conditions_payment
 #: model:ir.model,name:purchase_conditions_payment.model_purchase_pay_order_lines
 msgid "purchase.pay.order.lines"
+msgstr ""
+
+#. module: purchase_conditions_payment
+#: model:ir.model,name:purchase_conditions_payment.model_res_supplier_payment_plan
+msgid "res.supplier.payment.plan"
 msgstr ""

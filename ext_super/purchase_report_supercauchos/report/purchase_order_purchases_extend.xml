@@ -15,7 +15,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-5">
-                            <img t-if="res_company.logo" t-att-src="'data:image/png;base64,%s' % to_text(res_company.logo)" style="max-height: 100px; max-width: 200px;"/>
+                            <img t-if="o.company_id.logo" t-att-src="'data:image/png;base64,%s' % to_text(o.company_id.logo)" style="max-height: 100px; max-width: 200px;"/>
                         </div>
                         <div class="col-2">
                         </div>
@@ -63,7 +63,7 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        <span>Emisión</span> <b><t t-esc="o.date_approve.strftime('%d de %B del %Y')"/></b>
+                                        <span>Emisión</span> <b><t t-if="o.date_approve" t-esc="o.date_approve.strftime('%d de %B del %Y')"/></b>
                                     </td>
                                 </tr>
                                 <tr>
@@ -122,8 +122,8 @@
                 <t t-foreach="docs" t-as="o">
                     <t t-call="purchase_report_supercauchos.external_layout_purchase_order_purchases_extend">
                         <div class="page">
-                            <br/><br/><br/>
-                            <table>
+                            <br/><br/><br/><br/><br/>
+                            <table style="width: 100%;">
 
                                 <!-- Cantidad de columnas -->
                                 <colgroup>

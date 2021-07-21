@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 13.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-05-24 20:06+0000\n"
-"PO-Revision-Date: 2021-05-24 20:06+0000\n"
+"POT-Creation-Date: 2021-06-29 12:17+0000\n"
+"PO-Revision-Date: 2021-06-29 12:17+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -25,6 +25,11 @@ msgstr "Categoría de Aprobación"
 #: model_terms:ir.ui.view,arch_db:payment_order_approvals.purchase_pay_order_view_form_approvals_extend
 msgid "Approval Request"
 msgstr "Solicitud de Aprobación"
+
+#. module: payment_order_approvals
+#: model:ir.model.fields,field_description:payment_order_approvals.field_purchase_pay_order__approver_id
+msgid "Approver"
+msgstr "Aprobador"
 
 #. module: payment_order_approvals
 #: code:addons/extra-addons/oasis/payment_order_approvals/models/payment_order.py:0

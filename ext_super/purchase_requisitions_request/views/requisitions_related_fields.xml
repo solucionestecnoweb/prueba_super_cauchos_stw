@@ -10,7 +10,7 @@
             <field name="inherit_id" ref="purchase.purchase_order_form"/>
             <field name="arch" type="xml">
                 <xpath expr="//group[@name='planning']" position="inside">
-                    <field name="requisition_id"/>
+                    <field name="requisition_id" domain="[('state', 'in', ('confirmed','receive'))]"/>
                 </xpath>
             </field>
         </record>
@@ -23,7 +23,7 @@
             <field name="arch" type="xml">
                 <xpath expr="//page[@name='extra']/group" position="inside">
                     <group name="requisition" string="Requisition">
-                        <field name="requisition_id"/>
+                        <field name="requisition_id" domain="[('state', 'in', ('confirmed','receive'))]"/>
                     </group>
                 </xpath>
             </field>

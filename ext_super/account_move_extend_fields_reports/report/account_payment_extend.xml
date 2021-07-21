@@ -30,7 +30,7 @@
                     <div class="container">
                         <div class="row">
                             <div class="col-12">
-                                <span style="font-size:12px;">Hemos entregado a: <t t-esc="o.company_id.name"/></span><br/>
+                                <span style="font-size:12px;">Hemos entregado a: <t t-esc="o.partner_id.name"/></span><br/>
                                 <span style="font-size:12px;">La cantidad de: <t t-esc="o.get_literal_amount(o.amount)"/></span><br/>
                                 <span style="font-size:12px;">Por concepto de: <t t-esc="o.payment_concept"/></span><br/>
                             </div>
@@ -214,6 +214,9 @@
 
                                     <tbody>
                                         <!-- Lineas -->
+                                        <t t-if="rate == 0">
+                                            <t t-set="rate" t-value="1"/>
+                                        </t>
                                         <tr class="border-top border-bottom border-dark">
                                             <td class="text-center">
                                                 <span style="font-size:12px;"><t t-esc="o.communication"/></span>
@@ -228,11 +231,11 @@
                                             </td>
                                             <td class="text-right">
                                                 <span style="font-size:12px; padding-right: 3px;" t-if="o.currency_id.name == 'USD'"><t t-esc="o.amount" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
-                                                <span style="font-size:12px; padding-right: 3px;" t-else="">0,00</span>
+                                                <span style="font-size:12px; padding-right: 3px;" t-else=""><t t-esc="o.amount / rate" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
                                             </td>
                                             <td class="text-right">
                                                 <span style="font-size:12px; padding-right: 3px;" t-if="o.currency_id.name == 'Bs.'"><t t-esc="o.amount" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
-                                                <span style="font-size:12px; padding-right: 3px;" t-else="">0,00</span>
+                                                <span style="font-size:12px; padding-right: 3px;" t-else=""><t t-esc="o.amount * rate" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
                                             </td>
                                         </tr>
                                         <tr>
@@ -248,11 +251,11 @@
                                             </td>
                                             <td class="text-right">
                                                 <span style="font-size:12px; padding-right: 3px;" t-if="o.currency_id.name == 'USD'"><t t-esc="o.amount" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
-                                                <span style="font-size:12px; padding-right: 3px;" t-else="">0,00</span>
+                                                <span style="font-size:12px; padding-right: 3px;" t-else=""><t t-esc="o.amount / rate" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
                                             </td>
                                             <td class="text-right">
                                                 <span style="font-size:12px; padding-right: 3px;" t-if="o.currency_id.name == 'Bs.'"><t t-esc="o.amount" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
-                                                <span style="font-size:12px; padding-right: 3px;" t-else="">0,00</span>
+                                                <span style="font-size:12px; padding-right: 3px;" t-else=""><t t-esc="o.amount * rate" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
                                             </td>
                                         </tr>
                                         <!-- Fin lineas -->

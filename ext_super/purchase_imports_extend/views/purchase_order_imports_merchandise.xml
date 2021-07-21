@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- purchase.order.line tree view -->
+    <record id="imports_merchandise_transit_view_tree" model="ir.ui.view">
+        <field name="name">purchase.order.line.view.tree</field>
+        <field name="model">purchase.order.line</field>
+        <field name="arch" type="xml">
+            <tree create="false" delete="false" editable="bottom">
+                <!-- Add your fields here -->
+                <field name="order_id" readonly="1"/>
+                <field name="product_qty"/>
+                <field name="product_uom"/>
+                <field name="product_uom_category_id" invisible="1"/>
+                <field name="pr"/>
+                <field name="product_id" string="Product"/>
+                <field name="price_unit" widget="monetary"/>
+                <field name="currency_id" invisible="1"/>
+                <field name="pronto_pago"/>
+                <field name="super_promo"/>
+                <field name="apart_to_seller"/>
+                <field name="apart_qty_available"/>
+                <field name="date_planned"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- purchase.order.line search view -->
+    <record id="imports_merchandise_transit_view_search" model="ir.ui.view">
+        <field name="name">purchase.order.line.view.search</field>
+        <field name="model">purchase.order.line</field>
+        <field name="arch" type="xml">
+            <search>
+                <!-- Add your fields here -->
+            </search>
+        </field>
+    </record>
+
+</odoo>

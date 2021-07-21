@@ -17,20 +17,20 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-5">
-                            <img t-if="res_company.logo" t-att-src="'data:image/png;base64,%s' % to_text(res_company.logo)" style="max-height: 100px; max-width: 200px;"/><br/>
+                            <img t-if="o.company_id.logo" t-att-src="'data:image/png;base64,%s' % to_text(o.company_id.logo)" style="max-height: 100px; max-width: 200px;"/><br/>
                             <b style="font-size:12px;">Señores: <t t-esc="o.partner_id.name"/></b><br/>
                             <b style="font-size:12px;">R.I.F: <t t-esc="o.rif"/></b><br/>
                             <b style="font-size:12px;">Dirección: <t t-esc="o.partner_id.city"/> <t t-esc="o.partner_id.state_id.name"/></b><br/>
                             <b style="font-size:12px;">Teléfono: <t t-esc="o.partner_id.phone"/></b><br/>
                             <b style="font-size:12px;">Vendedor: <t t-esc="o.user_id.name"/></b><br/>
                             <b style="font-size:12px;">Teléfono: <t t-esc="o.user_id.phone"/></b><br/>
-                            <b style="font-size:12px;">Asunto: </b>
                         </div>
                         <div class="col-2">
                         </div>
                         <div class="col-5 text-center">
                             <span style="font-size:12px;"><t t-esc="o._date_now_purchase().strftime('%d de %B de %Y %r')"/></span><br/>
-                            <span style="font-size:12px;">Nro. Cotización: <t t-esc="o.name"/></span>
+                            <span style="font-size:12px;">Nro. Cotización: <t t-esc="o.name"/></span><br/>
+                            <span style="font-size:12px;">Usuario Solicitante: <t t-esc="o.env.user.name"/></span>
                         </div>
                     </div>
                 </div>
@@ -114,7 +114,7 @@
                                                     <span style="font-size:12px;"><t t-esc="item.product_uom_qty" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
                                                 </td>
                                                 <td class="text-center">
-                                                    <span style="font-size:12px;"><t t-esc="item.product_id.volume"/></span>
+                                                    <span style="font-size:12px;"><t t-esc="item.product_id.volume" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
                                                 </td>
                                                 <td class="text-center">
                                                     <span style="font-size:12px;"><t t-esc="item.product_id.brand_id.name"/></span>
@@ -185,12 +185,12 @@
                                 <div class="row">
                                     <div class="col-8">
                                         <span style="font-size:14px;">Condiciones: </span><br/>
-                                        <span style="font-size:12px;">-Condiciones de pago: </span><br/>
-                                        <span style="font-size:12px;">-Debido a la alta rotación de los neumáticos favor indicar la aprobación de los para bloquear</span><br/>
+                                        <span style="font-size:12px;">-Condiciones de pago: <t t-esc="o.payment_condition_id.name"/></span><br/>
+                                        <span style="font-size:12px;">-Debido a la alta rotación de los neumáticos por favor indicar la aprobación de los Cauchos para bloquear.</span><br/>
                                         <span style="font-size:12px;">-Los precios incluyen IVA </span><br/>
-                                        <span style="font-size:12px;">-Precios </span><br/>
-                                        <span style="font-size:12px;">-Fecha de llegada </span><br/>
-                                        <span style="font-size:12px;">-Anticipo </span><br/>
+                                        <span style="font-size:12px;">-Precios se mantienen si Venezuela mantiene sin pago de aranceles de importación</span><br/>
+                                        <span style="font-size:12px;">-Fecha de llegada <t t-if="o.arrive_date" t-esc="o.arrive_date.strftime('%d de %B de %Y')"/></span><br/>
+                                        <span style="font-size:12px;">-Anticipo 50%</span><br/>
                                     </div>
                                     <div class="col-4">
                                         <b style="font-size:12px;">Bank of America Grupo Chakao Corp.</b><br/>
@@ -204,15 +204,18 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+                            <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
                             <div class="container">
                                 <div class="row">
                                     <div class="col-12 text-center">
-                                        <b>Ing. Orlando Mesa</b><br/>
-                                        <span>Vice-presidente <br/>0414-5577177</span>
+                                        <t t-foreach="o._get_boss_signature()" t-as="item">
+                                            <img t-if="item.firma" t-att-src="'data:image/png;base64,%s' % to_text(item.firma)" style="max-height: 100px; max-width: 200px;"/><br/>
+                                            <b style="font-size:12px;"><t t-esc="item.name"/></b><br/>
+                                            <span style="font-size:12px;">Vice-presidente <br/><t t-esc="item.partner_id.phone"/></span>
+                                        </t>
                                     </div>
                                 </div>
-                            </div> -->
+                            </div>
                         </div>
                     </t>
                 </t>

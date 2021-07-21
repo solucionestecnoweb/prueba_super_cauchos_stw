@@ -15,7 +15,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-5">
-                            <img t-if="res_company.logo" t-att-src="'data:image/png;base64,%s' % to_text(res_company.logo)" style="max-height: 100px; max-width: 200px;"/>
+                            <img t-if="o.company_id.logo" t-att-src="'data:image/png;base64,%s' % to_text(o.company_id.logo)" style="max-height: 100px; max-width: 200px;"/>
                         </div>
                         <div class="col-2">
                         </div>
@@ -45,12 +45,12 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        <span>Departamento Solicitante</span>
+                                        <span>Usuario Solicitante</span>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>
-                                        <b t-if="o.department_id"><t t-esc="o.department_id.name"/></b><span t-else=""><br/></span>
+                                        <b><t t-esc="o.env.user.partner_id.name"/></b>
                                     </td>
                                 </tr>
                             </table>
@@ -59,7 +59,7 @@
                             <table>
                                 <tr>
                                     <td>
-                                        <b>Requisición N° <t t-esc="o.name"/></b>
+                                        <b>Nro. de Presupuesto <t t-esc="o.name"/></b>
                                     </td>
                                 </tr>
                                 <tr>
@@ -121,8 +121,8 @@
                 <t t-foreach="docs" t-as="o">
                     <t t-call="purchase_report_supercauchos.external_layout_purchase_order_budget_extend">
                         <div class="page">
-                            <br/><br/><br/>
-                            <table>
+                            <br/><br/><br/><br/>
+                            <table style="width: 100%;">
 
                                 <!-- Cantidad de columnas -->
                                 <colgroup>

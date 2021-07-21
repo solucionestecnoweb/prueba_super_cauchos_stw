@@ -47,7 +47,7 @@ class AccountMoveApproval(models.Model):
                 }
                 t = self.env['approval.request'].create(values)
                 for item in approval.user_ids:
-                    t.approver_ids = self.env['approval.approver'].new({
+                    t.approver_ids += self.env['approval.approver'].new({
                         'user_id': item.id,
                         'request_id': t.id,
                         'status': 'new'

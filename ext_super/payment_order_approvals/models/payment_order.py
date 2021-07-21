@@ -10,11 +10,12 @@ class PaymentOrderApproval(models.Model):
     _inherit = 'purchase.pay.order'
 
     is_approved = fields.Boolean(default=False)
-    
+    approver_id = fields.Many2one(comodel_name='res.users', string='Approver')
+
     def action_confirmed(self):
         for item in self:
             xfind = item.env['approval.request'].search([('payment_order_id', '=', item.id)])
-            is_company =  item.env['res.company'].search([('partner_id', '=', item.employee_id.partner_id.id)])
+            is_company =  item.env['res.company'].search([('partner_id', '=', item.employee_id.address_id.id)])
             if len(xfind) > 0:
                 for line in xfind:
                     if line.request_status == 'approved':
@@ -50,8 +51,8 @@ class PaymentOrderApproval(models.Model):
                     'request_status': 'pending'
                 }
                 t = self.env['approval.request'].create(values)
-                for item in approval.user_ids:
-                    t.approver_ids = self.env['approval.approver'].new({
+                for item in self.approver_id:
+                    t.approver_ids += self.env['approval.approver'].new({
                         'user_id': item.id,
                         'request_id': t.id,
                         'status': 'new'

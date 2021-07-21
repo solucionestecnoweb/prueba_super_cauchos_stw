@@ -39,6 +39,27 @@
                     <page name="trading_conditions" string="Trading Conditions" attrs="{'invisible': [('company_type', '=', 'person')]}">
                         <field name="trading_conditions"/>
                     </page>
+                    <page name="supplier_payment" string="Supplier Payment Plan">
+                        <field name="payment_ids" context="{'default_name': active_id}">
+                            <tree editable="bottom">
+                                <field name="name" invisible="1"/>
+                                <field name="date_start" required="1"/>
+                                <field name="qty" required="1"/>
+                                <field name="description" required="1"/>
+                                <field name="group" required="1"/>
+                                <field name="filler" required="1"/>
+                                <field name="currency_id" invisible="1"/>
+                                <field name="cost" widget="monetary" required="1"/>
+                                <field name="amount" widget="monetary" required="1"/>
+                                <field name="crossing" required="1"/>
+                                <field name="purchase_id" domain="[('partner_id', '=', name), ('state', '=', 'purchase')]" required="1"/>
+                                <field name="amount_payable"/>
+                                <field name="payment" widget="monetary" required="1"/>
+                                <field name="status_cxp" required="1"/>
+                                <field name="end_date" required="1"/>
+                            </tree>
+                        </field>
+                    </page>
                 </xpath>
             </field>
         </record>

@@ -13,6 +13,9 @@
                     <button string="Approval Request" name="approvals_request_purchase" type="object" class="oe_highlight" states="draft"/>
                     <field name="is_approved" invisible="1"/>
                 </xpath>
+                <xpath expr="//field[@name='priority']" position="after">
+                    <field name="approver_ids" widget="many2many_tags" required="1"/>
+                </xpath>
             </field>
         </record>
     </data>

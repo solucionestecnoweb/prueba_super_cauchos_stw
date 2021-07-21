@@ -127,11 +127,8 @@
                                                 <span style="font-size:12px;"><t t-esc="item.total_usd" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
                                             </td>
                                             <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center">
-                                                <t t-if="item.payment_condition == 'credit'">
-                                                    <span style="font-size:12px;">Credit</span>
-                                                </t>
-                                                <t t-elif="item.payment_condition == 'cash'">
-                                                    <span style="font-size:12px;">Cash</span>
+                                                <t t-if="item.payment_condition_id">
+                                                    <span style="font-size:12px;"><t t-esc="item.payment_condition_id.name"/></span>
                                                 </t>
                                             </td>
                                             <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle; padding-right: 5;" class="text-right">
@@ -146,11 +143,11 @@
                                         <t t-set="total_usd_gen" t-value="total_usd_gen + item.total_usd"/>
                                         <t t-set="total_amount" t-value="total_amount + item.amount"/>
                                         
-                                        <t t-if="item.payment_condition == 'credit'">
+                                        <t t-if="item.payment_condition_id.name in ('credito', 'Credito', 'CREDITO', 'crédito', 'Crédito', 'CRÉDITO')">
                                             <t t-set="total_bs_credit" t-value="total_bs_credit + item.total_bs"/>
                                             <t t-set="total_usd_credit" t-value="total_usd_credit + item.total_usd"/>
                                         </t>
-                                        <t t-elif="item.payment_condition == 'cash'">
+                                        <t t-elif="item.payment_condition_id.name in ('contado', 'Contado', 'CONTADO')">
                                             <t t-set="total_bs_cash" t-value="total_bs_cash + item.total_bs"/>
                                             <t t-set="total_usd_cash" t-value="total_usd_cash + item.total_usd"/>
                                         </t>

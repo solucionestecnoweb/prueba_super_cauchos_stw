@@ -7,7 +7,7 @@
     "author": "Oasis Consultora",
     "website": "https://gregoriocode.com",
     "license": "AGPL-3",
-    "depends": ['base', 'sale', 'contacts','isrl_retention'],
+    "depends": ['base', 'sale', 'contacts','isrl_retention', 'l10n_ve_fiscal_requirements'],
     "data": [
         "security/ir.model.access.csv",
         "views/sale_order_logic_extend.xml",

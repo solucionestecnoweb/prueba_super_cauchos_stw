@@ -9,15 +9,11 @@
             <field name="model">purchase.order</field>
             <field name="inherit_id" ref="purchase.purchase_order_form"/>
             <field name="arch" type="xml">
-                <xpath expr="//field[@name='partner_id']" position="after">
-                    <field name="department_id"/>
-                </xpath>
                 <xpath expr="//field[@name='date_approve']" position="after">
                     <field name="date_end"/>
+                    <field name="rate"/>
                 </xpath>
                 <xpath expr="//field[@name='company_id']" position="after">
-                    <field name="assigned_to_id"/>
-                    <field name="approve_by_id"/>
                     <field name="priority" widget="priority"/>
                 </xpath>
             </field>

@@ -10,13 +10,13 @@
             <field name="arch" type="xml">
                 <!-- Add your xpath here -->
                 <xpath expr="//field[@name='payment_term_id']" position="after">
-                    <field name="seller_id"/>
+                    <field name="seller_id" domain="[('is_seller', '=', True)]"/>
                     <label for="" name="reservation_period">
                         <b>Reservation Period</b>
                     </label>
                     <div>
                         <field name="date_start" widget="daterange" options="{'related_end_date': 'date_end'}"/>
-                        <span> to </span>
+                        <span attrs="{'invisible': [('date_start', '=', False), ('date_end', '=', False)]}"> to </span>
                         <field name="date_end" nolabel="1" widget="daterange" options="{'related_start_date': 'date_start'}"/>
                     </div>
                     <field name="estimated_date"/>

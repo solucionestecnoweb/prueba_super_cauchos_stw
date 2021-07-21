@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 13.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-05-16 01:55+0000\n"
-"PO-Revision-Date: 2021-05-16 01:55+0000\n"
+"POT-Creation-Date: 2021-07-05 20:47+0000\n"
+"PO-Revision-Date: 2021-07-05 20:47+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -60,16 +60,6 @@ msgid ""
 msgstr ""
 "<br/>\n"
 "                            <b style=\"font-size:20px;\">Transacciones de Ventas</b><br/>"
-
-#. module: daily_sales_closing_report
-#: model_terms:ir.ui.view,arch_db:daily_sales_closing_report.daily_sales_closing_report
-msgid "<span style=\"font-size:12px;\">Cash</span>"
-msgstr "<span style=\"font-size:12px;\">Efectivo</span>"
-
-#. module: daily_sales_closing_report
-#: model_terms:ir.ui.view,arch_db:daily_sales_closing_report.daily_sales_closing_report
-msgid "<span style=\"font-size:12px;\">Credit</span>"
-msgstr "<span style=\"font-size:12px;\">Crédito</span>"
 
 #. module: daily_sales_closing_report
 #: model_terms:ir.ui.view,arch_db:daily_sales_closing_report.daily_sales_closing_report
@@ -140,14 +130,6 @@ msgstr "Cancelar"
 #. module: daily_sales_closing_report
 #: code:addons/daily_sales_closing_report/wizards/wizard_daily_sales_closing_report.py:0
 #: code:addons/extra-addons/oasis/daily_sales_closing_report/wizards/wizard_daily_sales_closing_report.py:0
-#: model:ir.model.fields.selection,name:daily_sales_closing_report.selection__daily_sales__payment_condition__cash
-#, python-format
-msgid "Cash"
-msgstr "Efectivo"
-
-#. module: daily_sales_closing_report
-#: code:addons/daily_sales_closing_report/wizards/wizard_daily_sales_closing_report.py:0
-#: code:addons/extra-addons/oasis/daily_sales_closing_report/wizards/wizard_daily_sales_closing_report.py:0
 #, python-format
 msgid "Cash Bs./$"
 msgstr "Efectivo Bs./$"
@@ -168,14 +150,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:daily_sales_closing_report.field_daily_sales_report__create_date
 msgid "Created on"
 msgstr ""
-
-#. module: daily_sales_closing_report
-#: code:addons/daily_sales_closing_report/wizards/wizard_daily_sales_closing_report.py:0
-#: code:addons/extra-addons/oasis/daily_sales_closing_report/wizards/wizard_daily_sales_closing_report.py:0
-#: model:ir.model.fields.selection,name:daily_sales_closing_report.selection__daily_sales__payment_condition__credit
-#, python-format
-msgid "Credit"
-msgstr "Crédito"
 
 #. module: daily_sales_closing_report
 #: code:addons/daily_sales_closing_report/wizards/wizard_daily_sales_closing_report.py:0
@@ -316,7 +290,7 @@ msgstr ""
 #. module: daily_sales_closing_report
 #: code:addons/daily_sales_closing_report/wizards/wizard_daily_sales_closing_report.py:0
 #: code:addons/extra-addons/oasis/daily_sales_closing_report/wizards/wizard_daily_sales_closing_report.py:0
-#: model:ir.model.fields,field_description:daily_sales_closing_report.field_daily_sales__payment_condition
+#: model:ir.model.fields,field_description:daily_sales_closing_report.field_daily_sales__payment_condition_id
 #, python-format
 msgid "Payment Condition"
 msgstr "Condición de Pago"
@@ -324,7 +298,7 @@ msgstr "Condición de Pago"
 #. module: daily_sales_closing_report
 #: model:ir.model.fields,field_description:daily_sales_closing_report.field_daily_sales_report__report
 msgid "Prepared file"
-msgstr ""
+msgstr "Archivo preparado"
 
 #. module: daily_sales_closing_report
 #: code:addons/daily_sales_closing_report/wizards/wizard_daily_sales_closing_report.py:0
@@ -360,17 +334,17 @@ msgstr "Total Operación $"
 #. module: daily_sales_closing_report
 #: code:addons/daily_sales_closing_report/wizards/wizard_daily_sales_closing_report.py:0
 #: code:addons/extra-addons/oasis/daily_sales_closing_report/wizards/wizard_daily_sales_closing_report.py:0
-#: model:ir.model.fields,field_description:daily_sales_closing_report.field_daily_sales__total_bs
 #, python-format
-msgid "Total Bs. Operation"
-msgstr "Total Operación Bs."
+msgid "Total Bs."
+msgstr ""
 
 #. module: daily_sales_closing_report
 #: code:addons/daily_sales_closing_report/wizards/wizard_daily_sales_closing_report.py:0
 #: code:addons/extra-addons/oasis/daily_sales_closing_report/wizards/wizard_daily_sales_closing_report.py:0
+#: model:ir.model.fields,field_description:daily_sales_closing_report.field_daily_sales__total_bs
 #, python-format
-msgid "Total Bs."
-msgstr "Total Bs."
+msgid "Total Bs. Operation"
+msgstr "Total Operación Bs."
 
 #. module: daily_sales_closing_report
 #: model:ir.model.fields.selection,name:daily_sales_closing_report.selection__daily_sales_report__state__choose

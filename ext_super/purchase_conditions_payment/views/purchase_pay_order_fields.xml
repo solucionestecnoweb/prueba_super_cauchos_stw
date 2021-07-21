@@ -44,13 +44,13 @@
                                 <field name="employee_id" required="1" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
                                 <field name="company_id" required="1" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
                                 <field name="payment_reference" required="1" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
-                                <field name="currency_id" required="1"/>
+                                <field name="currency_id" required="1" attrs="{'readonly': [('state', 'in', ['done','cancel'])]}"/>
                             </group>
                             <group>
                                 <field name="request_date" required="1" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
                                 <field name="cancel_date" required="1" attrs="{'readonly': [('state', 'in', ['done','cancel'])]}"/>
-                                <field name="invoice_id" attrs="{'readonly': [('state', 'in', ['done','cancel'])], 'invisible': [('payment_reference', '!=', 'invoice')], 'required': [('payment_reference', '=', 'invoice')]}"/>
-                                <field name="order_id" attrs="{'readonly': [('state', 'in', ['done','cancel'])], 'invisible': [('payment_reference', '!=', 'purchase_order')], 'required': [('payment_reference', '=', 'purchase_order')]}"/>
+                                <field name="invoice_id" domain="[('state', '=', 'posted'), ('type', 'in', ('out_invoice','in_invoice')), ('invoice_payment_state', '!=', 'paid')]" attrs="{'readonly': [('state', 'in', ['done','cancel'])], 'invisible': [('payment_reference', '!=', 'invoice')], 'required': [('payment_reference', '=', 'invoice')]}"/>
+                                <field name="order_id" domain="[('state', '=', 'purchase')]" attrs="{'readonly': [('state', 'in', ['done','cancel'])], 'invisible': [('payment_reference', '!=', 'purchase_order')], 'required': [('payment_reference', '=', 'purchase_order')]}"/>
                             </group>
                         </group>
                         <notebook>
@@ -63,10 +63,13 @@
                                     </tree>
                                 </field>
                                 <group class="oe_subtotal_footer oe_right">
-                                    <div class="oe_inline">
-                                        <label for="amount_total"/>
-                                    </div>
-                                    <field name="amount_total" nolabel="1" class="oe_subtotal_footer_separator" readonly="1" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                                    <field name="total_debt_invoice" readonly="1" widget="monetary" attrs="{'invisible': [('payment_reference', '!=', 'invoice')]}" options="{'currency_field': 'currency_invoice'}"/>
+                                    <field name="total_debt_order" readonly="1" widget="monetary" attrs="{'invisible': [('payment_reference', '!=', 'purchase_order')]}" options="{'currency_field': 'currency_order'}"/>
+                                    
+                                    <field name="currency_order" invisible="1"/>
+                                    <field name="currency_invoice" invisible="1"/>
+                                    
+                                    <field name="amount_total" class="oe_subtotal_footer_separator" readonly="1" widget="monetary" options="{'currency_field': 'currency_id'}"/>
                                 </group>
                             </page>
                         </notebook>

@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 13.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-05-06 03:06+0000\n"
-"PO-Revision-Date: 2021-05-06 03:06+0000\n"
+"POT-Creation-Date: 2021-06-17 22:45+0000\n"
+"PO-Revision-Date: 2021-06-17 22:45+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -61,8 +61,13 @@ msgstr "<span style=\"font-size:14px;\">Modelo</span>"
 
 #. module: product_list_prices_multi_currency
 #: model_terms:ir.ui.view,arch_db:product_list_prices_multi_currency.prices_list_report
-msgid "<span style=\"font-size:14px;\">Price</span>"
-msgstr "<span style=\"font-size:14px;\">Precio</span>"
+msgid "<span style=\"font-size:14px;\">Price $</span>"
+msgstr "<span style=\"font-size:14px;\">Precio $</span>"
+
+#. module: product_list_prices_multi_currency
+#: model_terms:ir.ui.view,arch_db:product_list_prices_multi_currency.prices_list_report
+msgid "<span style=\"font-size:14px;\">Price Bs.</span>"
+msgstr "<span style=\"font-size:14px;\">Precio Bs.</span>"
 
 #. module: product_list_prices_multi_currency
 #: model_terms:ir.ui.view,arch_db:product_list_prices_multi_currency.prices_list_report
@@ -158,7 +163,7 @@ msgstr "Producto"
 #. module: product_list_prices_multi_currency
 #: model:ir.model.fields,field_description:product_list_prices_multi_currency.field_stock_wizard_price_list__pricelist_id
 msgid "Product Pricelist"
-msgstr "Tasa de Producto"
+msgstr "Tarifa de Producto"
 
 #. module: product_list_prices_multi_currency
 #: model:ir.actions.act_window,name:product_list_prices_multi_currency.action_stock_price_list

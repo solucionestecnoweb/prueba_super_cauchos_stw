@@ -10,6 +10,10 @@
             <field name="inherit_id" ref="base.view_partner_form"/>
             <field name="arch" type="xml">
                 <!-- Add your xpath here -->
+                <xpath expr="//field[@name='people_type']" position="after">
+                    <field name="is_seller" widget="boolean_toggle"/>
+                </xpath>
+
                 <xpath expr="//page[@name='isrl_retention']" position="after">
                     <page name="other_client_data" string="Other Client Data">
                         <group>
@@ -17,9 +21,9 @@
                                 <field name="customer_type" widget="radio"/>
                             </group>
                             <group>
-                                <field name="assigned_seller_id"/>
+                                <field name="assigned_seller_id" domain="[('is_seller', '=', True)]"/>
                                 <field name="zone_id"/>
-                                <field name="payment_condition"/>
+                                <field name="payment_condition_id"/>
                             </group>
                         </group>
                     </page>

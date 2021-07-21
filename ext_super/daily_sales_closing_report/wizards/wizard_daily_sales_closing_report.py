@@ -26,7 +26,7 @@ class DailySales(models.Model):
     currency_rate = fields.Float(string='Rate')
     total_bs = fields.Float(string='Total Bs. Operation')
     total_usd = fields.Float(string='Total $ Operation')
-    payment_condition = fields.Selection(string='Payment Condition', selection=[('credit', 'Credit'), ('cash', 'Cash')])
+    payment_condition_id = fields.Many2one(comodel_name='account.condition.payment', string='Payment Condition')
     amount = fields.Float(string='Amount')
     currency_id = fields.Many2one(comodel_name='res.currency', string='Currency')
 
@@ -61,16 +61,18 @@ class DailySalesReport(models.Model):
         for item in xfind:
             rate = 0.00
             if item.currency_id.name == 'Bs.':
-                rates = item.env['res.currency.rate.server'].search([
-                    ('name.name', '=', 'USD')
-                ], limit=1)
-                for line in rates.res_currency:
-                    if line.name == item.invoice_date and rate == 0:
-                        rate = line.sell_rate
-                    elif line.name == (item.invoice_date - timedelta(days=1)) and rate == 0:
-                        rate = line.sell_rate
+                rates = item.env['res.currency.rate'].search([
+                    ('name', '=', item.invoice_date)
+                ], limit=1).sell_rate
+                if rates > 0:
+                    rate = rates
+                else:
+                    rate = 1
             else:
-                rate = item.os_currency_rate
+                if item.os_currency_rate > 0:
+                    rate = item.os_currency_rate
+                else:
+                    rate = 1
 
             if item.currency_id.name == 'Bs.':
                 total_bs = item.amount_total
@@ -79,6 +81,11 @@ class DailySalesReport(models.Model):
                 total_bs =round (item.amount_total * item.os_currency_rate, 2)
                 total_usd = item.amount_total
 
+            if item.payment_condition_id:
+                payment_condition = item.payment_condition_id.id
+            else:
+                payment_condition = False
+
             values = {
                 'name': item.invoice_date,
                 'invoice_num': item.invoice_number_cli,
@@ -86,7 +93,7 @@ class DailySalesReport(models.Model):
                 'currency_rate': rate,
                 'total_bs': total_bs,
                 'total_usd': total_usd,
-                'payment_condition': item.payment_condition,
+                'payment_condition_id': payment_condition,
                 'amount': item.amount_total,
                 'currency_id': item.currency_id.id,
             }
@@ -195,10 +202,10 @@ class DailySalesReport(models.Model):
             else :
                 ws1.write(row,col+5,'',right)
             # Payment Condition
-            if item.payment_condition == 'cash':
-                ws1.write(row,col+6, _('Cash'),center)
+            if item.payment_condition_id:
+                ws1.write(row,col+6, item.payment_condition_id.name,center)
             else :
-                ws1.write(row,col+6, _('Credit'),center)
+                ws1.write(row,col+6, '',center)
             # Amount
             if item.amount:
                 ws1.write(row,col+7,item.amount,right)
@@ -210,10 +217,10 @@ class DailySalesReport(models.Model):
             else :
                 ws1.write(row,col+8,'',center)
             
-            if item.payment_condition == 'cash':
+            if item.payment_condition_id.name in ('contado', 'Contado', 'CONTADO'):
                 total_cash_bs += item.total_bs
                 total_cash_usd += item.total_usd
-            else:
+            elif item.payment_condition_id.name in ('credito', 'Credito', 'CREDITO', 'crédito', 'Crédito', 'CRÉDITO'):
                 total_credit_bs += item.total_bs
                 total_credit_usd += item.total_usd
 

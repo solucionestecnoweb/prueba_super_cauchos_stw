@@ -31,11 +31,11 @@
                     </header>
                     <sheet>
                         <h1>
-                            <field name="name" readonly="1" attrs="{'invisible': [('state', '!=', 'done'), ('name', '=', '/')]}"/>
+                            <field name="name" readonly="1" attrs="{'invisible': [('name', '=', '/')]}"/>
                         </h1>
                         <notebook>
                             <page name="purchase_orders" string="Purchase Orders">
-                                <field name="purchase_order_ids" domain="[('state', '=', 'draft')]"/>
+                                <field name="purchase_order_ids" domain="[('state', '=', 'draft')]" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
                             </page>
                             <page name="compared_prices" string="Compared Prices">
                                 <field name="purchase_compared_prices_ids" readonly="1">
@@ -43,14 +43,16 @@
                                         <field name="product_id"/>
                                         <field name="provider_id1"/>
                                         <field name="qty1"/>
-                                        <field name="price1" widget="monetary"/>
+                                        <field name="price1" widget="monetary" options="{'currency_field': 'currency_id1'}"/>
+                                        <field name="currency_id1" invisible="1" readonly="1"/>
                                         <field name="provider_id2"/>
                                         <field name="qty2"/>
-                                        <field name="price2" widget="monetary"/>
+                                        <field name="price2" widget="monetary" options="{'currency_field': 'currency_id2'}"/>
+                                        <field name="currency_id2" invisible="1" readonly="1"/>
                                         <field name="provider_id3"/>
                                         <field name="qty3"/>
-                                        <field name="price3" widget="monetary"/>
-                                        <field name="currency_id" invisible="1" readonly="1"/>
+                                        <field name="price3" widget="monetary" options="{'currency_field': 'currency_id3'}"/>
+                                        <field name="currency_id3" invisible="1" readonly="1"/>
                                     </tree>
                                 </field>
                             </page>

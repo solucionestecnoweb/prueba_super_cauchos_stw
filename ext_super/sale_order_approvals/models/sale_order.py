@@ -9,6 +9,7 @@ class SaleOrderApproval(models.Model):
     _inherit = 'sale.order'
 
     is_approved = fields.Boolean(default=False)
+    approver_ids = fields.Many2many(comodel_name='res.users', string='Approvers')
     
     def _action_confirm(self):
         for item in self:
@@ -22,6 +23,8 @@ class SaleOrderApproval(models.Model):
                         item.is_approved = False
             elif len(is_company) > 0:
                 item.is_approved = True
+            elif self.payment_condition_id.name in ('contado', 'Contado', 'CONTADO'):
+                item.is_approved = True
             else:
                 item.is_approved = False
             if item.is_approved:
@@ -30,10 +33,12 @@ class SaleOrderApproval(models.Model):
                 raise ValidationError(_("Cannot confirm until an approval request is approved for this budget."))
 
     def approvals_request_sale(self):
-        xfind = self.env['approval.request'].search([('sale_order_id', '=', self.id), ('request_status', 'not in', ['refused', 'cancel'])])
+        approvers = len(self.approver_ids)
+        xfind = self.env['approval.request'].search([('sale_order_id', '=', self.id), ('request_status', 'not in', ['refused', 'cancel']), ('approval_minimum', '=', approvers)])
         if len(xfind) == 0:
             approval = self.env['approval.category'].search([
-                ('has_sale_order', '=', 'required')
+                ('has_sale_order', '=', 'required'), 
+                ('approval_minimum', '=', approvers),
             ], limit=1)
             if len(approval) > 0:
                 values = {
@@ -46,8 +51,8 @@ class SaleOrderApproval(models.Model):
                     'request_status': 'pending'
                 }
                 t = self.env['approval.request'].create(values)
-                for item in approval.user_ids:
-                    t.approver_ids = self.env['approval.approver'].new({
+                for item in self.approver_ids:
+                    t.approver_ids += self.env['approval.approver'].new({
                         'user_id': item.id,
                         'request_id': t.id,
                         'status': 'new'

@@ -13,6 +13,9 @@
                     <button string="Approval Request" name="approvals_request_payment" type="object" class="oe_highlight" states="draft"/>
                     <field name="is_approved" invisible="1"/>
                 </xpath>
+                <xpath expr="//field[@name='order_id']" position="after">
+                    <field name="approver_id" required="1" attrs="{'readonly': [('state', 'in', ['done','cancel'])]}"/>
+                </xpath>
             </field>
         </record>
     </data>

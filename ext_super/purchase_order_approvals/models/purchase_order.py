@@ -10,7 +10,8 @@ class PurchaseOrderApproval(models.Model):
     _inherit = 'purchase.order'
 
     is_approved = fields.Boolean(default=False)
-    
+    approver_ids = fields.Many2many(comodel_name='res.users', string='Approvers')
+
     def button_confirm(self):
         for item in self:
             xfind = item.env['approval.request'].search([('purchase_order_id', '=', item.id)])
@@ -31,10 +32,12 @@ class PurchaseOrderApproval(models.Model):
                 raise ValidationError(_("Cannot confirm until an approval request is approved for this purchase order."))
 
     def approvals_request_purchase(self):
-        xfind = self.env['approval.request'].search([('purchase_order_id', '=', self.id), ('request_status', 'not in', ['refused', 'cancel'])])
+        approvers = len(self.approver_ids)
+        xfind = self.env['approval.request'].search([('purchase_order_id', '=', self.id), ('request_status', 'not in', ['refused', 'cancel']),('approval_minimum', '=', approvers)])
         if len(xfind) == 0:
             approval = self.env['approval.category'].search([
-                ('has_purchase_order', '=', 'required')
+                ('has_purchase_order', '=', 'required'),
+                ('approval_minimum', '=', approvers),
             ], limit=1)
             if len(approval) > 0:
                 values = {
@@ -47,8 +50,8 @@ class PurchaseOrderApproval(models.Model):
                     'request_status': 'pending'
                 }
                 t = self.env['approval.request'].create(values)
-                for item in approval.user_ids:
-                    t.approver_ids = self.env['approval.approver'].new({
+                for item in self.approver_ids:
+                    t.approver_ids += self.env['approval.approver'].new({
                         'user_id': item.id,
                         'request_id': t.id,
                         'status': 'new'

@@ -14,12 +14,16 @@ import time
 class PurchaseOrderExtend(models.Model):
 	_inherit = "purchase.order"
 
-	assigned_to_id = fields.Many2one(comodel_name='res.partner', string='Assigned to')
-	approve_by_id = fields.Many2one(comodel_name='res.partner', string='Approve by')
 	date_end = fields.Date(string='End Date')
-	department_id = fields.Many2one(comodel_name='hr.department', string='Department')
 	priority = fields.Selection(string='Priority', selection=[('very_low', 'Very Low'), ('low', 'Low'), ('meddium', 'Meddium'), ('high', 'High')], default="low")
+	rate = fields.Float(string='Rate')
 	
 	def _date_now_purchase(self):
 		xdate = datetime.now() - timedelta(hours=4)
 		return xdate
+
+	@api.onchange('date_order')
+	def _onchange_rate(self):
+		date_field = self.date_order
+		rate = self.env['res.currency.rate'].search([('name', '=', date_field.date()), ('company_id', '=', self.env.user.company_id.id)]).sell_rate
+		self.rate = rate

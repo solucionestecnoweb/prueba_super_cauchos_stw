@@ -10,31 +10,48 @@ class PurchaseRequisitions(models.Model):
     _description = 'Requisitions Request for Purchase Orders'
     _inherit = ['mail.thread', 'mail.activity.mixin']
 
-    name = fields.Char(string='Reference', default='/')
+    name = fields.Char(string='Reference', default=_('Draft'), copy=False)
     
     employee_id = fields.Many2one(comodel_name='hr.employee', string='Employee', default=lambda self: self.env['hr.employee'].search([('user_id', '=', self.env.uid)], limit=1))
-    department_id = fields.Many2one(comodel_name='hr.department', string='Department')
+    department_id = fields.Many2one(comodel_name='hr.department', string='Department', default=lambda self: self.env['hr.employee'].search([('user_id', '=', self.env.uid)], limit=1).department_id.id)
     company_id = fields.Many2one(comodel_name='res.company', string='Company', default=lambda self: self.env.user.company_id)
     requisition_responsible_id = fields.Many2one(comodel_name='hr.employee', string='Requisition Responsable')
     
     request_date = fields.Date(string='Requisition Date', default=fields.Date.today())
     received_date = fields.Date(string='Received Date')
     date_end = fields.Date(string='Requisition Deadline')
+    cancel_date = fields.Date(compute="_compute_cancel_requisition")
+    priority = fields.Selection(string='Priority', selection=[('very_low', 'Very Low'), ('low', 'Low'), ('meddium', 'Meddium'), ('high', 'High')], default="low")
     
     requisition_lines_ids = fields.One2many(comodel_name='purchase.requisitions.lines', inverse_name='requisition_id', string='Requisition Lines')
     reason = fields.Text(string='Reason for Requisition')
     state = fields.Selection([ ('draft', 'Draft'), ('confirmed', 'Confirmed'), ('receive', 'Receive'), ('cancel', 'Cancelled'), ('reject', 'Rejected')], default='draft')
     is_approved = fields.Boolean(default=False)
+    approver_id = fields.Many2one(comodel_name='res.users', string='Approver')
 
     @api.constrains('state')
     def _compute_name(self):
-        if self.name == '/' and self.state == 'confirmed':
+        if self.name == _('Draft') and self.state == 'confirmed':
             self.name = self.env['ir.sequence'].next_by_code('purchase.requisition.seq')
     
     @api.onchange('employee_id')
     def set_department(self):
         for item in self:
-            item.department_id = item.employee_id.sudo().department_id.id
+            item.department_id = item.employee_id.department_id.id
+
+    def _compute_cancel_requisition(self):
+        for item in self:
+            item.cancel_date = fields.Date.today()
+            if item.state == 'confirmed':
+                if item.date_end < item.cancel_date:
+                    item.state = 'cancel'
+
+
+    @api.onchange('date_end')
+    def date_end_validate(self):
+        if self.date_end and self.request_date:
+            if self.date_end < self.request_date:
+                raise ValidationError(_("Date end can't be minor than request date."))
 
     def reset_draft(self):
         for item in self:
@@ -43,7 +60,7 @@ class PurchaseRequisitions(models.Model):
     def requisition_confirm(self):
         for item in self:
             xfind = item.env['approval.request'].search([('requisition_id', '=', item.id)])
-            is_company =  item.env['res.company'].search([('partner_id', '=', item.employee_id.partner_id.id)])
+            is_company =  item.env['res.company'].search([('partner_id', '=', item.employee_id.address_id.id)])
             if len(xfind) > 0:
                 for line in xfind:
                     if line.request_status == 'approved':
@@ -55,14 +72,13 @@ class PurchaseRequisitions(models.Model):
             else:
                 item.is_approved = False
             if item.is_approved:
-                item.confirm_date = fields.Date.today()
                 item.state = 'confirmed'
             else:
                 raise ValidationError(_("Cannot confirm until an approval request is approved for this requisition."))
     
     def action_received(self):
         for item in self:
-            item.receive_date = fields.Date.today()
+            item.received_date = fields.Date.today()
             item.state = 'receive'
     def action_cancel(self):
         for item in self:
@@ -100,8 +116,8 @@ class PurchaseRequisitions(models.Model):
                     'request_status': 'pending'
                 }
                 t = self.env['approval.request'].create(values)
-                for item in approval.user_ids:
-                    t.approver_ids = self.env['approval.approver'].new({
+                for item in self.approver_id:
+                    t.approver_ids += self.env['approval.approver'].new({
                         'user_id': item.id,
                         'request_id': t.id,
                         'status': 'new'
@@ -140,4 +156,12 @@ class StockPickingRequisition(models.Model):
     _inherit = 'stock.picking'
 
     requisition_id = fields.Many2one(comodel_name='purchase.requisitions', string='Requisition')
+    
+class PurchaseOrderPriority(models.Model):
+    _inherit = 'purchase.order'
+
+    @api.onchange('requisition_id')
+    def _set_priority(self):
+        for item in self:
+            item.priority = item.requisition_id.priority
     

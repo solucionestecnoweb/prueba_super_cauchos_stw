@@ -7,9 +7,11 @@ class SaleOrderLogicExtend(models.Model):
     seller_id = fields.Many2one(comodel_name='res.partner', string='Seller Name')
     date_start = fields.Date(string='Date Start')
     date_end = fields.Date(string='Date End')
-    estimated_date = fields.Date(string='Estimated Date')
+    estimated_date = fields.Date(string='Estimated Delivery Date')
 
-    @api.onchange('user_id')
-    def _onchange_user_id(self):
-        self.seller_id = self.user_id.partner_id.id
-
+    @api.onchange('partner_id')
+    def onchange_seller_id(self):
+        if self.partner_id.assigned_seller_id.id:
+            self.seller_id = self.partner_id.assigned_seller_id.id
+        else:
+            self.seller_id = False

@@ -13,21 +13,6 @@
                 <xpath expr="//page[@name='purchase_delivery_invoice']" position="after">
                     <page name="imports" string="Imports">
                         <group>
-                            <group name="import_cycle" string="Import Cycle">
-                                <field name="cycle_brand"/>
-                                <field name="invoice_number"/>
-                                <field name="cycle_type"/>
-                                <field name="prof_date"/>
-                                <field name="invoice_id"/>
-                                <field name="cont"/>
-                                <field name="bl_date"/>
-                                <field name="transc"/>
-                                <field name="acumulated"/>
-                                <field name="eta"/>
-                                <field name="traffic"/>
-                                <field name="nac"/>
-                                <field name="total"/>
-                            </group>
                             <group name="foreign_provider" string="Foreign Provider Information">
                                 <field name="load_plan"/>
                                 <field name="package_list"/>

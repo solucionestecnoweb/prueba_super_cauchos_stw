@@ -33,16 +33,15 @@ class PriceList(models.TransientModel):
     def print_inventario(self):
         return {'type': 'ir.actions.report','report_name': 'product_list_prices_multi_currency.prices_list_report','report_type':"qweb-pdf"}
 
-    def _get_products(self):
+    def _get_products(self, category):
         categ = []
         temp = []
-        for item in self.category_id:
-            if item.parent_id:
-                temp.append(item.id)
-            else:
-                xfind = self.env['product.category'].search([('parent_id', '=', item.id)])
-                for line in xfind:
-                    temp.append(line.id)
+        if category.parent_id:
+            temp.append(category.id)
+        else:
+            xfind = self.env['product.category'].search([('parent_id', '=', category.id)])
+            for line in xfind:
+                temp.append(line.id)
         temp = set(temp)
         for item in temp:
             categ.append(item)
@@ -60,4 +59,11 @@ class PriceList(models.TransientModel):
         xfind = self.env['product.pricelist'].search([
             ('id', 'in', prices)
         ])
+        return xfind
+
+    def _get_rate(self):
+        xfind = self.env['res.currency.rate'].search([
+            ('name', '=', fields.date.today()),
+            ('company_id', '=', self.env.user.company_id.id)
+        ], limit=1).sell_rate
         return xfind

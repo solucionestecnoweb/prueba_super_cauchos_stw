@@ -14,7 +14,7 @@
                 <field name="currency_rate" optional="show"/>
                 <field name="total_bs" optional="show"/>
                 <field name="total_usd" optional="show"/>
-                <field name="payment_condition" optional="show"/>
+                <field name="payment_condition_id" optional="show"/>
                 <field name="amount" optional="show"/>
                 <field name="currency_id" optional="show"/>
             </tree>

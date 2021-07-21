@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 13.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-21 14:46+0000\n"
-"PO-Revision-Date: 2021-04-21 14:46+0000\n"
+"POT-Creation-Date: 2021-06-24 14:30+0000\n"
+"PO-Revision-Date: 2021-06-24 14:30+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -49,11 +49,6 @@ msgstr ""
 #. module: purchase_report_supercauchos
 #: model_terms:ir.ui.view,arch_db:purchase_report_supercauchos.external_layout_purchase_order_budget_extend
 msgid "<b>Prioridad </b>"
-msgstr ""
-
-#. module: purchase_report_supercauchos
-#: model_terms:ir.ui.view,arch_db:purchase_report_supercauchos.external_layout_purchase_order_budget_extend
-msgid "<span>Departamento Solicitante</span>"
 msgstr ""
 
 #. module: purchase_report_supercauchos
@@ -101,24 +96,14 @@ msgid ""
 msgstr ""
 
 #. module: purchase_report_supercauchos
-#: model_terms:ir.ui.view,arch_db:purchase_report_supercauchos.external_layout_purchase_order_purchases_extend
-msgid "<span>Vencimiento</span>"
+#: model_terms:ir.ui.view,arch_db:purchase_report_supercauchos.external_layout_purchase_order_budget_extend
+msgid "<span>Usuario Solicitante</span>"
 msgstr ""
 
 #. module: purchase_report_supercauchos
-#: model_terms:ir.ui.view,arch_db:purchase_report_supercauchos.purchase_order_extend_form
-msgid "Approve Levels"
-msgstr "Niveles de Aprobación"
-
-#. module: purchase_report_supercauchos
-#: model:ir.model.fields,field_description:purchase_report_supercauchos.field_purchase_order__approve_by_id
-msgid "Approve by"
-msgstr "Aprobado por"
-
-#. module: purchase_report_supercauchos
-#: model:ir.model.fields,field_description:purchase_report_supercauchos.field_purchase_order__assigned_to_id
-msgid "Assigned to"
-msgstr "Asignado a"
+#: model_terms:ir.ui.view,arch_db:purchase_report_supercauchos.external_layout_purchase_order_purchases_extend
+msgid "<span>Vencimiento</span>"
+msgstr ""
 
 #. module: purchase_report_supercauchos
 #: model_terms:ir.ui.view,arch_db:purchase_report_supercauchos.purchase_order_budget_extend
@@ -141,11 +126,6 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:purchase_report_supercauchos.purchase_order_purchases_extend
 msgid "Código"
 msgstr ""
-
-#. module: purchase_report_supercauchos
-#: model:ir.model.fields,field_description:purchase_report_supercauchos.field_purchase_order__department_id
-msgid "Department"
-msgstr "Departamento Solicitante"
 
 #. module: purchase_report_supercauchos
 #: model_terms:ir.ui.view,arch_db:purchase_report_supercauchos.purchase_order_budget_extend
@@ -174,10 +154,9 @@ msgid "Meddium"
 msgstr "Media"
 
 #. module: purchase_report_supercauchos
-#: model:ir.model.fields,field_description:purchase_report_supercauchos.field_purchase_order__approve_notes
-#: model_terms:ir.ui.view,arch_db:purchase_report_supercauchos.purchase_order_extend_form
-msgid "Observations"
-msgstr "Observaciones"
+#: model_terms:ir.ui.view,arch_db:purchase_report_supercauchos.external_layout_purchase_order_budget_extend
+msgid "Nro. de Presupuesto"
+msgstr ""
 
 #. module: purchase_report_supercauchos
 #: model_terms:ir.ui.view,arch_db:purchase_report_supercauchos.external_layout_purchase_order_purchases_extend
@@ -200,9 +179,9 @@ msgid "Purchase Order"
 msgstr "Pedido de compra"
 
 #. module: purchase_report_supercauchos
-#: model_terms:ir.ui.view,arch_db:purchase_report_supercauchos.external_layout_purchase_order_budget_extend
-msgid "Requisición N°"
-msgstr ""
+#: model:ir.model.fields,field_description:purchase_report_supercauchos.field_purchase_order__rate
+msgid "Rate"
+msgstr "Tasa"
 
 #. module: purchase_report_supercauchos
 #: model_terms:ir.ui.view,arch_db:purchase_report_supercauchos.purchase_order_purchases_extend
@@ -215,16 +194,6 @@ msgid "Total Piezas"
 msgstr ""
 
 #. module: purchase_report_supercauchos
-#: model:ir.model.fields,field_description:purchase_report_supercauchos.field_purchase_order__treasury_manager
-msgid "Treasury Manager"
-msgstr "Gerencia de Tesorería"
-
-#. module: purchase_report_supercauchos
 #: model:ir.model.fields.selection,name:purchase_report_supercauchos.selection__purchase_order__priority__very_low
 msgid "Very Low"
 msgstr "Muy Baja"
-
-#. module: purchase_report_supercauchos
-#: model:ir.model.fields,field_description:purchase_report_supercauchos.field_purchase_order__vice_presidency
-msgid "Viceprecidency"
-msgstr "Viceprecidencia"

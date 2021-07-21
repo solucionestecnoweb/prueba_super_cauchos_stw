@@ -5,7 +5,7 @@
     'maintainer': 'OasisConsultora',
     'website': 'oasisconsultora.com',
     'license': 'AGPL-3',
-    'depends': ['sale', 'approvals', 'account_accountant'],
+    'depends': ['sale', 'approvals', 'account_accountant', 'sale_report_supercauchos'],
     'data': [
         'views/approval_sale_fields_extend.xml',
         'views/sale_order_approvals.xml',

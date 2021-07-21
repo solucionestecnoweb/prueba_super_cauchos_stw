@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 13.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-05-08 17:42+0000\n"
-"PO-Revision-Date: 2021-05-08 17:42+0000\n"
+"POT-Creation-Date: 2021-06-14 20:30+0000\n"
+"PO-Revision-Date: 2021-06-14 20:30+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -52,6 +52,11 @@ msgid "Approval Request"
 msgstr "Solicitud de Aprobación"
 
 #. module: purchase_requisitions_request
+#: model:ir.model.fields,field_description:purchase_requisitions_request.field_purchase_requisitions__approver_id
+msgid "Approver"
+msgstr "Aprobador"
+
+#. module: purchase_requisitions_request
 #: model:ir.model.fields,field_description:purchase_requisitions_request.field_purchase_requisitions__message_attachment_count
 msgid "Attachment Count"
 msgstr ""
@@ -60,6 +65,11 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:purchase_requisitions_request.purchase_requisitions_form_view
 msgid "Cancel"
 msgstr "Cancelar"
+
+#. module: purchase_requisitions_request
+#: model:ir.model.fields,field_description:purchase_requisitions_request.field_purchase_requisitions__cancel_date
+msgid "Cancel Date"
+msgstr ""
 
 #. module: purchase_requisitions_request
 #: model:ir.model.fields.selection,name:purchase_requisitions_request.selection__purchase_requisitions__state__cancel
@@ -104,6 +114,13 @@ msgid "Created on"
 msgstr ""
 
 #. module: purchase_requisitions_request
+#: code:addons/extra-addons/oasis/purchase_requisitions_request/models/requisitions.py:0
+#: code:addons/purchase_requisitions_request/models/requisitions.py:0
+#, python-format
+msgid "Date end can't be minor than request date."
+msgstr "Fecha de vencimiento no puede ser menor que la fecha de solicitud"
+
+#. module: purchase_requisitions_request
 #: model:ir.model.fields,field_description:purchase_requisitions_request.field_purchase_requisitions__department_id
 msgid "Department"
 msgstr "Departamento"
@@ -120,7 +137,12 @@ msgid "Display Name"
 msgstr ""
 
 #. module: purchase_requisitions_request
+#: code:addons/extra-addons/oasis/purchase_requisitions_request/models/requisitions.py:0
+#: code:addons/extra-addons/oasis/purchase_requisitions_request/models/requisitions.py:0
+#: code:addons/purchase_requisitions_request/models/requisitions.py:0
+#: code:addons/purchase_requisitions_request/models/requisitions.py:0
 #: model:ir.model.fields.selection,name:purchase_requisitions_request.selection__purchase_requisitions__state__draft
+#, python-format
 msgid "Draft"
 msgstr "Borrador"
 
@@ -143,6 +165,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:purchase_requisitions_request.field_purchase_requisitions__message_partner_ids
 msgid "Followers (Partners)"
 msgstr ""
+
+#. module: purchase_requisitions_request
+#: model:ir.model.fields.selection,name:purchase_requisitions_request.selection__purchase_requisitions__priority__high
+msgid "High"
+msgstr "Alta"
 
 #. module: purchase_requisitions_request
 #: model:ir.model.fields,field_description:purchase_requisitions_request.field_purchase_requisitions__id
@@ -206,9 +233,19 @@ msgid "Lines for Requisitions Request"
 msgstr "Líneas para las Solicitudes de Requisición"
 
 #. module: purchase_requisitions_request
+#: model:ir.model.fields.selection,name:purchase_requisitions_request.selection__purchase_requisitions__priority__low
+msgid "Low"
+msgstr "Baja"
+
+#. module: purchase_requisitions_request
 #: model:ir.model.fields,field_description:purchase_requisitions_request.field_purchase_requisitions__message_main_attachment_id
 msgid "Main Attachment"
 msgstr ""
+
+#. module: purchase_requisitions_request
+#: model:ir.model.fields.selection,name:purchase_requisitions_request.selection__purchase_requisitions__priority__meddium
+msgid "Meddium"
+msgstr "Media"
 
 #. module: purchase_requisitions_request
 #: model:ir.model.fields,field_description:purchase_requisitions_request.field_purchase_requisitions__message_has_error
@@ -274,6 +311,11 @@ msgstr "Opcional"
 #: model_terms:ir.ui.view,arch_db:purchase_requisitions_request.purchase_requisitions_form_view
 msgid "Picking Orders"
 msgstr "Ordenes de Entrega"
+
+#. module: purchase_requisitions_request
+#: model:ir.model.fields,field_description:purchase_requisitions_request.field_purchase_requisitions__priority
+msgid "Priority"
+msgstr "Prioridad"
 
 #. module: purchase_requisitions_request
 #: model:ir.model.fields,field_description:purchase_requisitions_request.field_purchase_requisitions_lines__product_id
@@ -371,7 +413,7 @@ msgstr "Lineas de Requisición"
 #: model:ir.actions.act_window,name:purchase_requisitions_request.purchase_requisitions_request_action
 #: model:ir.ui.menu,name:purchase_requisitions_request.purchase_requisitions_request_menu
 msgid "Requisitions Request"
-msgstr "Pedidos de Compra"
+msgstr "Pedidos de Requisición"
 
 #. module: purchase_requisitions_request
 #: model_terms:ir.ui.view,arch_db:purchase_requisitions_request.purchase_requisitions_request_view_search
@@ -430,8 +472,12 @@ msgstr "Hay una solicitud de aprobación en curso para esta requisición."
 #: code:addons/extra-addons/oasis/purchase_requisitions_request/models/requisitions.py:0
 #: code:addons/purchase_requisitions_request/models/requisitions.py:0
 #, python-format
-msgid "There is no approval category for this type record."
-msgstr "No existe una categoría de aprobación para este tipo de registro."
+msgid ""
+"There is no approval category for this type record. Go to "
+"Approvals/Config/Approval type."
+msgstr ""
+"No hay una categoría para este tipo de registro. Vaya a "
+"Aprobaciones/Configuración/Tipos de aprobación"
 
 #. module: purchase_requisitions_request
 #: model:ir.model,name:purchase_requisitions_request.model_stock_picking
@@ -457,6 +503,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:purchase_requisitions_request.field_purchase_requisitions__message_unread_counter
 msgid "Unread Messages Counter"
 msgstr ""
+
+#. module: purchase_requisitions_request
+#: model:ir.model.fields.selection,name:purchase_requisitions_request.selection__purchase_requisitions__priority__very_low
+msgid "Very Low"
+msgstr "Muy Baja"
 
 #. module: purchase_requisitions_request
 #: model:ir.model.fields,field_description:purchase_requisitions_request.field_purchase_requisitions__website_message_ids
