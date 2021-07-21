@@ -12,8 +12,9 @@ import time
 class ResUsersBoss(models.Model):
     _inherit = 'res.users'
     
-    is_boss = fields.Boolean(string='Is vice-president?')
-    the_boss = fields.Boolean(compute='compute_boss')
+    #is_boss = fields.Boolean(string='Is vice-president?')
+    #the_boss = fields.Boolean(compute='compute_boss')
+    papa = fields.Char()
 
     def compute_boss(self):
         for item in self:
