@@ -90,7 +90,7 @@
                                             <span style="font-size:12px;"><t t-esc="item.pr"/></span>
                                         </td>
                                         <td class="text-center">
-                                            <span style="font-size:12px;"><t t-esc="item.product_template_id.modelo"/></span>
+                                            <span style="font-size:12px;"><!--t t-esc="item.product_template_id.modelo"/--></span>
                                         </td>
                                         <td class="text-right">
                                             <span style="font-size:12px;"><t t-esc="item.price_unit" t-options='{"widget": "monetary", "display_currency": item.currency_id}'/></span>
