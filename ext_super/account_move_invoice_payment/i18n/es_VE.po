@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 13.0+e-20210712\n"
+"Project-Id-Version: Odoo Server 13.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-07-16 22:43+0000\n"
-"PO-Revision-Date: 2021-07-16 22:43+0000\n"
+"POT-Creation-Date: 2021-08-05 19:01+0000\n"
+"PO-Revision-Date: 2021-08-05 19:01+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -18,6 +18,8 @@ msgstr ""
 #. module: account_move_invoice_payment
 #: code:addons/account_move_invoice_payment/wizard/wizard_in_invoice.py:0
 #: code:addons/account_move_invoice_payment/wizard/wizard_out_invoice.py:0
+#: code:addons/extra-addons/oasis/account_move_invoice_payment/wizard/wizard_in_invoice.py:0
+#: code:addons/extra-addons/oasis/account_move_invoice_payment/wizard/wizard_out_invoice.py:0
 #, python-format
 msgid " To "
 msgstr " Hasta "
@@ -25,6 +27,8 @@ msgstr " Hasta "
 #. module: account_move_invoice_payment
 #: code:addons/account_move_invoice_payment/wizard/wizard_in_invoice.py:0
 #: code:addons/account_move_invoice_payment/wizard/wizard_out_invoice.py:0
+#: code:addons/extra-addons/oasis/account_move_invoice_payment/wizard/wizard_in_invoice.py:0
+#: code:addons/extra-addons/oasis/account_move_invoice_payment/wizard/wizard_out_invoice.py:0
 #: model:ir.model.fields,field_description:account_move_invoice_payment.field_account_move_line__delay_1_30
 #: model_terms:ir.ui.view,arch_db:account_move_invoice_payment.in_invoice_report
 #: model_terms:ir.ui.view,arch_db:account_move_invoice_payment.out_invoice_report
@@ -35,6 +39,8 @@ msgstr ""
 #. module: account_move_invoice_payment
 #: code:addons/account_move_invoice_payment/wizard/wizard_in_invoice.py:0
 #: code:addons/account_move_invoice_payment/wizard/wizard_out_invoice.py:0
+#: code:addons/extra-addons/oasis/account_move_invoice_payment/wizard/wizard_in_invoice.py:0
+#: code:addons/extra-addons/oasis/account_move_invoice_payment/wizard/wizard_out_invoice.py:0
 #: model:ir.model.fields,field_description:account_move_invoice_payment.field_account_move_line__delay_31_60
 #: model_terms:ir.ui.view,arch_db:account_move_invoice_payment.in_invoice_report
 #: model_terms:ir.ui.view,arch_db:account_move_invoice_payment.out_invoice_report
@@ -45,6 +51,8 @@ msgstr ""
 #. module: account_move_invoice_payment
 #: code:addons/account_move_invoice_payment/wizard/wizard_in_invoice.py:0
 #: code:addons/account_move_invoice_payment/wizard/wizard_out_invoice.py:0
+#: code:addons/extra-addons/oasis/account_move_invoice_payment/wizard/wizard_in_invoice.py:0
+#: code:addons/extra-addons/oasis/account_move_invoice_payment/wizard/wizard_out_invoice.py:0
 #: model:ir.model.fields,field_description:account_move_invoice_payment.field_account_move_line__delay_61_90
 #: model_terms:ir.ui.view,arch_db:account_move_invoice_payment.in_invoice_report
 #: model_terms:ir.ui.view,arch_db:account_move_invoice_payment.out_invoice_report
@@ -55,6 +63,8 @@ msgstr ""
 #. module: account_move_invoice_payment
 #: code:addons/account_move_invoice_payment/wizard/wizard_in_invoice.py:0
 #: code:addons/account_move_invoice_payment/wizard/wizard_out_invoice.py:0
+#: code:addons/extra-addons/oasis/account_move_invoice_payment/wizard/wizard_in_invoice.py:0
+#: code:addons/extra-addons/oasis/account_move_invoice_payment/wizard/wizard_out_invoice.py:0
 #: model:ir.model.fields,field_description:account_move_invoice_payment.field_account_move_line__delay_91_120
 #: model_terms:ir.ui.view,arch_db:account_move_invoice_payment.in_invoice_report
 #: model_terms:ir.ui.view,arch_db:account_move_invoice_payment.out_invoice_report
@@ -76,23 +86,25 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:account_move_invoice_payment.external_layout_in_invoice_report
 msgid ""
 "<br/>\n"
-"                            <b style=\"font-size:20px;\">Payable Invoices</b><br/>"
+"                            <b style=\"font-size:20px;\">Past Due Accounts Payable</b><br/>"
 msgstr ""
 "<br/>\n"
-"                            <b style=\"font-size:20px;\">Facturas por Pagar</b><br/>"
+"                            <b style=\"font-size:20px;\">Cuentas Vencidas por Pagar</b><br/>"
 
 #. module: account_move_invoice_payment
 #: model_terms:ir.ui.view,arch_db:account_move_invoice_payment.external_layout_out_invoice_report
 msgid ""
 "<br/>\n"
-"                            <b style=\"font-size:20px;\">Receivable Invoices</b><br/>"
+"                            <b style=\"font-size:20px;\">Past Due Accounts Receivable</b><br/>"
 msgstr ""
 "<br/>\n"
-"                            <b style=\"font-size:20px;\">Facturas por Cobrar</b><br/>"
+"                            <b style=\"font-size:20px;\">Cuentas Vencidas por Cobrar</b><br/>"
 
 #. module: account_move_invoice_payment
 #: code:addons/account_move_invoice_payment/wizard/wizard_in_invoice.py:0
 #: code:addons/account_move_invoice_payment/wizard/wizard_out_invoice.py:0
+#: code:addons/extra-addons/oasis/account_move_invoice_payment/wizard/wizard_in_invoice.py:0
+#: code:addons/extra-addons/oasis/account_move_invoice_payment/wizard/wizard_out_invoice.py:0
 #: model_terms:ir.ui.view,arch_db:account_move_invoice_payment.in_invoice_report
 #: model_terms:ir.ui.view,arch_db:account_move_invoice_payment.out_invoice_report
 #, python-format
@@ -100,9 +112,15 @@ msgid "Account"
 msgstr "Cuenta"
 
 #. module: account_move_invoice_payment
-#: model:ir.actions.act_window,name:account_move_invoice_payment.action_move_in_invoice_type_payment
-msgid "Bills"
-msgstr "Facturas"
+#: model:ir.ui.menu,name:account_move_invoice_payment.customer_invoice_show_menu
+#: model:ir.ui.menu,name:account_move_invoice_payment.supplier_bills_show_menu
+msgid "Accounts"
+msgstr "Cuentas"
+
+#. module: account_move_invoice_payment
+#: model:ir.ui.menu,name:account_move_invoice_payment.account_move_invoice_payment_menu
+msgid "Administration"
+msgstr "Administración"
 
 #. module: account_move_invoice_payment
 #: model_terms:ir.ui.view,arch_db:account_move_invoice_payment.wizard_in_invoice
@@ -129,13 +147,18 @@ msgid "Created on"
 msgstr ""
 
 #. module: account_move_invoice_payment
-#: model:ir.ui.menu,name:account_move_invoice_payment.customer_invoice_menu
-msgid "Customers"
-msgstr "Clientes"
+#: code:addons/account_move_invoice_payment/wizard/wizard_out_invoice.py:0
+#: code:addons/extra-addons/oasis/account_move_invoice_payment/wizard/wizard_out_invoice.py:0
+#: model_terms:ir.ui.view,arch_db:account_move_invoice_payment.out_invoice_report
+#, python-format
+msgid "Customer"
+msgstr "Cliente"
 
 #. module: account_move_invoice_payment
 #: code:addons/account_move_invoice_payment/wizard/wizard_in_invoice.py:0
 #: code:addons/account_move_invoice_payment/wizard/wizard_out_invoice.py:0
+#: code:addons/extra-addons/oasis/account_move_invoice_payment/wizard/wizard_in_invoice.py:0
+#: code:addons/extra-addons/oasis/account_move_invoice_payment/wizard/wizard_out_invoice.py:0
 #: model_terms:ir.ui.view,arch_db:account_move_invoice_payment.in_invoice_report
 #: model_terms:ir.ui.view,arch_db:account_move_invoice_payment.out_invoice_report
 #, python-format
@@ -169,12 +192,19 @@ msgstr ""
 #. module: account_move_invoice_payment
 #: code:addons/account_move_invoice_payment/wizard/wizard_in_invoice.py:0
 #: code:addons/account_move_invoice_payment/wizard/wizard_out_invoice.py:0
+#: code:addons/extra-addons/oasis/account_move_invoice_payment/wizard/wizard_in_invoice.py:0
+#: code:addons/extra-addons/oasis/account_move_invoice_payment/wizard/wizard_out_invoice.py:0
 #: model:ir.model.fields,field_description:account_move_invoice_payment.field_account_move_line__exp_date_today
 #: model_terms:ir.ui.view,arch_db:account_move_invoice_payment.in_invoice_report
 #: model_terms:ir.ui.view,arch_db:account_move_invoice_payment.out_invoice_report
 #, python-format
 msgid "Exp. Date"
 msgstr "Fecha Exp."
+
+#. module: account_move_invoice_payment
+#: model_terms:ir.ui.view,arch_db:account_move_invoice_payment.view_account_move_line_filter_extend
+msgid "Expired Accounts"
+msgstr "Cuentas vencidas"
 
 #. module: account_move_invoice_payment
 #: model_terms:ir.ui.view,arch_db:account_move_invoice_payment.wizard_in_invoice
@@ -197,6 +227,8 @@ msgstr "Nombre del Archivo"
 #. module: account_move_invoice_payment
 #: code:addons/account_move_invoice_payment/wizard/wizard_in_invoice.py:0
 #: code:addons/account_move_invoice_payment/wizard/wizard_out_invoice.py:0
+#: code:addons/extra-addons/oasis/account_move_invoice_payment/wizard/wizard_in_invoice.py:0
+#: code:addons/extra-addons/oasis/account_move_invoice_payment/wizard/wizard_out_invoice.py:0
 #, python-format
 msgid "From "
 msgstr "Desde "
@@ -214,19 +246,10 @@ msgid "ID"
 msgstr ""
 
 #. module: account_move_invoice_payment
-#: model:ir.ui.menu,name:account_move_invoice_payment.account_move_invoice_payment_menu
-msgid "Invoice Pending"
-msgstr "Facturas Pendientes"
-
-#. module: account_move_invoice_payment
-#: model:ir.actions.act_window,name:account_move_invoice_payment.action_move_out_invoice_type_payment
-#: model:ir.ui.menu,name:account_move_invoice_payment.customer_invoice_show_menu
-msgid "Invoices"
-msgstr "Facturas"
-
-#. module: account_move_invoice_payment
 #: code:addons/account_move_invoice_payment/wizard/wizard_in_invoice.py:0
 #: code:addons/account_move_invoice_payment/wizard/wizard_out_invoice.py:0
+#: code:addons/extra-addons/oasis/account_move_invoice_payment/wizard/wizard_in_invoice.py:0
+#: code:addons/extra-addons/oasis/account_move_invoice_payment/wizard/wizard_out_invoice.py:0
 #: model_terms:ir.ui.view,arch_db:account_move_invoice_payment.in_invoice_report
 #: model_terms:ir.ui.view,arch_db:account_move_invoice_payment.out_invoice_report
 #, python-format
@@ -234,12 +257,7 @@ msgid "Journal"
 msgstr "Diario"
 
 #. module: account_move_invoice_payment
-#: code:addons/account_move_invoice_payment/wizard/wizard_in_invoice.py:0
-#: code:addons/account_move_invoice_payment/wizard/wizard_out_invoice.py:0
 #: model:ir.model,name:account_move_invoice_payment.model_account_move_line
-#: model_terms:ir.ui.view,arch_db:account_move_invoice_payment.in_invoice_report
-#: model_terms:ir.ui.view,arch_db:account_move_invoice_payment.out_invoice_report
-#, python-format
 msgid "Journal Item"
 msgstr "Apunte contable"
 
@@ -264,6 +282,8 @@ msgstr ""
 #. module: account_move_invoice_payment
 #: code:addons/account_move_invoice_payment/wizard/wizard_in_invoice.py:0
 #: code:addons/account_move_invoice_payment/wizard/wizard_out_invoice.py:0
+#: code:addons/extra-addons/oasis/account_move_invoice_payment/wizard/wizard_in_invoice.py:0
+#: code:addons/extra-addons/oasis/account_move_invoice_payment/wizard/wizard_out_invoice.py:0
 #: model:ir.model.fields,field_description:account_move_invoice_payment.field_account_move_line__delay_older
 #: model_terms:ir.ui.view,arch_db:account_move_invoice_payment.in_invoice_report
 #: model_terms:ir.ui.view,arch_db:account_move_invoice_payment.out_invoice_report
@@ -272,25 +292,54 @@ msgid "Older"
 msgstr "Más Antiguos"
 
 #. module: account_move_invoice_payment
-#: model:ir.ui.menu,name:account_move_invoice_payment.supplier_bills_show_menu
-msgid "Payable Bills"
-msgstr "Facturas por Pagar"
+#: model:ir.actions.act_window,name:account_move_invoice_payment.action_move_in_invoice_type_payment
+#: model:ir.ui.menu,name:account_move_invoice_payment.supplier_bills_menu
+msgid "Past Due Accounts Payable"
+msgstr "Cuentas Vencidas por Pagar"
 
 #. module: account_move_invoice_payment
 #: code:addons/account_move_invoice_payment/wizard/wizard_in_invoice.py:0
 #: code:addons/account_move_invoice_payment/wizard/wizard_in_invoice.py:0
+#: code:addons/extra-addons/oasis/account_move_invoice_payment/wizard/wizard_in_invoice.py:0
+#: code:addons/extra-addons/oasis/account_move_invoice_payment/wizard/wizard_in_invoice.py:0
 #: model:ir.actions.act_window,name:account_move_invoice_payment.action_in_invoice
 #: model:ir.ui.menu,name:account_move_invoice_payment.in_invoice_menu
 #: model_terms:ir.ui.view,arch_db:account_move_invoice_payment.wizard_in_invoice
 #, python-format
-msgid "Payable Invoices Report"
-msgstr "Reporte de Facturas por Pagar"
+msgid "Past Due Accounts Payable Report"
+msgstr "Reporte de Cuentas Vencidas por Pagar"
 
 #. module: account_move_invoice_payment
 #: code:addons/account_move_invoice_payment/wizard/wizard_in_invoice.py:0
+#: code:addons/extra-addons/oasis/account_move_invoice_payment/wizard/wizard_in_invoice.py:0
 #, python-format
-msgid "Payable Invoices Report "
-msgstr "Reporte de Facturas por Pagar "
+msgid "Past Due Accounts Payable Report "
+msgstr "Reporte de Cuentas Vencidas por Cobrar "
+
+#. module: account_move_invoice_payment
+#: model:ir.actions.act_window,name:account_move_invoice_payment.action_move_out_invoice_type_payment
+#: model:ir.ui.menu,name:account_move_invoice_payment.customer_invoice_menu
+msgid "Past Due Accounts Receivable"
+msgstr "Cuentas Vencidas por Cobrar"
+
+#. module: account_move_invoice_payment
+#: code:addons/account_move_invoice_payment/wizard/wizard_out_invoice.py:0
+#: code:addons/account_move_invoice_payment/wizard/wizard_out_invoice.py:0
+#: code:addons/extra-addons/oasis/account_move_invoice_payment/wizard/wizard_out_invoice.py:0
+#: code:addons/extra-addons/oasis/account_move_invoice_payment/wizard/wizard_out_invoice.py:0
+#: model:ir.actions.act_window,name:account_move_invoice_payment.action_out_invoice
+#: model:ir.ui.menu,name:account_move_invoice_payment.out_invoice_menu
+#: model_terms:ir.ui.view,arch_db:account_move_invoice_payment.wizard_out_invoice
+#, python-format
+msgid "Past Due Accounts Receivable Report"
+msgstr "Reporte de Cuentas Vencidas por Cobrar"
+
+#. module: account_move_invoice_payment
+#: code:addons/account_move_invoice_payment/wizard/wizard_out_invoice.py:0
+#: code:addons/extra-addons/oasis/account_move_invoice_payment/wizard/wizard_out_invoice.py:0
+#, python-format
+msgid "Past Due Accounts Receivable Report "
+msgstr "Reporte de Cuentas Vencidas por Pagar "
 
 #. module: account_move_invoice_payment
 #: model:ir.model.fields,field_description:account_move_invoice_payment.field_wizard_in_invoice__report
@@ -299,20 +348,15 @@ msgid "Prepared file"
 msgstr "Archivo Preparado"
 
 #. module: account_move_invoice_payment
-#: code:addons/account_move_invoice_payment/wizard/wizard_out_invoice.py:0
-#: code:addons/account_move_invoice_payment/wizard/wizard_out_invoice.py:0
-#: model:ir.actions.act_window,name:account_move_invoice_payment.action_out_invoice
-#: model:ir.ui.menu,name:account_move_invoice_payment.out_invoice_menu
-#: model_terms:ir.ui.view,arch_db:account_move_invoice_payment.wizard_out_invoice
-#, python-format
-msgid "Receivable Invoices Report"
-msgstr "Reporte de Facturas por Cobrar"
+#: model:ir.model.fields,field_description:account_move_invoice_payment.field_account_move_line__seller_id
+#: model_terms:ir.ui.view,arch_db:account_move_invoice_payment.view_account_move_line_filter_extend
+msgid "Seller"
+msgstr "Vendedor"
 
 #. module: account_move_invoice_payment
-#: code:addons/account_move_invoice_payment/wizard/wizard_out_invoice.py:0
-#, python-format
-msgid "Receivable Invoices Report "
-msgstr "Reporte de Facturas por Cobrar "
+#: model:ir.model.fields,field_description:account_move_invoice_payment.field_account_move_line__seller_true
+msgid "Seller True"
+msgstr ""
 
 #. module: account_move_invoice_payment
 #: model:ir.model.fields,field_description:account_move_invoice_payment.field_wizard_in_invoice__state
@@ -321,7 +365,10 @@ msgid "State"
 msgstr "Estado"
 
 #. module: account_move_invoice_payment
-#: model:ir.ui.menu,name:account_move_invoice_payment.supplier_bills_menu
+#: code:addons/account_move_invoice_payment/wizard/wizard_in_invoice.py:0
+#: code:addons/extra-addons/oasis/account_move_invoice_payment/wizard/wizard_in_invoice.py:0
+#: model_terms:ir.ui.view,arch_db:account_move_invoice_payment.in_invoice_report
+#, python-format
 msgid "Supplier"
 msgstr "Proveedor"
 
@@ -334,6 +381,8 @@ msgstr "Hasta:"
 #. module: account_move_invoice_payment
 #: code:addons/account_move_invoice_payment/wizard/wizard_in_invoice.py:0
 #: code:addons/account_move_invoice_payment/wizard/wizard_out_invoice.py:0
+#: code:addons/extra-addons/oasis/account_move_invoice_payment/wizard/wizard_in_invoice.py:0
+#: code:addons/extra-addons/oasis/account_move_invoice_payment/wizard/wizard_out_invoice.py:0
 #: model:ir.model.fields,field_description:account_move_invoice_payment.field_account_move_line__delay_total
 #: model_terms:ir.ui.view,arch_db:account_move_invoice_payment.in_invoice_report
 #: model_terms:ir.ui.view,arch_db:account_move_invoice_payment.out_invoice_report
@@ -350,11 +399,18 @@ msgstr ""
 #. module: account_move_invoice_payment
 #: code:addons/account_move_invoice_payment/wizard/wizard_in_invoice.py:0
 #: code:addons/account_move_invoice_payment/wizard/wizard_out_invoice.py:0
+#: code:addons/extra-addons/oasis/account_move_invoice_payment/wizard/wizard_in_invoice.py:0
+#: code:addons/extra-addons/oasis/account_move_invoice_payment/wizard/wizard_out_invoice.py:0
 #: model_terms:ir.ui.view,arch_db:account_move_invoice_payment.in_invoice_report
 #: model_terms:ir.ui.view,arch_db:account_move_invoice_payment.out_invoice_report
 #, python-format
 msgid "Totals..."
 msgstr "Totales..."
+
+#. module: account_move_invoice_payment
+#: model_terms:ir.ui.view,arch_db:account_move_invoice_payment.view_account_move_line_filter_extend
+msgid "Unexpired Accounts"
+msgstr "Cuentas sin vencer"
 
 #. module: account_move_invoice_payment
 #: model:ir.model.fields.selection,name:account_move_invoice_payment.selection__wizard_in_invoice__state__choose
@@ -371,12 +427,12 @@ msgstr ""
 #. module: account_move_invoice_payment
 #: model:ir.actions.report,name:account_move_invoice_payment.action_in_invoice_report
 msgid "in_invoice_report"
-msgstr "reporte_facturas_pagar"
+msgstr "reporte_cuentas_por_pagar"
 
 #. module: account_move_invoice_payment
 #: model:ir.actions.report,name:account_move_invoice_payment.action_out_invoice_report
 msgid "out_invoice_report"
-msgstr "reporte_facturas_cobrar"
+msgstr "reporte_cuentas_por_cobrar"
 
 #. module: account_move_invoice_payment
 #: model:ir.model,name:account_move_invoice_payment.model_wizard_in_invoice

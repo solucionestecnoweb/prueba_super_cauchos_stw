@@ -7,7 +7,7 @@
     "author": "Ing Gregorio Blanco",
     "website": "https://gregoriocode.com",
     "license": "AGPL-3",
-    "depends": ['base', 'account_accountant', 'l10n_ve'],
+    "depends": ['base', 'account_accountant', 'l10n_ve', 'sale_logic_extend'],
     "data": [
         "security/ir.model.access.csv",
         "views/account_move_form_extend.xml",

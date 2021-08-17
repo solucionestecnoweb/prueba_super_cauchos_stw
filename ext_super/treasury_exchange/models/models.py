@@ -44,7 +44,7 @@ class Exchange(models.Model):
         if(self.origin_currency_id.name == 'USD' or self.origin_currency_id.name == 'EUR'):
             self.final_amount = self.amount * self.rate
         
-        elif (self.origin_currency_id.name == 'VEF' or self.origin_currency_id.name == 'VES'):
+        elif (self.origin_currency_id.name == 'Bs.'):
             self.final_amount = self.amount / self.rate
     
     def draft(self):

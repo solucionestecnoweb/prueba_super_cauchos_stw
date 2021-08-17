@@ -54,7 +54,7 @@ class WizardOutInvoice(models.TransientModel):
 
     def generate_xls_report(self):
         wb1 = xlwt.Workbook(encoding='utf-8')
-        ws1 = wb1.add_sheet(_('Receivable Invoices Report'))
+        ws1 = wb1.add_sheet(_('Past Due Accounts Receivable Report'))
         fp = BytesIO()
 
         header_content_style = xlwt.easyxf("font: name Helvetica size 20 px, bold 1, height 170; align: horiz center;")
@@ -67,7 +67,7 @@ class WizardOutInvoice(models.TransientModel):
         row = 0
         col = 0
         ws1.row(row).height = 500
-        ws1.write_merge(row,row, 3, 7, _("Receivable Invoices Report"), header_content_style)
+        ws1.write_merge(row,row, 3, 7, _("Past Due Accounts Receivable Report"), header_content_style)
         xdate = self.date_now.strftime('%d/%m/%Y %I:%M:%S %p')
         xdate = datetime.strptime(xdate,'%d/%m/%Y %I:%M:%S %p') - timedelta(hours=4)
         ws1.write_merge(row,row, 8, 10, xdate.strftime('%d/%m/%Y %I:%M:%S %p'), header_content_style)
@@ -76,7 +76,7 @@ class WizardOutInvoice(models.TransientModel):
         row += 2
 
         #CABECERA DE LA TABLA 
-        ws1.write(row,col+0, _("Journal Item"),sub_header_style_c)
+        ws1.write(row,col+0, _("Customer"),sub_header_style_c)
         ws1.col(col+0).width = int((len('xxxx/xxxx/xxxx')+2)*256)
         ws1.write(row,col+1, _("Date"),sub_header_style_c)
         ws1.col(col+1).width = int((len('xx/xx/xxxx')+5)*256)
@@ -216,7 +216,7 @@ class WizardOutInvoice(models.TransientModel):
         wb1.save(fp)
         out = base64.encodestring(fp.getvalue())
         fecha  = datetime.now().strftime('%d/%m/%Y') 
-        self.write({'state': 'get', 'report': out, 'name': _('Receivable Invoices Report ')+ fecha +'.xls'})
+        self.write({'state': 'get', 'report': out, 'name': _('Past Due Accounts Receivable Report ')+ fecha +'.xls'})
         return {
             'type': 'ir.actions.act_window',
             'res_model': 'wizard.out.invoice',

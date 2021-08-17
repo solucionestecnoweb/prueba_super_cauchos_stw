@@ -40,7 +40,7 @@ class AccountMoveExtend(models.Model):
 			elif item.name == (self.invoice_date + timedelta(days=1)):
 				return item.sell_rate
 			else:
-				return 0.00
+				return 1
 
 	def invoice_letter_bs(self):
 		return {'type': 'ir.actions.report','report_name': 'account_move_extend_fields_reports.account_move_invoice_extend_multirepuestos_bs','report_type':"qweb-pdf"}

@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 13.0+e\n"
+"Project-Id-Version: Odoo Server 13.0+e-20210510\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-07-21 00:13+0000\n"
-"PO-Revision-Date: 2021-07-21 00:13+0000\n"
+"POT-Creation-Date: 2021-08-04 18:04+0000\n"
+"PO-Revision-Date: 2021-08-04 18:04+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: treasury_exchange
-#: code:addons/extra-addons/oasis/treasury_exchange/wizards/wizards_exchange.py:0
+#: code:addons/odoo/oasis/treasury_exchange/wizards/wizards_exchange.py:0
 #: code:addons/treasury_exchange/wizards/wizards_exchange.py:0
 #: model:ir.model.fields,field_description:treasury_exchange.field_account_exchange__amount
 #, python-format
@@ -63,7 +63,7 @@ msgid "Confirmed"
 msgstr "Confirmado"
 
 #. module: treasury_exchange
-#: code:addons/extra-addons/oasis/treasury_exchange/wizards/wizards_exchange.py:0
+#: code:addons/odoo/oasis/treasury_exchange/wizards/wizards_exchange.py:0
 #: code:addons/treasury_exchange/wizards/wizards_exchange.py:0
 #, python-format
 msgid "Converted Amount"
@@ -102,7 +102,7 @@ msgid "Date To"
 msgstr "Hasta"
 
 #. module: treasury_exchange
-#: code:addons/extra-addons/oasis/treasury_exchange/wizards/wizards_exchange.py:0
+#: code:addons/odoo/oasis/treasury_exchange/wizards/wizards_exchange.py:0
 #: code:addons/treasury_exchange/wizards/wizards_exchange.py:0
 #, python-format
 msgid "Date of Request"
@@ -142,9 +142,9 @@ msgid "Draft"
 msgstr "Borrador"
 
 #. module: treasury_exchange
-#: code:addons/extra-addons/oasis/treasury_exchange/wizards/wizards_exchange.py:0
-#: code:addons/extra-addons/oasis/treasury_exchange/wizards/wizards_exchange.py:0
-#: code:addons/extra-addons/oasis/treasury_exchange/wizards/wizards_exchange.py:0
+#: code:addons/odoo/oasis/treasury_exchange/wizards/wizards_exchange.py:0
+#: code:addons/odoo/oasis/treasury_exchange/wizards/wizards_exchange.py:0
+#: code:addons/odoo/oasis/treasury_exchange/wizards/wizards_exchange.py:0
 #: code:addons/treasury_exchange/wizards/wizards_exchange.py:0
 #: code:addons/treasury_exchange/wizards/wizards_exchange.py:0
 #: code:addons/treasury_exchange/wizards/wizards_exchange.py:0
@@ -156,7 +156,7 @@ msgstr "Transacciones de Intercambio"
 
 #. module: treasury_exchange
 #: model:ir.actions.act_window,name:treasury_exchange.action_exchange_report
-#: model:ir.ui.menu,name:treasury_exchange.exchange_menu
+#: model:ir.ui.menu,name:treasury_exchange.report_menu
 #: model_terms:ir.ui.view,arch_db:treasury_exchange.wizard_exchange
 msgid "Exchange Transactions Report"
 msgstr "Reporte de Transacciones de Intercambio"
@@ -177,7 +177,7 @@ msgid "Final Amount"
 msgstr "Monto Final"
 
 #. module: treasury_exchange
-#: code:addons/extra-addons/oasis/treasury_exchange/wizards/wizards_exchange.py:0
+#: code:addons/odoo/oasis/treasury_exchange/wizards/wizards_exchange.py:0
 #: code:addons/treasury_exchange/wizards/wizards_exchange.py:0
 #: model:ir.model.fields,field_description:treasury_exchange.field_account_exchange__final_currency_id
 #, python-format
@@ -209,7 +209,7 @@ msgid "Last Updated on"
 msgstr "Última Actualización en"
 
 #. module: treasury_exchange
-#: code:addons/extra-addons/oasis/treasury_exchange/wizards/wizards_exchange.py:0
+#: code:addons/odoo/oasis/treasury_exchange/wizards/wizards_exchange.py:0
 #: code:addons/treasury_exchange/wizards/wizards_exchange.py:0
 #: model:ir.model.fields,field_description:treasury_exchange.field_account_exchange__origin_currency_id
 #, python-format
@@ -222,7 +222,7 @@ msgid "Prepared file"
 msgstr "Archivo Preparado"
 
 #. module: treasury_exchange
-#: code:addons/extra-addons/oasis/treasury_exchange/wizards/wizards_exchange.py:0
+#: code:addons/odoo/oasis/treasury_exchange/wizards/wizards_exchange.py:0
 #: code:addons/treasury_exchange/wizards/wizards_exchange.py:0
 #: model:ir.model.fields,field_description:treasury_exchange.field_account_exchange__rate
 #, python-format
@@ -230,7 +230,7 @@ msgid "Rate"
 msgstr "Tasa"
 
 #. module: treasury_exchange
-#: code:addons/extra-addons/oasis/treasury_exchange/wizards/wizards_exchange.py:0
+#: code:addons/odoo/oasis/treasury_exchange/wizards/wizards_exchange.py:0
 #: code:addons/treasury_exchange/wizards/wizards_exchange.py:0
 #, python-format
 msgid "Reference"
@@ -247,18 +247,13 @@ msgid "Sale"
 msgstr "Venta"
 
 #. module: treasury_exchange
-#: model_terms:ir.ui.view,arch_db:treasury_exchange.wizard_exchange
-msgid "Show Exchange Transactions"
-msgstr "Mostrar Transacciones de Intercambio"
-
-#. module: treasury_exchange
 #: model:ir.model.fields,field_description:treasury_exchange.field_account_exchange__state
 #: model:ir.model.fields,field_description:treasury_exchange.field_transaction_exchange__state
 msgid "State"
 msgstr "Estado"
 
 #. module: treasury_exchange
-#: code:addons/extra-addons/oasis/treasury_exchange/wizards/wizards_exchange.py:0
+#: code:addons/odoo/oasis/treasury_exchange/wizards/wizards_exchange.py:0
 #: code:addons/treasury_exchange/wizards/wizards_exchange.py:0
 #: model:ir.model.fields,field_description:treasury_exchange.field_account_exchange__name
 #: model:ir.model.fields,field_description:treasury_exchange.field_account_exchange__transaction

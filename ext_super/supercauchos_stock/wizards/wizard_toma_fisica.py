@@ -214,3 +214,5 @@ class TomaFisica(models.TransientModel):
             'views': [(False, 'form')],
             'target': 'new',
         }
+
+        

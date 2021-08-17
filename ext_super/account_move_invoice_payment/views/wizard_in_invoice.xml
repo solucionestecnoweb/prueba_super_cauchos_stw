@@ -3,10 +3,10 @@
     <data noupdate="0">
         <!-- Add you code here -->
         <record id="wizard_in_invoice" model="ir.ui.view">
-            <field name="name">Payable Invoices Wizard</field>
+            <field name="name">Past Due Accounts Payable Wizard</field>
             <field name="model">wizard.in.invoice</field>
             <field name="arch" type="xml">
-                <form string="Payable Invoices Report">
+                <form string="Past Due Accounts Payable Report">
                     <field invisible="1" name="state"/>
                     <div states="choose">
                         <group >
@@ -36,14 +36,14 @@
             </field>
         </record>
         <record id="action_in_invoice" model="ir.actions.act_window">
-            <field name="name">Payable Invoices Report</field>
+            <field name="name">Past Due Accounts Payable Report</field>
             <field name="res_model">wizard.in.invoice</field>
             <field name="view_mode">form</field>
             <field name="view_id" ref="wizard_in_invoice"/>
             <field name="target">new</field>
         </record>
 
-        <menuitem   name="Payable Invoices Report" 
+        <menuitem   name="Past Due Accounts Payable Report" 
                     parent="supplier_bills_menu" 
                     id="in_invoice_menu" 
                     action="action_in_invoice"

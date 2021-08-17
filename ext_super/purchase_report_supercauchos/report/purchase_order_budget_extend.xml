@@ -69,7 +69,7 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        <span>F Solicitud</span> <b t-if="o.date_order"><t t-esc="o.date_order.strftime('%d de %B del %Y')"/></b>
+                                        <br/>
                                     </td>
                                 </tr>
                                 <tr>

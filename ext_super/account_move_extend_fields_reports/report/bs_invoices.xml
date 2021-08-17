@@ -17,21 +17,6 @@
             <div class="header">
                 <div class="container">
                     <div class="row">
-                        <div class="col-4">
-                            <b style="font-size:12px;">Factura: <t t-esc="o.name"/></b><br/>
-                            <b style="font-size:12px;">Emisión: <t t-esc="o.invoice_date"/></b><br/>
-                            <t t-if="o.invoice_payment_term_id">
-                                <b style="font-size:12px;">Vencimiento: <t t-esc="o.invoice_payment_term_id.name"/></b><br/>
-                            </t>
-                            <t t-else="">
-                                <b style="font-size:12px;">Vencimiento: <t t-esc="o.invoice_date_due"/></b><br/>
-                            </t>
-                            <b style="font-size:12px;">Vendedor: <t t-esc="o.seller_id.name"/></b><br/>
-                            <b style="font-size:12px;">Cond. Pago: <t t-esc="o.payment_condition_id.name"/></b>
-                            <br/>
-                        </div>
-                        <div class="col-2">
-                        </div>
                         <div class="col-6">
                             <table>
                                 <colgroup>
@@ -39,20 +24,35 @@
                                     <col span="1" style="width: 50%;"/>
                                 </colgroup>
                                 <tbody>
-                                    <tr class="text-right">
-                                        <td style="font-size:12px;"><b>Nombre y Apellido o Razón Social</b></td>
+                                    <tr>
+                                        <td style="font-size:12px;"><b>Nombre y Apellido o Razón Social </b></td>
                                         <td style="font-size:12px;"><t t-esc="o.partner_id.name"/></td>
                                     </tr>
-                                    <tr class="text-right">
+                                    <tr>
                                         <td style="font-size:12px;"><b>C.I. / R.I.F</b></td>
                                         <td style="font-size:12px;"><t t-esc="o.partner_id.vat"/></td>
                                     </tr>
-                                    <tr class="text-right">
+                                    <tr>
                                         <td style="font-size:12px;"><b>Domicilio Fiscal</b></td>
                                         <td style="font-size:12px;"><t t-esc="o.partner_id.street"/> <t t-esc="o.partner_id.city"/> <t t-esc="o.partner_id.state_id.name"/></td>
                                     </tr>
                                 </tbody>
                             </table>
+                        </div>
+                        <div class="col-2">
+                        </div>
+                        <div class="col-4">
+                            <b style="font-size:12px;">Nro. Factura: <t t-esc="o.invoice_number_cli"/></b><br/>
+                            <b style="font-size:12px;">Emisión: <t t-esc="o.invoice_date.strftime('%d/%m/%Y')"/></b><br/>
+                            <t t-if="o.invoice_payment_term_id">
+                                <b style="font-size:12px;">Vencimiento: <t t-esc="o.invoice_payment_term_id.name.strftime('%d/%m/%Y')"/></b><br/>
+                            </t>
+                            <t t-else="">
+                                <b style="font-size:12px;">Vencimiento: <t t-esc="o.invoice_date_due.strftime('%d/%m/%Y')"/></b><br/>
+                            </t>
+                            <b style="font-size:12px;">Vendedor: <t t-esc="o.seller_id.name"/></b><br/>
+                            <b style="font-size:12px;">Cond. Pago: <t t-esc="o.payment_condition_id.name"/></b>
+                            <br/>
                         </div>
                     </div>
                 </div>
@@ -75,7 +75,7 @@
                     <t t-call="account_move_extend_fields_reports.external_layout_account_move_extend_bs">
                         <div class="page">
                             <br/><br/>
-                            <table>
+                            <table style="width: 100%;">
                                 <!-- Cantidad de columnas -->
                                 <colgroup>
                                     <col span="1" style="width: 13%;"/>
@@ -181,17 +181,24 @@
                                             <t t-set="iva_16" t-value=" iva_16 + item.alicuota_general"/>
                                             <t t-set="iva_24" t-value="iva_24 + item.alicuota_adicional"/>
                                         </t>
-                                        <t t-if="iva_exempt > 0">
-                                            <tr>
-                                                <td colspan="4"></td>
-                                                <td class="text-center border border-dark">
-                                                    <b>Total IVA Excento</b>
-                                                </td>
-                                                <td class="text-right border border-dark">
-                                                    <span><t t-esc="iva_exempt" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
-                                                </td>
-                                            </tr>
-                                        </t>
+                                        <tr>
+                                            <td colspan="4"></td>
+                                            <td class="text-center border border-dark">
+                                                <b>Total IVA Exento</b>
+                                            </td>
+                                            <td class="text-right border border-dark">
+                                                <span><t t-esc="iva_exempt" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="4"></td>
+                                            <td class="text-center border border-dark">
+                                                <b>Base Neta Imponible</b>
+                                            </td>
+                                            <td class="text-right border border-dark">
+                                                <span><t t-esc="net_amount" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                            </td>
+                                        </tr>
                                         <t t-if="iva_8 > 0">
                                             <tr>
                                                 <td colspan="4"></td>
@@ -231,7 +238,7 @@
                                                 <b>Total a Pagar</b>
                                             </td>
                                             <td class="text-right border border-dark">
-                                                <span><t t-esc="net_amount + iva_exempt + iva_8 + iva_16 + iva_24" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                                <span><t t-esc="net_amount + iva_8 + iva_16 + iva_24" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
                                             </td>
                                         </tr>
                                         <!-- Fin totales -->
@@ -293,6 +300,24 @@
                                             <td colspan="4"></td>
                                             <td class="text-center border border-dark">
                                                 <b>Monto Neto</b>
+                                            </td>
+                                            <td class="text-right border border-dark">
+                                                <span><t t-esc="net_amount" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="4"></td>
+                                            <td class="text-center border border-dark">
+                                                <b>Total IVA Exento</b>
+                                            </td>
+                                            <td class="text-right border border-dark">
+                                                <span><t t-esc="iva_exempt" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="4"></td>
+                                            <td class="text-center border border-dark">
+                                                <b>Base Neta Imponible</b>
                                             </td>
                                             <td class="text-right border border-dark">
                                                 <span><t t-esc="net_amount" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
@@ -337,7 +362,7 @@
                     <t t-call="account_move_extend_fields_reports.external_layout_account_move_extend_bs">
                         <div class="page">
                             <br/><br/>
-                            <table>
+                            <table style="width: 100%;">
                                 <!-- Cantidad de columnas -->
                                 <colgroup>
                                     <col span="1" style="width: 13%;"/>
@@ -443,17 +468,24 @@
                                             <t t-set="iva_16" t-value=" iva_16 + item.alicuota_general"/>
                                             <t t-set="iva_24" t-value="iva_24 + item.alicuota_adicional"/>
                                         </t>
-                                        <t t-if="iva_exempt > 0">
-                                            <tr>
-                                                <td colspan="4"></td>
-                                                <td class="text-center border border-dark">
-                                                    <b>Total IVA Excento</b>
-                                                </td>
-                                                <td class="text-right border border-dark">
-                                                    <span><t t-esc="iva_exempt" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
-                                                </td>
-                                            </tr>
-                                        </t>
+                                        <tr>
+                                            <td colspan="4"></td>
+                                            <td class="text-center border border-dark">
+                                                <b>Total IVA Exento</b>
+                                            </td>
+                                            <td class="text-right border border-dark">
+                                                <span><t t-esc="iva_exempt" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="4"></td>
+                                            <td class="text-center border border-dark">
+                                                <b>Base Neta Imponible</b>
+                                            </td>
+                                            <td class="text-right border border-dark">
+                                                <span><t t-esc="net_amount" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                            </td>
+                                        </tr>
                                         <t t-if="iva_8 > 0">
                                             <tr>
                                                 <td colspan="4"></td>
@@ -493,7 +525,7 @@
                                                 <b>Total a Pagar</b>
                                             </td>
                                             <td class="text-right border border-dark">
-                                                <span><t t-esc="net_amount + iva_exempt + iva_8 + iva_16 + iva_24" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                                <span><t t-esc="net_amount + iva_8 + iva_16 + iva_24" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
                                             </td>
                                         </tr>
                                         <!-- Fin totales -->
@@ -555,6 +587,24 @@
                                             <td colspan="4"></td>
                                             <td class="text-center border border-dark">
                                                 <b>Monto Neto</b>
+                                            </td>
+                                            <td class="text-right border border-dark">
+                                                <span><t t-esc="net_amount" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="4"></td>
+                                            <td class="text-center border border-dark">
+                                                <b>Total IVA Exento</b>
+                                            </td>
+                                            <td class="text-right border border-dark">
+                                                <span><t t-esc="iva_exempt" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="4"></td>
+                                            <td class="text-center border border-dark">
+                                                <b>Base Neta Imponible</b>
                                             </td>
                                             <td class="text-right border border-dark">
                                                 <span><t t-esc="net_amount" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
@@ -599,7 +649,7 @@
                     <t t-call="account_move_extend_fields_reports.external_layout_account_move_extend_bs">
                         <div class="page">
                             <br/><br/>
-                            <table>
+                            <table style="width: 100%;">
                                 <!-- Cantidad de columnas -->
                                 <colgroup>
                                     <col span="1" style="width: 13%;"/>
@@ -705,17 +755,24 @@
                                             <t t-set="iva_16" t-value=" iva_16 + item.alicuota_general"/>
                                             <t t-set="iva_24" t-value="iva_24 + item.alicuota_adicional"/>
                                         </t>
-                                        <t t-if="iva_exempt > 0">
-                                            <tr>
-                                                <td colspan="4"></td>
-                                                <td class="text-center border border-dark">
-                                                    <b>Total IVA Excento</b>
-                                                </td>
-                                                <td class="text-right border border-dark">
-                                                    <span><t t-esc="iva_exempt" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
-                                                </td>
-                                            </tr>
-                                        </t>
+                                        <tr>
+                                            <td colspan="4"></td>
+                                            <td class="text-center border border-dark">
+                                                <b>Total IVA Exento</b>
+                                            </td>
+                                            <td class="text-right border border-dark">
+                                                <span><t t-esc="iva_exempt" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="4"></td>
+                                            <td class="text-center border border-dark">
+                                                <b>Base Neta Imponible</b>
+                                            </td>
+                                            <td class="text-right border border-dark">
+                                                <span><t t-esc="net_amount" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                            </td>
+                                        </tr>
                                         <t t-if="iva_8 > 0">
                                             <tr>
                                                 <td colspan="4"></td>
@@ -755,7 +812,7 @@
                                                 <b>Total a Pagar</b>
                                             </td>
                                             <td class="text-right border border-dark">
-                                                <span><t t-esc="net_amount + iva_exempt + iva_8 + iva_16 + iva_24" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                                <span><t t-esc="net_amount + iva_8 + iva_16 + iva_24" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
                                             </td>
                                         </tr>
                                         <!-- Fin totales -->
@@ -817,6 +874,24 @@
                                             <td colspan="4"></td>
                                             <td class="text-center border border-dark">
                                                 <b>Monto Neto</b>
+                                            </td>
+                                            <td class="text-right border border-dark">
+                                                <span><t t-esc="net_amount" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="4"></td>
+                                            <td class="text-center border border-dark">
+                                                <b>Total IVA Exento</b>
+                                            </td>
+                                            <td class="text-right border border-dark">
+                                                <span><t t-esc="iva_exempt" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="4"></td>
+                                            <td class="text-center border border-dark">
+                                                <b>Base Neta Imponible</b>
                                             </td>
                                             <td class="text-right border border-dark">
                                                 <span><t t-esc="net_amount" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>

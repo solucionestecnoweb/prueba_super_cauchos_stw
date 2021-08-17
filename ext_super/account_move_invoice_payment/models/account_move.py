@@ -1,3 +1,4 @@
+from operator import index
 from odoo import api, fields, models, _
 from datetime import datetime, date, timedelta
 import base64
@@ -7,13 +8,27 @@ from odoo.tools.float_utils import float_round
 class AccountMoveInvoicePayment(models.Model):
     _inherit = 'account.move.line'
 
-    exp_date_today = fields.Date(string='Exp. Date', compute='_compute_delay')
+    exp_date_today = fields.Date(string='Exp. Date', compute='_compute_delay', index=True)
     delay_1_30 = fields.Float(string='1 - 30')
     delay_31_60 = fields.Float(string='31 - 60')
     delay_61_90 = fields.Float(string='61 - 90')
     delay_91_120 = fields.Float(string='91 - 120')
     delay_older = fields.Float(string='Older')
     delay_total = fields.Float(string='Total')
+    seller_id = fields.Many2one(comodel_name='res.partner', string='Seller')
+    seller_true = fields.Boolean(compute='_compute_seller')
+    
+    def _compute_seller(self):
+        for item in self:
+            if item.seller_id:
+                item.seller_true = True
+            else:
+                item.seller_id = item.move_id.seller_id.id
+                item.seller_true = False
+
+    @api.onchange('move_id')
+    def _onchange_seller(self):
+        self.seller_id = self.move_id.seller_id.id
 
     ### Compute Functions ###
     def _compute_delay(self):
@@ -28,7 +43,7 @@ class AccountMoveInvoicePayment(models.Model):
 
             if item.date and item.exp_date_today:
                 days = (item.exp_date_today - item.date)
-                if days.days >= 1 and days.days <=30:
+                if days.days >= 0 and days.days <=30:
                     item.delay_1_30 = item.amount_residual
                 elif days.days >= 31 and days.days <=60:
                     item.delay_31_60 = item.amount_residual

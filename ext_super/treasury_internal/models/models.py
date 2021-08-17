@@ -12,5 +12,5 @@ class Internal(models.Model):
     _inherit ='account.payment'
 
     transfer_to_id = fields.Many2one ('res.company', string='Company to transfer')
-    destination_journal_id = fields.Many2one('account.journal', domain="[('company_id','=',transfer_to_id)]")
+    destination_journal_id = fields.Many2one('account.journal', domain="[('type', 'in', ('bank', 'cash')), ('company_id','=',transfer_to_id)]")
     

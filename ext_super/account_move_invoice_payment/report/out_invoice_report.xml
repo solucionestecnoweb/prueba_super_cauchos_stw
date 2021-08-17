@@ -18,7 +18,7 @@
                             <img t-if="o.company_id.logo" t-att-src="'data:image/png;base64,%s' % to_text(o.company_id.logo)" style="max-height: 100px; max-width: 200px;"/><br/>
                         </div>
                         <div class="col-4 text-center"><br/>
-                            <b style="font-size:20px;">Receivable Invoices</b><br/>
+                            <b style="font-size:20px;">Past Due Accounts Receivable</b><br/>
                             <small style="font-size:12px;">From: <t t-esc="o.date_from.strftime('%d/%m/%y')"/> To: <t t-esc="o.date_to.strftime('%d/%m/%y')"/></small><br/>
                         </div>
                         <div class="col-4 text-right">
@@ -80,7 +80,7 @@
 
                                 <thead>
                                     <tr style="background-color: #cacaca">
-                                        <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle; font-size:14px;">Journal Item</th>
+                                        <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle; font-size:14px;">Customer</th>
                                         <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle; font-size:14px;">Date</th>
                                         <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle; font-size:14px;">Journal</th>
                                         <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle; font-size:14px;">Account</th>

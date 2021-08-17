@@ -5,10 +5,11 @@
     'maintainer': 'OasisConsultora',
     'website': 'oasisconsultora.com',
     'license': 'AGPL-3',
-    'depends': ['account'],
+    'depends': ['account', 'account_move_extend_fields_reports'],
     'data': [
         'views/account_move_out_invoice.xml',
         'views/account_move_in_invoice.xml',
+        'views/account_move_filters.xml',
         'views/wizard_out_invoice.xml',
         'views/wizard_in_invoice.xml',
         'report/out_invoice_report.xml',

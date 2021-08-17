@@ -25,11 +25,9 @@
                     </div>
                     <footer states="choose">
                         <button name="generate_xls_report" string="Export XLS" type="object" class="oe_highlight" />
-                        <button name="show_exchange" string="Show Exchange Transactions" type="object" class="oe_highlight" />
                         <button special="cancel" string="Cancel" class="oe_highlight" />
                     </footer>
                     <footer states="get">
-                        <button name="show_exchange" string="Show Exchange Transactions" type="object" class="oe_highlight" />
                         <button special="cancel" string="Cancel" class="oe_highlight" />
                     </footer>
                 </form>
@@ -45,12 +43,10 @@
         
         <menuitem   name="Exchange Transactions Report" 
                     parent="treasury_exchange.menu_transactions"
-                    id="exchange_menu" 
+                    id="report_menu" 
                     action="treasury_exchange.action_exchange_report"
-                    sequence="1"
+                    sequence="2"
                     />
     </data>
-
-
 
 </odoo>
