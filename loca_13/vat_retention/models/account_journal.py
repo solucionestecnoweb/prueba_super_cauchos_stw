@@ -12,4 +12,4 @@ from odoo.exceptions import UserError, ValidationError
 class Partners(models.Model):
     _inherit = 'account.journal'
 
-    tipo_docc = fields.Selection([('nc', 'Nota de Credito'),('nb', 'Nota de Debito'),('fc','Factura')])
+    tipo_doc = fields.Selection([('nc', 'Nota de Credito'),('nb', 'Nota de Debito'),('fc','Factura')])
