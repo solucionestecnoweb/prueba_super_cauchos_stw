@@ -97,7 +97,7 @@ class RetentionVat(models.Model):
         #raise UserError(_('cedula: %s')%resultado)
         
     def action_post(self):
-    	self.ejecuta()
+        self.ejecuta()
 
 
 
