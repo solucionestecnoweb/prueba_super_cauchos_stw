@@ -1,0 +1,17 @@
+product_list_prices_multi_currency
+
+purchase_compare_multiple
+
+purchase_imports_extend
+
+purchase_order_approvals
+
+purchase_report_supercauchos
+
+purchase_requisitions_request
+
+supercauchos_stock
+
+treasury_exchange
+
+treasury_internal
