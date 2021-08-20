@@ -29,25 +29,25 @@ class AccountMove(models.Model):
     @api.depends('partner_id')
     def _concatena(self):
         if self.partner_id.doc_type=="v":
-            tipo_doc="V"
+            tipo_docc="V"
         if self.partner_id.doc_type=="e":
             #self.partner_id.doc_type="E"
-            tipo_doc="E"
+            tipo_docc="E"
         if self.partner_id.doc_type=="g":
-            tipo_doc="G"
+            tipo_docc="G"
         if self.partner_id.doc_type=="j":
-            tipo_doc="J"
+            tipo_docc="J"
         if self.partner_id.doc_type=="p":
-            tipo_doc="P"
+            tipo_docc="P"
         if self.partner_id.doc_type=="c":
-            tipo_doc="C"
+            tipo_docc="C"
         if not self.partner_id.doc_type:
-            tipo_doc="?"
+            tipo_docc="?"
         if not self.partner_id.vat:
             vat=str(00000000)
         else:
             vat=self.partner_id.vat
-        self.rif=str(tipo_doc)+"-"+str(vat)
+        self.rif=str(tipo_docc)+"-"+str(vat)
 
     # Main Function
     def action_post(self):
