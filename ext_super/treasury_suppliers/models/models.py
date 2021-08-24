@@ -7,6 +7,7 @@ from datetime import date
 from odoo.tools.float_utils import float_round
 from odoo.exceptions import Warning
 import time
+from base64 import encodestring
 
 class Suppliers(models.Model):
     _inherit ='account.payment'
@@ -37,3 +38,19 @@ class Suppliers(models.Model):
                 self.message_post(body=_("Enviado email al Cliente: %s"%self.partner_id.name))
                 self.state_dte_partner = 'sent'
                 print('Correo Enviado a '+ str(self.partner_id.email))
+
+class InvoicesDisplayName(models.Model):
+    _inherit ='account.move'
+
+    def name_get(self):
+        result = []
+        for record in self:
+            if record.type in ('in_invoice', 'in_refund', 'in_receipt'):
+                # Only goes in when invoice is suppliers
+                result.append((record.id, record.invoice_number_pro))
+            elif record.type in ('out_invoice', 'out_refund', 'out_receipt'):
+                # Only goes in when invoice is customer
+                result.append((record.id, record.invoice_number_cli))
+            else:
+                result.append((record.id, record.name))
+        return result

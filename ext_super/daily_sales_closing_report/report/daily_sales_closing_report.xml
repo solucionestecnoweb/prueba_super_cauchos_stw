@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
+    <record id="paperformat_horizontal" model="report.paperformat">
+        <field name="name">Horizontal predeterminado</field>
+        <field name="orientation">Landscape</field>
+    </record>
+
     <report
             id="action_daily_sales_closing_report"
             model="daily.sales.report"
@@ -9,6 +14,7 @@
             name="daily_sales_closing_report.daily_sales_closing_report"
             file="daily_sales_closing_report.daily_sales_closing_report"
             menu="True"
+            paperformat="paperformat_horizontal"
             />
 
         <template id="external_layout_daily_sales_closing_report">

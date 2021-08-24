@@ -68,16 +68,14 @@ class AccountPaymentExtend(models.Model):
 	payment_notes = fields.Text(string='Notes')
 
 	def get_currency_rate(self):
-		xfind = self.env['res.currency.rate.server'].search([
-			('name.name', '=', 'USD')
-		], limit=1)
-		for item in xfind.res_currency:
-			if item.name == self.payment_date:
-				return item.sell_rate
-			elif item.name == (self.payment_date - timedelta(days=1)):
-				return item.sell_rate
-			else:
-				return 0.00
+		xfind = self.env['res.currency.rate'].search([
+			('name', '=', self.payment_date)
+		], limit=1).sell_rate
+		if xfind:
+			return xfind
+		else:
+			xfind = 0
+			return xfind
 
 	def get_debt_amount(self, partner):
 		debt = 0

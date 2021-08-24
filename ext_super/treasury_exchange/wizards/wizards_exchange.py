@@ -29,7 +29,7 @@ class Exchange(models.TransientModel):
     company_id = fields.Many2one('res.company','Company',default=lambda self: self.env.user.company_id.id)
 
     def get_lines(self):
-        xfind = self.env['account.exchange'].search([('state', 'in', ('confirmed', 'done'))('request', '>=', self.date_from), ('request', '<=', self.date_to)])
+        xfind = self.env['account.exchange'].search([('state', 'in', ('confirmed', 'done')), ('request', '>=', self.date_from), ('request', '<=', self.date_to)])
         return xfind
 
     def generate_xls_report(self):

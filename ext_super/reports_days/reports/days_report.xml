@@ -1,5 +1,10 @@
 <odoo>
 
+    <record id="paperformat_horizontal" model="report.paperformat">
+        <field name="name">Horizontal predeterminado</field>
+        <field name="orientation">Landscape</field>
+    </record>
+
     <report
             id="action_days_report"
             model="days.report"
@@ -8,6 +13,7 @@
             name="reports_days.days_report"
             file="reports_days.days_report"
             menu="True"
+            paperformat="paperformat_horizontal"
             />
 
         <template id="external_layout_days_report">

@@ -39,7 +39,7 @@ class StreetDaysReport(models.TransientModel):
             }
 
     def get_lines(self):
-        xfind = self.env['account.move'].search([('type', 'in', ('out_invoice','in_invoice')), ('invoice_date', '>=', self.date_from), ('invoice_date', '<=', self.date_to), ('invoice_payment_state', '=', 'paid')])
+        xfind = self.env['account.move'].search([('type', 'in', ('out_invoice')), ('invoice_date', '>=', self.date_from), ('invoice_date', '<=', self.date_to), ('invoice_payment_state', '=', 'paid')])
         return xfind
 
     def show_street_days(self):

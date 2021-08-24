@@ -23,7 +23,7 @@ class Exchange(models.Model):
     company_id = fields.Many2one ('res.company', default=lambda self: self.env.user.company_id.id)
     origin_currency_id = fields.Many2one ('res.currency', default=lambda self: self.env.user.company_id.currency_id.id)
     request = fields.Date(string='Date of request', default=fields.Date.context_today)
-    confirmation = fields.Datetime(string='Date of confirmation', default=fields.Datetime.now)
+    confirmation = fields.Datetime(string='Date of confirmation')
     reference = fields.Char ("Bank reference")
     state = fields.Selection(selection=[("draft", "Draft"), ("confirmed", "Confirmed"), ("done", "Done"), ("cancel", "Cancel")], default="draft")
 
@@ -44,7 +44,7 @@ class Exchange(models.Model):
         if(self.origin_currency_id.name == 'USD' or self.origin_currency_id.name == 'EUR'):
             self.final_amount = self.amount * self.rate
         
-        elif (self.origin_currency_id.name == 'Bs.'):
+        elif (self.origin_currency_id.name in ('Bs.', 'Bs', 'bs', 'bs.', 'BS', 'BS.')):
             self.final_amount = self.amount / self.rate
     
     def draft(self):
@@ -54,6 +54,7 @@ class Exchange(models.Model):
         self.state = "confirmed"
 
     def done(self):
+        self.confirmation = fields.Datetime.now()
         self.state = "done"
 
     def cancel(self):
