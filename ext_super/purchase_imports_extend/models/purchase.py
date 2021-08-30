@@ -40,7 +40,7 @@ class PurchaseOrderLineImports(models.Model):
 		for item in self:
 			xfind = self.env['sale.order.line'].search([
 				('state', 'in', ('draft', 'sent')),
-				('product_template_id', '=', item.product_template_id.id),
+				('product_id', '=', item.product_id.id),
 				('is_transit_merch', '=', True),
 			])
 			item.apart_to_seller = 0
