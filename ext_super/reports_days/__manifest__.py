@@ -2,7 +2,7 @@
     "name":"Extensión para Reportes",
     "description":"Permite añadir realizar reportes de promedio de días y días de calle.",
     "author":"Oasis Consultora",
-    "depends":['account', 'account_accountant'],
+    "depends":['account', 'account_accountant', 'administration_module'],
     "data":[
         'views/views.xml',
         'views/wizards_days.xml',

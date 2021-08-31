@@ -1,11 +1,12 @@
+<?xml version='1.0' encoding='utf-8'?>
 <odoo>
-
     <data noupdate="0">
-        <record id="wizard_days_report" model="ir.ui.view">
-            <field name="name">Average Days Report Wizard</field>
-            <field name="model">days.report</field>
+        <!-- Add you code here -->
+        <record id="wizard_out_invoice" model="ir.ui.view">
+            <field name="name">Past Due Accounts Receivable Wizard</field>
+            <field name="model">wizard.out.invoice</field>
             <field name="arch" type="xml">
-                <form string="Average Days Report">
+                <form string="Past Due Accounts Receivable Report">
                     <field invisible="1" name="state"/>
                     <div states="choose">
                         <group >
@@ -25,31 +26,28 @@
                     </div>
                     <footer states="choose">
                         <button name="generate_xls_report" string="Export XLS" type="object" class="oe_highlight" />
-                        <button name="print_report" string="Export PDF" type="object" class="oe_highlight" />
-                        <button name="show_days" string="Show Average Days" type="object" class="oe_highlight" />
+                        <button name="print_pdf" string="Export PDF" type="object" class="oe_highlight" />
                         <button special="cancel" string="Cancel" class="oe_highlight" />
                     </footer>
                     <footer states="get">
-                        <button name="show_days" string="Show Average Days" type="object" class="oe_highlight" />
                         <button special="cancel" string="Cancel" class="oe_highlight" />
                     </footer>
                 </form>
             </field>
         </record>
-        <record id="action_days_report" model="ir.actions.act_window">
-            <field name="name">Average Days Report</field>
-            <field name="res_model">days.report</field>
+        <record id="action_out_invoice" model="ir.actions.act_window">
+            <field name="name">Past Due Accounts Receivable Report</field>
+            <field name="res_model">wizard.out.invoice</field>
             <field name="view_mode">form</field>
-            <field name="view_id" ref="wizard_days_report"/>
+            <field name="view_id" ref="wizard_out_invoice"/>
             <field name="target">new</field>
         </record>
 
-        <menuitem   name="Average Days" 
-                    parent="administration_module.admin_collection_menu"
-                    id="days_report_menu" 
-                    action="reports_days.action_days_report"
-                    sequence="25"
+        <menuitem   name="Past Due Accounts Receivable Report" 
+                    parent="admin_account_receivable_menu" 
+                    id="out_invoice_menu" 
+                    action="action_out_invoice"
+                    sequence="5"
                     />
     </data>
-
 </odoo>
