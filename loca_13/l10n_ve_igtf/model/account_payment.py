@@ -6,8 +6,17 @@ import logging
 from odoo import api, fields, models, _
 from odoo.addons import decimal_precision as dp
 from odoo.exceptions import UserError
+from odoo.exceptions import Warning
 
 #_logger = logging.getLogger(__name__)
+
+class AccountPaymentMoveIgtf(models.Model):
+    _name='account.payment.move.igtf'
+
+    move_id=fields.Many2one('account.move', 'Factura original')
+    payment_igtf_id=fields.Many2one('account.payment')
+    move_igtf_id=fields.Many2one('account.move', 'Mov del IGTF')
+
 class account_payment(models.Model):
     _name = 'account.payment'
     _inherit = 'account.payment'
@@ -51,6 +60,7 @@ class account_payment(models.Model):
                 raise ValidationError(_("The payment cannot be processed because the invoice is not open!"))
 
             # keep the name in case of a payment reset to draft
+            #raise UserError(_("mama 6=%s")%rec.name)
             if not rec.name:
                 # Use the right sequence to set the name
                 if rec.payment_type == 'transfer':
@@ -72,6 +82,7 @@ class account_payment(models.Model):
 
             moves = AccountMove.create(rec._prepare_payment_moves())
             moves.filtered(lambda move: move.journal_id.post_at != 'bank_rec').post()
+            #raise UserError(_("mama 8="))
 
             # Update the state / move before performing any reconciliation.
             move_name = self._get_move_name_transfer_separator().join(moves.mapped('name'))
@@ -183,6 +194,18 @@ class account_payment(models.Model):
                                     """ Fin codigo de odoo que valida asiento contable """
                                     #raise UserError(_('El id move es = %s')%moves)
                                     self.env['account.payment'].browse(id_pago).write({'move_itf_id': id_move.id})
+                            #raise Warning(_('Debe agregar Lineas de Pagos de Anticipo=%s')%self.invoice_ids)
+                            for fact in self.invoice_ids:
+                                move_igtf = self.env['account.payment.move.igtf']
+                                value = {
+                                'move_id':fact.id,
+                                'payment_igtf_id':self.id,
+                                'move_igtf_id':self.move_itf_id.id,
+                                }
+                                move_igtf.create(value) 
+
+
+
 
 
     def registro_movimiento_pago_igtf(self,igtf_porcentage,total_monto,igtf_nombre):

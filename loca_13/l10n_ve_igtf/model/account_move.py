@@ -4,6 +4,7 @@ import logging
 from odoo import api, fields, models, _
 from odoo.addons import decimal_precision as dp
 from odoo.exceptions import UserError
+from odoo.exceptions import Warning
 
 class AccontPartialReconcile(models.Model):
     _inherit = "account.partial.reconcile"
@@ -22,6 +23,16 @@ class AccountMove(models.Model):
     usar_anticipo = fields.Boolean(defaul=False)
 
     #rel_field = fields.Char(string='Name', related='payment_id.amount')
+
+    @api.onchange('partner_id')
+    def _onchange_partner_id(self):
+        xfind = self.env['account.payment'].search([
+            ('partner_id', '=', self.partner_id.id),
+            ('anticipo', '=', True),
+            ('state', '=', 'posted')
+        ])
+        if len(xfind) > 0:
+            return {'warning': {'message':'Este Cliente/Proveedor posee un anticipo disponible'}}
 
     def _compute_monto(self):
         self.monto_anticipo = self.payment_id.saldo_disponible
