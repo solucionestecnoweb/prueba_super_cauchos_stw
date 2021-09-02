@@ -197,7 +197,7 @@
                                                     <b>Total IVA Exento</b>
                                                 </td>
                                                 <td class="text-right border border-dark">
-                                                    <span><t t-esc="0,00" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                                    <span><t t-esc="0" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
                                                 </td>
                                             </tr>
                                         </t>
@@ -333,7 +333,7 @@
                                                     <b>Total IVA Exento</b>
                                                 </td>
                                                 <td class="text-right border border-dark">
-                                                    <span><t t-esc="0,00" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                                    <span><t t-esc="0" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
                                                 </td>
                                             </tr>
                                         </t>
@@ -344,7 +344,7 @@
                                                     <b>Total IVA 8%</b>
                                                 </td>
                                                 <td class="text-right border border-dark">
-                                                    <span><t t-esc="iva_8" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                                    <span><t t-esc="iva_8 * rate" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
                                                 </td>
                                             </tr>
                                         </t>
@@ -355,7 +355,7 @@
                                                     <b>Total IVA 16%</b>
                                                 </td>
                                                 <td class="text-right border border-dark">
-                                                    <span><t t-esc="iva_16" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                                    <span><t t-esc="iva_16 * rate" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
                                                 </td>
                                             </tr>
                                         </t>
@@ -366,7 +366,7 @@
                                                     <b>Total IVA 31%</b>
                                                 </td>
                                                 <td class="text-right border border-dark">
-                                                    <span><t t-esc="iva_24" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                                    <span><t t-esc="iva_24 * rate" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
                                                 </td>
                                             </tr>
                                         </t>
@@ -376,7 +376,7 @@
                                                 <b>Total a Pagar</b>
                                             </td>
                                             <td class="text-right border border-dark">
-                                                <span><t t-esc="o.amount_total" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                                <span><t t-esc="o.amount_total * rate" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
                                             </td>
                                         </tr>
                                         <!-- Fin totales -->
@@ -530,7 +530,7 @@
                                                     <b>Total IVA Exento</b>
                                                 </td>
                                                 <td class="text-right border border-dark">
-                                                    <span><t t-esc="0,00" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                                    <span><t t-esc="0" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
                                                 </td>
                                             </tr>
                                         </t>
@@ -666,7 +666,7 @@
                                                     <b>Total IVA Exento</b>
                                                 </td>
                                                 <td class="text-right border border-dark">
-                                                    <span><t t-esc="0,00" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                                    <span><t t-esc="0" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
                                                 </td>
                                             </tr>
                                         </t>
@@ -677,7 +677,7 @@
                                                     <b>Total IVA 8%</b>
                                                 </td>
                                                 <td class="text-right border border-dark">
-                                                    <span><t t-esc="iva_8" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                                    <span><t t-esc="iva_8 * rate" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
                                                 </td>
                                             </tr>
                                         </t>
@@ -688,7 +688,7 @@
                                                     <b>Total IVA 16%</b>
                                                 </td>
                                                 <td class="text-right border border-dark">
-                                                    <span><t t-esc="iva_16" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                                    <span><t t-esc="iva_16 * rate" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
                                                 </td>
                                             </tr>
                                         </t>
@@ -699,7 +699,7 @@
                                                     <b>Total IVA 31%</b>
                                                 </td>
                                                 <td class="text-right border border-dark">
-                                                    <span><t t-esc="iva_24" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                                    <span><t t-esc="iva_24 * rate" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
                                                 </td>
                                             </tr>
                                         </t>
@@ -709,7 +709,7 @@
                                                 <b>Total a Pagar</b>
                                             </td>
                                             <td class="text-right border border-dark">
-                                                <span><t t-esc="o.amount_total" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                                <span><t t-esc="o.amount_total * rate" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
                                             </td>
                                         </tr>
                                         <!-- Fin totales -->
@@ -863,7 +863,7 @@
                                                     <b>Total IVA Exento</b>
                                                 </td>
                                                 <td class="text-right border border-dark">
-                                                    <span><t t-esc="0,00" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                                    <span><t t-esc="0" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
                                                 </td>
                                             </tr>
                                         </t>
@@ -999,7 +999,7 @@
                                                     <b>Total IVA Exento</b>
                                                 </td>
                                                 <td class="text-right border border-dark">
-                                                    <span><t t-esc="0,00" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                                    <span><t t-esc="0" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
                                                 </td>
                                             </tr>
                                         </t>
@@ -1010,7 +1010,7 @@
                                                     <b>Total IVA 8%</b>
                                                 </td>
                                                 <td class="text-right border border-dark">
-                                                    <span><t t-esc="iva_8" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                                    <span><t t-esc="iva_8 * rate" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
                                                 </td>
                                             </tr>
                                         </t>
@@ -1021,7 +1021,7 @@
                                                     <b>Total IVA 16%</b>
                                                 </td>
                                                 <td class="text-right border border-dark">
-                                                    <span><t t-esc="iva_16" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                                    <span><t t-esc="iva_16 * rate" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
                                                 </td>
                                             </tr>
                                         </t>
@@ -1032,7 +1032,7 @@
                                                     <b>Total IVA 31%</b>
                                                 </td>
                                                 <td class="text-right border border-dark">
-                                                    <span><t t-esc="iva_24" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                                    <span><t t-esc="iva_24 * rate" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
                                                 </td>
                                             </tr>
                                         </t>
@@ -1042,7 +1042,7 @@
                                                 <b>Total a Pagar</b>
                                             </td>
                                             <td class="text-right border border-dark">
-                                                <span><t t-esc="o.amount_total" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                                <span><t t-esc="o.amount_total * rate" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
                                             </td>
                                         </tr>
                                         <!-- Fin totales -->
