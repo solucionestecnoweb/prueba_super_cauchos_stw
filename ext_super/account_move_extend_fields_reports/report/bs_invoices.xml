@@ -190,6 +190,17 @@
                                                 <span><t t-esc="net_amount" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
                                             </td>
                                         </tr>
+                                        <t t-if="iva_exempt > 0">
+                                            <tr>
+                                                <td colspan="4"></td>
+                                                <td class="text-center border border-dark">
+                                                    <b>Total IVA Exento</b>
+                                                </td>
+                                                <td class="text-right border border-dark">
+                                                    <span><t t-esc="0,00" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                                </td>
+                                            </tr>
+                                        </t>
                                         <t t-if="iva_8 > 0">
                                             <tr>
                                                 <td colspan="4"></td>
@@ -314,6 +325,17 @@
                                             <t t-set="iva_8" t-value="iva_8 + item.alicuota_reducida"/>
                                             <t t-set="iva_16" t-value=" iva_16 + item.alicuota_general"/>
                                             <t t-set="iva_24" t-value="iva_24 + item.alicuota_adicional"/>
+                                        </t>
+                                        <t t-if="iva_exempt > 0">
+                                            <tr>
+                                                <td colspan="4"></td>
+                                                <td class="text-center border border-dark">
+                                                    <b>Total IVA Exento</b>
+                                                </td>
+                                                <td class="text-right border border-dark">
+                                                    <span><t t-esc="0,00" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                                </td>
+                                            </tr>
                                         </t>
                                         <t t-if="iva_8 > 0">
                                             <tr>
@@ -501,6 +523,17 @@
                                             <t t-set="iva_16" t-value=" iva_16 + item.alicuota_general"/>
                                             <t t-set="iva_24" t-value="iva_24 + item.alicuota_adicional"/>
                                         </t>
+                                        <t t-if="iva_exempt > 0">
+                                            <tr>
+                                                <td colspan="4"></td>
+                                                <td class="text-center border border-dark">
+                                                    <b>Total IVA Exento</b>
+                                                </td>
+                                                <td class="text-right border border-dark">
+                                                    <span><t t-esc="0,00" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                                </td>
+                                            </tr>
+                                        </t>
                                         <t t-if="iva_8 > 0">
                                             <tr>
                                                 <td colspan="4"></td>
@@ -625,6 +658,17 @@
                                             <t t-set="iva_8" t-value="iva_8 + item.alicuota_reducida"/>
                                             <t t-set="iva_16" t-value=" iva_16 + item.alicuota_general"/>
                                             <t t-set="iva_24" t-value="iva_24 + item.alicuota_adicional"/>
+                                        </t>
+                                        <t t-if="iva_exempt > 0">
+                                            <tr>
+                                                <td colspan="4"></td>
+                                                <td class="text-center border border-dark">
+                                                    <b>Total IVA Exento</b>
+                                                </td>
+                                                <td class="text-right border border-dark">
+                                                    <span><t t-esc="0,00" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                                </td>
+                                            </tr>
                                         </t>
                                         <t t-if="iva_8 > 0">
                                             <tr>
@@ -812,6 +856,17 @@
                                             <t t-set="iva_16" t-value=" iva_16 + item.alicuota_general"/>
                                             <t t-set="iva_24" t-value="iva_24 + item.alicuota_adicional"/>
                                         </t>
+                                        <t t-if="iva_exempt > 0">
+                                            <tr>
+                                                <td colspan="4"></td>
+                                                <td class="text-center border border-dark">
+                                                    <b>Total IVA Exento</b>
+                                                </td>
+                                                <td class="text-right border border-dark">
+                                                    <span><t t-esc="0,00" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                                </td>
+                                            </tr>
+                                        </t>
                                         <t t-if="iva_8 > 0">
                                             <tr>
                                                 <td colspan="4"></td>
@@ -936,6 +991,17 @@
                                             <t t-set="iva_8" t-value="iva_8 + item.alicuota_reducida"/>
                                             <t t-set="iva_16" t-value=" iva_16 + item.alicuota_general"/>
                                             <t t-set="iva_24" t-value="iva_24 + item.alicuota_adicional"/>
+                                        </t>
+                                        <t t-if="iva_exempt > 0">
+                                            <tr>
+                                                <td colspan="4"></td>
+                                                <td class="text-center border border-dark">
+                                                    <b>Total IVA Exento</b>
+                                                </td>
+                                                <td class="text-right border border-dark">
+                                                    <span><t t-esc="0,00" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                                </td>
+                                            </tr>
                                         </t>
                                         <t t-if="iva_8 > 0">
                                             <tr>
