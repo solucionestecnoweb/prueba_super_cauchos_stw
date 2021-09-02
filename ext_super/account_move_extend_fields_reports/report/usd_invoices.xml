@@ -184,10 +184,10 @@
                                             <tr>
                                                 <td colspan="3"></td>
                                                 <td class="text-center border border-dark">
-                                                    <b>Total IVA Exento</b>
+                                                    <b>Total Exento</b>
                                                 </td>
                                                 <td class="text-right border border-dark">
-                                                    <span><t t-esc="0" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                                    <span><t t-esc="iva_exempt / rate" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
                                                 </td>
                                             </tr>
                                         </t>
@@ -313,10 +313,10 @@
                                             <tr>
                                                 <td colspan="3"></td>
                                                 <td class="text-center border border-dark">
-                                                    <b>Total IVA Exento</b>
+                                                    <b>Total Exento</b>
                                                 </td>
                                                 <td class="text-right border border-dark">
-                                                    <span><t t-esc="0" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                                    <span><t t-esc="iva_exempt" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
                                                 </td>
                                             </tr>
                                         </t>
@@ -501,10 +501,10 @@
                                             <tr>
                                                 <td colspan="3"></td>
                                                 <td class="text-center border border-dark">
-                                                    <b>Total IVA Exento</b>
+                                                    <b>Total Exento</b>
                                                 </td>
                                                 <td class="text-right border border-dark">
-                                                    <span><t t-esc="0" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                                    <span><t t-esc="iva_exempt / rate" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
                                                 </td>
                                             </tr>
                                         </t>
@@ -630,10 +630,10 @@
                                             <tr>
                                                 <td colspan="3"></td>
                                                 <td class="text-center border border-dark">
-                                                    <b>Total IVA Exento</b>
+                                                    <b>Total Exento</b>
                                                 </td>
                                                 <td class="text-right border border-dark">
-                                                    <span><t t-esc="0" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                                    <span><t t-esc="iva_exempt" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
                                                 </td>
                                             </tr>
                                         </t>
@@ -818,10 +818,10 @@
                                             <tr>
                                                 <td colspan="3"></td>
                                                 <td class="text-center border border-dark">
-                                                    <b>Total IVA Exento</b>
+                                                    <b>Total Exento</b>
                                                 </td>
                                                 <td class="text-right border border-dark">
-                                                    <span><t t-esc="0" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                                    <span><t t-esc="iva_exempt / rate" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
                                                 </td>
                                             </tr>
                                         </t>
@@ -947,10 +947,10 @@
                                             <tr>
                                                 <td colspan="3"></td>
                                                 <td class="text-center border border-dark">
-                                                    <b>Total IVA Exento</b>
+                                                    <b>Total Exento</b>
                                                 </td>
                                                 <td class="text-right border border-dark">
-                                                    <span><t t-esc="0" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                                    <span><t t-esc="iva_exempt" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
                                                 </td>
                                             </tr>
                                         </t>
