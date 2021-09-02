@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
+    <record id="paperformat_horizontal" model="report.paperformat">
+        <field name="name">Horizontal predeterminado</field>
+        <field name="orientation">Landscape</field>
+    </record>
+
     <report 
             id="action_payment_plan_report" 
             model="wizard.payment.plan" 
@@ -8,6 +13,7 @@
             report_type="qweb-pdf"
             name="account_payment_plan_reports.payment_plan_report" 
             file="account_payment_plan_reports.payment_plan_report" 
+            paperformat="paperformat_horizontal"
             />
 
         <template id="external_layout_payment_plan_report">

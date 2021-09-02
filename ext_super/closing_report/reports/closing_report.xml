@@ -1,5 +1,10 @@
 <odoo>
 
+    <record id="paperformat_horizontal" model="report.paperformat">
+        <field name="name">Horizontal predeterminado</field>
+        <field name="orientation">Landscape</field>
+    </record>
+
     <report
             id="action_closing_report"
             model="closing.report"
@@ -8,6 +13,7 @@
             name="closing_report.closing_report"
             file="closing_report.closing_report"
             menu="True"
+            paperformat="paperformat_horizontal"
             />
 
         <template id="external_layout_closing_report">
