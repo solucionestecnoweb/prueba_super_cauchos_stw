@@ -1,7 +1,7 @@
 <odoo>
 
     <record id="wizard_street_days_report" model="ir.ui.view">
-        <field name="name">Street Days Report Wizard</field>
+        <field name="name">Asistente de Reporte de Días Calle</field>
         <field name="model">street_days.report</field>
         <field name="arch" type="xml">
             <form string="Street Days Report">

@@ -1,13 +1,14 @@
 {
-    'name': 'Account Promotions',
+    'name': 'Conciliation Approvals',
     'version': '13.0.1.0.0',
     'author': 'OasisConsultora',
     'maintainer': 'OasisConsultora',
     'website': 'oasisconsultora.com',
     'license': 'AGPL-3',
-    'depends': ['account', 'vat_retention'],
+    'depends': ['account', 'approvals'],
     'data': [
-        'views/account_promotion_fields.xml',
+        'views/approval_fields_extend.xml',
+        'views/account_payment_approvals.xml',
         ],
     'installable': True,
     'auto_install': False,

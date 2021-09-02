@@ -2,7 +2,7 @@
 
     <data noupdate="0">
         <record id="wizard_days_report" model="ir.ui.view">
-            <field name="name">Average Days Report Wizard</field>
+            <field name="name">Asistente de Reporte de Días Promedio</field>
             <field name="model">days.report</field>
             <field name="arch" type="xml">
                 <form string="Average Days Report">

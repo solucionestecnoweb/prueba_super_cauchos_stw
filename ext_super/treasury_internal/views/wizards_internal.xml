@@ -2,21 +2,21 @@
 
     <data noupdate="0">
         <record id="wizard_internal" model="ir.ui.view">
-            <field name="name">Internal Transfers Wizard</field>
+            <field name="name">Asistente de Transferencias Internas</field>
             <field name="model">internal.transfers</field>
             <field name="arch" type="xml">
-                <form string="Internal Transfers">
+                <form string="Transferencias Internas">
                     <field invisible="1" name="state"/>
                     <div states="choose">
                         <group>
-                            <group string="Money Sending Company" name="sending">
+                            <group string="Compañía que Envía Dinero" name="sending">
                                 <field name="out_payment_type" invisible="1"/>
-                                <field name="out_company_id" string="Sending Company" required="1"/>
-                                <field name="out_journal_id" string="Sending Journal" widget="selection" required="1" domain="[('type', '=', 'bank'), ('company_id', '=', out_company_id)]"/>
+                                <field name="out_company_id" string="Compañía que envía" required="1"/>
+                                <field name="out_journal_id" string="Diario de envío" widget="selection" required="1" domain="[('type', '=', 'bank'), ('company_id', '=', out_company_id)]"/>
                                 <field name="out_payment_method_id" widget="selection" required="1" domain="[('payment_type', '=', out_payment_type)]"/>
                                 <!-- <field name="out_destination_account_id" required="1" domain="[('company_id', '=', out_company_id)]"/> -->
                             </group>
-                            <group string="Money Receiving Company" name="receiving">
+                            <group string="Compañía que Recibe Dinero" name="receiving">
                                 <field name="in_payment_type" invisible="1"/>
                                 <field name="in_company_id" groups="base.group_multi_company" string="Receiving Company" required="1"/>
                                 <field name="in_journal_id" string="Receiving Journal" widget="selection" required="1" domain="[('type', '=', 'bank'), ('company_id', '=', in_company_id)]"/>
@@ -24,7 +24,7 @@
                                 <!-- <field name="in_destination_account_id" required="1" domain="[('company_id', '=', in_company_id)]"/> -->
                             </group>
                         </group>
-                        <group string="Payment Data" name="data">
+                        <group string="Información de Pago" name="data">
                             <field name="amount" required="1"/>
                             <field name="currency_id" required="1"/>
                             <field name="out_payment_date" required="1"/>
@@ -41,24 +41,24 @@
                         </group>
                     </div>
                     <footer states="choose">
-                        <button name="validate" string="Validate Transfer" type="object" class="oe_highlight" />
-                        <button special="cancel" string="Cancel" class="oe_highlight" />
+                        <button name="validate" string="Validar Transferencia" type="object" class="oe_highlight" />
+                        <button special="cancel" string="Cancelar" class="oe_highlight" />
                     </footer>
                     <footer states="get">
-                        <button special="cancel" string="Cancel" class="oe_highlight" />
+                        <button special="cancel" string="Cancelar" class="oe_highlight" />
                     </footer>
                 </form>
             </field>
         </record>
         <record id="action_internal" model="ir.actions.act_window">
-            <field name="name">Transfers Between Companies</field>
+            <field name="name">Transferencia entre Compañías</field>
             <field name="res_model">internal.transfers</field>
             <field name="view_mode">form</field>
             <field name="view_id" ref="wizard_internal"/>
             <field name="target">new</field>
         </record>
         
-        <menuitem   name="Internal Transfers" 
+        <menuitem   name="Transferencias Internas" 
                     parent="treasury_exchange.menu_transactions"
                     id="internal_menu" 
                     action="treasury_internal.action_internal"

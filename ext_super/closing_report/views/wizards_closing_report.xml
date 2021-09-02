@@ -2,10 +2,10 @@
 
     <data noupdate="0">
         <record id="wizard_closing_report" model="ir.ui.view">
-            <field name="name">Collections Closing Report Wizard</field>
+            <field name="name">Asistente de Reporte de Cierre de Cobranza</field>
             <field name="model">closing.report</field>
             <field name="arch" type="xml">
-                <form string="Collections Closing Report">
+                <form string="Reporte de Cierre de Cobranza">
                     <field invisible="1" name="state"/>
                     <div states="choose">
                         <group >
@@ -35,7 +35,7 @@
             </field>
         </record>
         <record id="action_closing_report" model="ir.actions.act_window">
-            <field name="name">Collections Closing Report</field>
+            <field name="name">Reporte de Cierre de Cobranza</field>
             <field name="res_model">closing.report</field>
             <field name="view_mode">form</field>
             <field name="view_id" ref="wizard_closing_report"/>

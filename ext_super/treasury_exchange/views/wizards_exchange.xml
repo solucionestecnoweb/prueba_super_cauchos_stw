@@ -2,10 +2,10 @@
 
     <data noupdate="0">
         <record id="wizard_exchange" model="ir.ui.view">
-            <field name="name">Exchange Transactions Report Wizard</field>
+            <field name="name">Asistente de Reporte de Transacciones de Cambio</field>
             <field name="model">transaction.exchange</field>
             <field name="arch" type="xml">
-                <form string="Exchange Transactions Report">
+                <form string="Reporte de Transacciones de Cambio">
                     <field invisible="1" name="state"/>
                     <div states="choose">
                         <group >
@@ -24,8 +24,8 @@
                         </group>
                     </div>
                     <footer states="choose">
-                        <button name="generate_xls_report" string="Export XLS" type="object" class="oe_highlight" />
-                        <button special="cancel" string="Cancel" class="oe_highlight" />
+                        <button name="generate_xls_report" string="Exportar XLS" type="object" class="oe_highlight" />
+                        <button special="cancel" string="Cancelar" class="oe_highlight" />
                     </footer>
                     <footer states="get">
                         <button special="cancel" string="Cancel" class="oe_highlight" />
@@ -34,14 +34,14 @@
             </field>
         </record>
         <record id="action_exchange_report" model="ir.actions.act_window">
-            <field name="name">Exchange Transactions Report</field>
+            <field name="name">Reporte de Transacciones de Cambio</field>
             <field name="res_model">transaction.exchange</field>
             <field name="view_mode">form</field>
             <field name="view_id" ref="wizard_exchange"/>
             <field name="target">new</field>
         </record>
         
-        <menuitem   name="Exchange Transactions Report" 
+        <menuitem   name="Reporte de Transacciones de Cambio" 
                     parent="treasury_exchange.menu_transactions"
                     id="report_menu" 
                     action="treasury_exchange.action_exchange_report"

@@ -19,26 +19,26 @@ _logger = logging.getLogger(__name__)
 class Internal(models.TransientModel):
     _name ='internal.transfers'
 
-    out_company_id = fields.Many2one('res.company', string='Sending Company')
+    out_company_id = fields.Many2one('res.company', string='Compañía que envía')
     out_journal_id = fields.Many2one('account.journal')
-    out_payment_type = fields.Selection([('outbound', 'Send Money'), ('inbound', 'Receive Money'), ('transfer', 'Internal Transfer')], default='outbound', string='Payment Type')
-    out_payment_method_id = fields.Many2one('account.payment.method', string='Payment Method')
+    out_payment_type = fields.Selection([('outbound', 'Enviar Dinero'), ('inbound', 'Recibir Dinero'), ('transfer', 'Transferencia Interna')], default='outbound', string='Tipo de Pago')
+    out_payment_method_id = fields.Many2one('account.payment.method', string='Método de Pago')
     out_destination_account_id  = fields.Many2one('account.account')
 
     in_company_id = fields.Many2one('res.company', string='Recieving Company')
     in_journal_id = fields.Many2one('account.journal')
-    in_payment_type = fields.Selection([('outbound', 'Send Money'), ('inbound', 'Receive Money'), ('transfer', 'Internal Transfer')], default='inbound', string='Payment Type')
-    in_payment_method_id = fields.Many2one('account.payment.method', string='Payment Method')
+    in_payment_type = fields.Selection([('outbound', 'Enviar Dinero'), ('inbound', 'Recibir Dinero'), ('transfer', 'Transferencia Interna')], default='inbound', string='Tipo de Pago')
+    in_payment_method_id = fields.Many2one('account.payment.method', string='Método de Pago')
     in_destination_account_id  = fields.Many2one('account.account')
 
-    amount = fields.Monetary(string='Amount')
+    amount = fields.Monetary(string='Monto')
     currency_id = fields.Many2one('res.currency', string='Currency', default=lambda self: self.env.company.currency_id)
-    out_payment_date = fields.Date(string='Sending Date', default=fields.Date.context_today)
-    in_payment_date = fields.Date(string='Recieving Date')
+    out_payment_date = fields.Date(string='Fecha de Envío', default=fields.Date.context_today)
+    in_payment_date = fields.Date(string='Fecha de Recibo')
     communication = fields.Char(string='Memo')
-    payment_concept = fields.Char(string='Payment Concept')
+    payment_concept = fields.Char(string='Concepto de Pago')
 
-    partner_type = fields.Selection([('customer', 'Customer'), ('supplier', 'Vendor')], default='supplier')
+    partner_type = fields.Selection([('customer', 'Cliente'), ('supplier', 'Proveedor')], default='Proveedor')
 
     state = fields.Selection([('choose', 'choose'), ('get', 'get')],default='choose')
     report = fields.Binary('Prepared file', filters='.xls', readonly=True)

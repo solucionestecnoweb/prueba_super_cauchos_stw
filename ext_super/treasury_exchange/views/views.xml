@@ -39,7 +39,7 @@
                             <field name="name" readonly="1" attrs="{'invisible': [('state', '!=', 'confirmed'), ('name', '=', '/')]}"/><br/>
                         </h1>
                     </div>
-                    <group string="Amount to exchange" name="info" priority="1">
+                    <group string="Monto a Cambiar" name="info" priority="1">
                         <group>
                             <field name="amount" required="1" attrs="{'readonly': [('state', 'in', ('cancel', 'done'))]}"/>
                             <field name="origin_currency_id" attrs="{'readonly': [('state', 'in', ('cancel', 'done'))]}"/>
@@ -52,7 +52,7 @@
                             <field name="credit_id" required="1" domain="[('company_id', '=', company_id)]" attrs="{'readonly': [('state', 'in', ('cancel', 'done'))]}"/>
                         </group>
                     </group>
-                    <group string="Result" name="result" priority="2">
+                    <group string="Resultado" name="result" priority="2">
                         <group>
                             <field name="final_amount" attrs="{'readonly': [('state', 'in', ('cancel', 'done'))]}"/>
                             <field name="final_currency_id" attrs="{'readonly': [('state', 'in', ('cancel', 'done'))]}"/>
@@ -62,7 +62,7 @@
                         </group>
                     </group>
                     <footer>
-                        <button name="calculate" string="Calculate" type="object" class="oe_highlight"/>
+                        <button name="calculate" string="Calcular" type="object" class="oe_highlight"/>
                     </footer>
                 </sheet>
             </form>
@@ -70,13 +70,13 @@
     </record>
 
     <record id="action_view_exchange" model="ir.actions.act_window">
-        <field name="name">Exchange Transactions</field>
+        <field name="name">Transacciones de Cambio</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">account.exchange</field>
         <field name="view_mode">tree,form</field>
     </record>
 
-    <menuitem id="menu_transactions" name="Transactions" parent="account.menu_finance_entries" sequence="2"/>
-    <menuitem id="menu_exchange" name="Exchange Transactions" parent="treasury_exchange.menu_transactions" action="treasury_exchange.action_view_exchange" sequence="1"/>
+    <menuitem id="menu_transactions" name="Transacciones" parent="account.menu_finance_entries" sequence="2"/>
+    <menuitem id="menu_exchange" name="Transacciones de Cambio" parent="treasury_exchange.menu_transactions" action="treasury_exchange.action_view_exchange" sequence="1"/>
 
 </odoo>
