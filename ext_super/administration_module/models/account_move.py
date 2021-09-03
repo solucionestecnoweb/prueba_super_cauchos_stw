@@ -15,6 +15,7 @@ class AccountMoveInvoicePayment(models.Model):
     delay_91_120 = fields.Float(string='91 - 120')
     delay_older = fields.Float(string='Older')
     delay_total = fields.Float(string='Total')
+    delay_total_usd = fields.Float(string='Total $')
     seller_id = fields.Many2one(comodel_name='res.partner', string='Seller')
     seller_true = fields.Boolean(compute='_compute_seller')
     
@@ -40,8 +41,13 @@ class AccountMoveInvoicePayment(models.Model):
             item.delay_91_120 = 0
             item.delay_older = 0
             item.delay_total = 0
+            item.delay_total_usd = 0
+
 
             if item.date and item.exp_date_today:
+                rate = item.env['res.currency.rate'].search([('name', '=', item.date)], limit=1).sell_rate
+                if not rate:
+                    rate = 1
                 days = (item.exp_date_today - item.date)
                 if days.days >= 0 and days.days <=30:
                     item.delay_1_30 = item.amount_residual
@@ -55,3 +61,4 @@ class AccountMoveInvoicePayment(models.Model):
                     item.delay_older = item.amount_residual
 
                 item.delay_total = item.delay_1_30 + item.delay_31_60 + item.delay_61_90 + item.delay_91_120 + item.delay_older
+                item.delay_total_usd = item.delay_total / rate

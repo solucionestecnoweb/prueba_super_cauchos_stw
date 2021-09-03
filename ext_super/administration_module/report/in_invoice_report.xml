@@ -55,16 +55,17 @@
                                 <!-- Cantidad de columnas -->
                                 <colgroup>
                                     <col span="1" style="width: 10%;"/>
-                                    <col span="1" style="width: 9%;"/>
-                                    <col span="1" style="width: 9%;"/>
-                                    <col span="1" style="width: 9%;"/>
-                                    <col span="1" style="width: 9%;"/>
-                                    <col span="1" style="width: 9%;"/>
-                                    <col span="1" style="width: 9%;"/>
-                                    <col span="1" style="width: 9%;"/>
-                                    <col span="1" style="width: 9%;"/>
-                                    <col span="1" style="width: 9%;"/>
-                                    <col span="1" style="width: 9%;"/>
+                                    <col span="1" style="width: 8%;"/>
+                                    <col span="1" style="width: 8%;"/>
+                                    <col span="1" style="width: 10%;"/>
+                                    <col span="1" style="width: 8%;"/>
+                                    <col span="1" style="width: 8%;"/>
+                                    <col span="1" style="width: 8%;"/>
+                                    <col span="1" style="width: 8%;"/>
+                                    <col span="1" style="width: 8%;"/>
+                                    <col span="1" style="width: 8%;"/>
+                                    <col span="1" style="width: 8%;"/>
+                                    <col span="1" style="width: 8%;"/>
                                 </colgroup>
                                 <!-- Fin cantidad de columnas -->
                                 
@@ -75,6 +76,7 @@
                                 <t t-set="t_91_120" t-value="0"/>
                                 <t t-set="t_older" t-value="0"/>
                                 <t t-set="t_total" t-value="0"/>
+                                <t t-set="t_total_usd" t-value="0"/>
                                 <!-- Fin variables totales -->
 
                                 <thead>
@@ -90,6 +92,7 @@
                                         <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle; font-size:14px;">91 - 120</th>
                                         <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle; font-size:14px;">Older</th>
                                         <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle; font-size:14px;">Total</th>
+                                        <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle; font-size:14px;">Total $</th>
                                     </tr>
                                 </thead>
 
@@ -114,7 +117,7 @@
                                                 </tr>
                                             </t>
                                             <tr>
-                                                <td colspan="11" style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle; font-size:16px;"><t t-esc="item.partner_id.name"/></td>
+                                                <td colspan="12" style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle; font-size:16px;"><t t-esc="item.partner_id.name"/></td>
                                             </tr>
                                             <t t-set="partner" t-value="item.partner_id.name"/>
                                             <t t-set="temp_1_30" t-value="0"/>
@@ -123,6 +126,7 @@
                                             <t t-set="temp_91_120" t-value="0"/>
                                             <t t-set="temp_older" t-value="0"/>
                                             <t t-set="temp_total" t-value="0"/>
+                                            <t t-set="temp_total_usd" t-value="0"/>
                                         </t>
 
                                         <tr>
@@ -137,6 +141,7 @@
                                             <td class="text-right" style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle; font-size:12px; padding-right: 3px;"><t t-esc="item.delay_91_120" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></td>
                                             <td class="text-right" style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle; font-size:12px; padding-right: 3px;"><t t-esc="item.delay_older" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></td>
                                             <td class="text-right" style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle; font-size:12px; padding-right: 3px;"><t t-esc="item.delay_total" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></td>
+                                            <td class="text-right" style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle; font-size:12px; padding-right: 3px;"><t t-esc="item.delay_total_usd" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></td>
                                         </tr>
 
                                         <t t-set="t_1_30" t-value="t_1_30 + item.delay_1_30"/>
@@ -145,6 +150,7 @@
                                         <t t-set="t_91_120" t-value="t_91_120 + item.delay_91_120"/>
                                         <t t-set="t_older" t-value="t_older + item.delay_older"/>
                                         <t t-set="t_total" t-value="t_total + item.delay_total"/>
+                                        <t t-set="t_total_usd" t-value="t_total_usd + item.delay_total_usd"/>
                                         
                                         <t t-set="temp_1_30" t-value="temp_1_30 + item.delay_1_30"/>
                                         <t t-set="temp_31_60" t-value="temp_31_60 + item.delay_31_60"/>
@@ -152,6 +158,7 @@
                                         <t t-set="temp_91_120" t-value="temp_91_120 + item.delay_91_120"/>
                                         <t t-set="temp_older" t-value="temp_older + item.delay_older"/>
                                         <t t-set="temp_total" t-value="temp_total + item.delay_total"/>
+                                        <t t-set="temp_total_usd" t-value="temp_total_usd + item.delay_total_usd"/>
                                         
                                         <t t-if="counter == 0">
                                             <tr>
@@ -163,6 +170,7 @@
                                                 <td class="text-right" style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle; font-size:12px; padding-right: 3px;"><t t-esc="temp_91_120" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></td>
                                                 <td class="text-right" style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle; font-size:12px; padding-right: 3px;"><t t-esc="temp_older" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></td>
                                                 <td class="text-right" style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle; font-size:12px; padding-right: 3px;"><t t-esc="temp_total" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></td>
+                                                <td class="text-right" style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle; font-size:12px; padding-right: 3px;"><t t-esc="temp_total_usd" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></td>
                                             </tr>
                                         </t>
 
@@ -178,6 +186,7 @@
                                         <td class="text-right" style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle; font-size:14px; padding-right: 3px;"><t t-esc="t_91_120" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></td>
                                         <td class="text-right" style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle; font-size:14px; padding-right: 3px;"><t t-esc="t_older" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></td>
                                         <td class="text-right" style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle; font-size:14px; padding-right: 3px;"><t t-esc="t_total" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></td>
+                                        <td class="text-right" style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle; font-size:14px; padding-right: 3px;"><t t-esc="t_total_usd" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></td>
                                     </tr>
                                     <!-- Fin Totales -->
                                 </tbody>     

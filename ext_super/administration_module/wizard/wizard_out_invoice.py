@@ -52,6 +52,16 @@ class WizardOutInvoice(models.TransientModel):
     
     # *******************  REPORTE EN EXCEL ****************************
 
+    def float_format(self,valor):
+        if valor:
+            result = '{:,.2f}'.format(valor)
+            result = result.replace(',','*')
+            result = result.replace('.',',')
+            result = result.replace('*','.')
+        else:
+            result="0,00"
+        return result
+
     def generate_xls_report(self):
         wb1 = xlwt.Workbook(encoding='utf-8')
         ws1 = wb1.add_sheet(_('Past Due Accounts Receivable Report'))
@@ -67,12 +77,12 @@ class WizardOutInvoice(models.TransientModel):
         row = 0
         col = 0
         ws1.row(row).height = 500
-        ws1.write_merge(row,row, 3, 7, _("Past Due Accounts Receivable Report"), header_content_style)
+        ws1.write_merge(row,row, 4, 8, _("Past Due Accounts Receivable Report"), header_content_style)
         xdate = self.date_now.strftime('%d/%m/%Y %I:%M:%S %p')
         xdate = datetime.strptime(xdate,'%d/%m/%Y %I:%M:%S %p') - timedelta(hours=4)
-        ws1.write_merge(row,row, 8, 10, xdate.strftime('%d/%m/%Y %I:%M:%S %p'), header_content_style)
+        ws1.write_merge(row,row, 9, 11, xdate.strftime('%d/%m/%Y %I:%M:%S %p'), header_content_style)
         row += 1
-        ws1.write_merge(row,row, 3, 7, _("From ") + self.date_from.strftime('%d/%m/%Y') + _(" To ") + self.date_to.strftime('%d/%m/%Y'), header_content_style)
+        ws1.write_merge(row,row, 4, 8, _("From ") + self.date_from.strftime('%d/%m/%Y') + _(" To ") + self.date_to.strftime('%d/%m/%Y'), header_content_style)
         row += 2
 
         #CABECERA DE LA TABLA 
@@ -98,6 +108,8 @@ class WizardOutInvoice(models.TransientModel):
         ws1.col(col+9).width = int((len('xxx.xxx.xxx,xx')+2)*256)
         ws1.write(row,col+10, _("Total"),sub_header_style_c)
         ws1.col(col+10).width = int((len('xxx.xxx.xxx,xx')+2)*256)
+        ws1.write(row,col+11, _("Total $"),sub_header_style_c)
+        ws1.col(col+11).width = int((len('xxx.xxx.xxx.xxx,xx')+2)*256)
 
         center = xlwt.easyxf("align: horiz center")
         right = xlwt.easyxf("align: horiz right")
@@ -109,6 +121,7 @@ class WizardOutInvoice(models.TransientModel):
         t_91_120 = 0
         t_older = 0
         t_total = 0
+        t_total_usd = 0
         ###
         temp_1_30 = 0
         temp_31_60 = 0
@@ -116,6 +129,7 @@ class WizardOutInvoice(models.TransientModel):
         temp_91_120 = 0
         temp_older = 0
         temp_total = 0
+        temp_total_usd = 0
 
         partner = False
         counter = len(self._get_data())
@@ -132,8 +146,9 @@ class WizardOutInvoice(models.TransientModel):
                     ws1.write(row,col+8, temp_91_120,right)
                     ws1.write(row,col+9, temp_older,right)
                     ws1.write(row,col+10, temp_total,right)
+                    ws1.write(row,col+11, temp_total_usd,right)
                     row += 1
-                ws1.write_merge(row,row, 0, 10, item.partner_id.name, sub_header_style)
+                ws1.write_merge(row,row, 0, 11, item.partner_id.name, sub_header_style)
                 partner = item.partner_id.name
                 temp_1_30 = 0
                 temp_31_60 = 0
@@ -141,6 +156,7 @@ class WizardOutInvoice(models.TransientModel):
                 temp_91_120 = 0
                 temp_older = 0
                 temp_total = 0
+                temp_total_usd = 0
 
             row += 1
             # Journal Item
@@ -169,17 +185,19 @@ class WizardOutInvoice(models.TransientModel):
             else:
                 ws1.write(row,col+4, '',center)
             # 1 - 30
-            ws1.write(row,col+5, round(item.delay_1_30, 2),right)
+            ws1.write(row,col+5, self.float_format(item.delay_1_30),right)
             # 31 - 60
-            ws1.write(row,col+6, round(item.delay_31_60, 2),right)
+            ws1.write(row,col+6, self.float_format(item.delay_31_60),right)
             # 61 - 90
-            ws1.write(row,col+7,round(item.delay_61_90, 2),right)
+            ws1.write(row,col+7,self.float_format(item.delay_61_90),right)
             # 91 - 120
-            ws1.write(row,col+8,round(item.delay_91_120, 2),right)
+            ws1.write(row,col+8,self.float_format(item.delay_91_120),right)
             # Older
-            ws1.write(row,col+9,round(item.delay_older, 2),right)
+            ws1.write(row,col+9,self.float_format(item.delay_older),right)
             # Total
-            ws1.write(row,col+10,round(item.delay_total, 2),right)
+            ws1.write(row,col+10,self.float_format(item.delay_total),right)
+            # Total
+            ws1.write(row,col+11,self.float_format(item.delay_total_usd),right)
             
             t_1_30 += item.delay_1_30 
             t_31_60 += item.delay_31_60 
@@ -187,6 +205,7 @@ class WizardOutInvoice(models.TransientModel):
             t_91_120 += item.delay_91_120 
             t_older += item.delay_older 
             t_total += item.delay_total 
+            t_total_usd += item.delay_total_usd
 
             temp_1_30 += item.delay_1_30 
             temp_31_60 += item.delay_31_60 
@@ -194,24 +213,27 @@ class WizardOutInvoice(models.TransientModel):
             temp_91_120 += item.delay_91_120 
             temp_older += item.delay_older 
             temp_total += item.delay_total
+            temp_total_usd += item.delay_total_usd
 
             if counter == 0:
                 row += 1
-                ws1.write(row,col+5, temp_1_30,right)
-                ws1.write(row,col+6, temp_31_60,right)
-                ws1.write(row,col+7, temp_61_90,right)
-                ws1.write(row,col+8, temp_91_120,right)
-                ws1.write(row,col+9, temp_older,right)
-                ws1.write(row,col+10, temp_total,right)
+                ws1.write(row,col+5, self.float_format(temp_1_30),right)
+                ws1.write(row,col+6, self.float_format(temp_31_60),right)
+                ws1.write(row,col+7, self.float_format(temp_61_90),right)
+                ws1.write(row,col+8, self.float_format(temp_91_120),right)
+                ws1.write(row,col+9, self.float_format(temp_older),right)
+                ws1.write(row,col+10, self.float_format(temp_total),right)
+                ws1.write(row,col+11, self.float_format(temp_total_usd),right)
 
         row += 1
         ws1.write(row,col+4, _('Totals...'),right)
-        ws1.write(row,col+5, t_1_30,right)
-        ws1.write(row,col+6, t_31_60,right)
-        ws1.write(row,col+7, t_61_90,right)
-        ws1.write(row,col+8, t_91_120,right)
-        ws1.write(row,col+9, t_older,right)
-        ws1.write(row,col+10, t_total,right)
+        ws1.write(row,col+5, self.float_format(t_1_30),right)
+        ws1.write(row,col+6, self.float_format(t_31_60),right)
+        ws1.write(row,col+7, self.float_format(t_61_90),right)
+        ws1.write(row,col+8, self.float_format(t_91_120),right)
+        ws1.write(row,col+9, self.float_format(t_older),right)
+        ws1.write(row,col+10, self.float_format(t_total),right)
+        ws1.write(row,col+11, self.float_format(t_total_usd),right)
 
         wb1.save(fp)
         out = base64.encodestring(fp.getvalue())

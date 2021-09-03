@@ -19,6 +19,7 @@
                 <field name="delay_91_120"/>
                 <field name="delay_older"/>
                 <field name="delay_total"/>
+                <field name="delay_total_usd"/>
                 <field name="seller_id" invisible="1"/>
                 <field name="seller_true" invisible="1"/>
             </tree>

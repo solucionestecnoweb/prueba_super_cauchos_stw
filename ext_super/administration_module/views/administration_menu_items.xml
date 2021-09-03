@@ -62,12 +62,30 @@
         sequence="1"
         action="account.action_move_out_invoice_type"/>
 
+    <record id="action_admin_billing_move_out_refund_type" model="ir.actions.act_window">
+        <field name="name">Credit Notes</field>
+        <field name="res_model">account.move</field>
+        <field name="view_mode">tree,kanban,form</field>
+        <field name="view_id" ref="account.view_invoice_tree"/>
+        <field name="search_view_id" ref="account.view_account_invoice_filter"/>
+        <field name="domain">[('type', '=', 'out_refund'), ('promos', '=', False)]</field>
+        <field name="context">{'default_type': 'out_refund'}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+            Create a credit note
+            </p><p>
+            Note that the easiest way to create a credit note is to do it directly
+            from the customer invoice.
+            </p>
+        </field>
+    </record>
+
     <menuitem
         id="admin_customer_credit_notes_menu"
         name="Credit Notes"
         parent="admin_billing_menu"
         sequence="5"
-        action="account.action_move_out_refund_type"/>
+        action="action_admin_billing_move_out_refund_type"/>
 
     <menuitem
         id="admin_customer_debit_notes_menu"
@@ -136,12 +154,30 @@
 
     <!-- Accounts Receivable Sub Menus -->
 
+    <record id="action_admin_receivable_move_out_refund_type" model="ir.actions.act_window">
+        <field name="name">Credit Notes Promotion</field>
+        <field name="res_model">account.move</field>
+        <field name="view_mode">tree,kanban,form</field>
+        <field name="view_id" ref="account.view_invoice_tree"/>
+        <field name="search_view_id" ref="account.view_account_invoice_filter"/>
+        <field name="domain">[('type', '=', 'out_refund'), ('promos', '!=', False)]</field>
+        <field name="context">{'default_type': 'out_refund'}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+            Create a credit note
+            </p><p>
+            Note that the easiest way to create a credit note is to do it directly
+            from the customer invoice.
+            </p>
+        </field>
+    </record>
+
     <menuitem
         id="admin_credit_promotion_pago_menu"
         name="Credit Note Promotion"
         parent="admin_account_receivable_menu"
         sequence="10"
-        action="account.action_move_out_refund_type"/>
+        action="action_admin_receivable_move_out_refund_type"/>
 
     <menuitem
         id="admin_account_customer_payment_menu"

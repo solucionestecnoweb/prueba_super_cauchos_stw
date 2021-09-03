@@ -18,6 +18,7 @@
                 <field name="delay_91_120"/>
                 <field name="delay_older"/>
                 <field name="delay_total"/>
+                <field name="delay_total_usd"/>
             </tree>
         </field>
     </record>

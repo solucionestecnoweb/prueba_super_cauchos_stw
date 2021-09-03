@@ -108,10 +108,10 @@ class Exchange(models.TransientModel):
             else:
                 ws1.write(row,col+2, '0,00',center)
             # Transaction
-            if item.transaction:
-                ws1.write(row,col+3, item.transaction,center)
+            if item.transaction == 'buy':
+                ws1.write(row,col+3, 'Compra',center)
             else:
-                ws1.write(row,col+3, '0,00',center)
+                ws1.write(row,col+3, 'Venta',center)
             # Rate
             if item.rate:
                 ws1.write(row,col+4, float_format(self, item.rate),right)
