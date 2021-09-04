@@ -69,7 +69,7 @@ class AccountPaymentExtend(models.Model):
 
 	def get_currency_rate(self):
 		xfind = self.env['res.currency.rate'].search([
-			('name', '=', self.payment_date)
+			('name', '<=', self.payment_date)
 		], limit=1).sell_rate
 		if xfind:
 			return xfind
