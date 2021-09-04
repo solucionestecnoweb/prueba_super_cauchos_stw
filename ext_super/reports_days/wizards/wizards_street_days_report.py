@@ -39,7 +39,7 @@ class StreetDaysReport(models.TransientModel):
             }
 
     def get_lines(self):
-        xfind = self.env['account.move'].search([('type', 'in', ('out_invoice')), ('invoice_date', '>=', self.date_from), ('invoice_date', '<=', self.date_to), ('invoice_payment_state', '=', 'paid')])
+        xfind = self.env['account.move'].search([('type', '=', 'out_invoice'), ('invoice_date', '>=', self.date_from), ('invoice_date', '<=', self.date_to), ('invoice_payment_state', '=', 'paid')])
         return xfind
 
     def show_street_days(self):
@@ -53,7 +53,7 @@ class StreetDaysReport(models.TransientModel):
     def generate_xls_report(self):
 
         wb1 = xlwt.Workbook(encoding='utf-8')
-        ws1 = wb1.add_sheet(_('Street Days Report'))
+        ws1 = wb1.add_sheet(_('Reporte de Días Calle'))
         fp = BytesIO()
 
         header_content_style = xlwt.easyxf("font: name Helvetica size 20 px, bold 1, height 170; align: horiz center;")
@@ -66,7 +66,7 @@ class StreetDaysReport(models.TransientModel):
         row = 0
         col = 0
         ws1.row(row).height = 500
-        ws1.write_merge(row,row, 4, 5, _("Street Days Report"), header_content_style)
+        ws1.write_merge(row,row, 4, 5, _("Reporte de Días Calle"), header_content_style)
         xdate = self.date_now.strftime('%d/%m/%Y %I:%M:%S %p')
         xdate = datetime.strptime(xdate,'%d/%m/%Y %I:%M:%S %p') - timedelta(hours=4)
         xname = self.company_id.name
@@ -78,22 +78,22 @@ class StreetDaysReport(models.TransientModel):
 
         #CABECERA DE LA TABLA 
         ws1.col(col).width = 250
-        ws1.write(row,col+0, _("Date of Expiration"),sub_header_style_c)
+        ws1.write(row,col+0, _("Fecha de Vencimiento"),sub_header_style_c)
         ws1.col(col+0).width = int((len('xx/xx/xxxx')+10)*256)
-        ws1.write(row,col+1, _("Date of Payment"),sub_header_style_c)
+        ws1.write(row,col+1, _("Fecha de Pago"),sub_header_style_c)
         ws1.col(col+1).width = int((len('xx/xx/xxxx')+10)*256)
-        ws1.write(row,col+2, _("Street Days"),sub_header_style_c)
-        ws1.col(col+2).width = int((len('Street Days')+15)*256)
-        ws1.write(row,col+3, _("Bill"),sub_header_style_c)
-        ws1.col(col+3).width = int((len('Bill')+20)*256)
-        ws1.write(row,col+4, _("Customer"),sub_header_style_c)
-        ws1.col(col+4).width = int((len('Customer')+26)*256)
-        ws1.write(row,col+5, _("Amount in Bs"),sub_header_style_c)
-        ws1.col(col+5).width = int((len('Amount in Bs')+10)*256)
-        ws1.write(row,col+6, _("Rate"),sub_header_style_c)
-        ws1.col(col+6).width = int((len('Rate')+15)*256)
-        ws1.write(row,col+7, _("Amount in $"),sub_header_style_c)
-        ws1.col(col+7).width = int((len('Amount in $')+10)*256)
+        ws1.write(row,col+2, _("Días Calle"),sub_header_style_c)
+        ws1.col(col+2).width = int((len('Días Calle')+15)*256)
+        ws1.write(row,col+3, _("Factura"),sub_header_style_c)
+        ws1.col(col+3).width = int((len('Factura')+20)*256)
+        ws1.write(row,col+4, _("Cliente"),sub_header_style_c)
+        ws1.col(col+4).width = int((len('Cliente')+26)*256)
+        ws1.write(row,col+5, _("Monto en Bs"),sub_header_style_c)
+        ws1.col(col+5).width = int((len('Monto en Bs')+10)*256)
+        ws1.write(row,col+6, _("Tasa"),sub_header_style_c)
+        ws1.col(col+6).width = int((len('Tasa')+15)*256)
+        ws1.write(row,col+7, _("Monto en $"),sub_header_style_c)
+        ws1.col(col+7).width = int((len('Monto en $')+10)*256)
 
         center = xlwt.easyxf("align: horiz center")
         right = xlwt.easyxf("align: horiz right")
@@ -151,7 +151,7 @@ class StreetDaysReport(models.TransientModel):
             total_usd += item.amount_currency
                 
         row += 1
-        ws1.write_merge(row,row, 0, 1, ("Totals..."), sub_header_style_c)
+        ws1.write_merge(row,row, 0, 1, ("Totales..."), sub_header_style_c)
         ws1.write(row,col+2, total_street_days,center)
         ws1.write(row,col+5, total_bs,right)
         ws1.write(row,col+7, total_usd,right)
@@ -159,7 +159,7 @@ class StreetDaysReport(models.TransientModel):
         wb1.save(fp)
         out = base64.encodestring(fp.getvalue())
         fecha  = datetime.now().strftime('%d/%m/%Y') 
-        self.write({'state': 'get', 'report': out, 'name': _('Street Days Report ')+ fecha +'.xls'})
+        self.write({'state': 'get', 'report': out, 'name': _('Reporte de Días Calle ')+ fecha +'.xls'})
         return {
             'type': 'ir.actions.act_window',
             'res_model': 'street_days.report',

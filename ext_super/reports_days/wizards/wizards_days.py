@@ -52,7 +52,7 @@ class Days(models.TransientModel):
     def generate_xls_report(self):
 
         wb1 = xlwt.Workbook(encoding='utf-8')
-        ws1 = wb1.add_sheet(_('Average Days Report'))
+        ws1 = wb1.add_sheet(_('Reporte de Días Promedio'))
         fp = BytesIO()
 
         header_content_style = xlwt.easyxf("font: name Helvetica size 20 px, bold 1, height 170; align: horiz center;")
@@ -65,7 +65,7 @@ class Days(models.TransientModel):
         row = 0
         col = 0
         ws1.row(row).height = 500
-        ws1.write_merge(row,row, 6, 7, _("Average Days Report"), header_content_style)
+        ws1.write_merge(row,row, 6, 7, _("Reporte de Días Promedio"), header_content_style)
         xdate = self.date_now.strftime('%d/%m/%Y %I:%M:%S %p')
         xdate = datetime.strptime(xdate,'%d/%m/%Y %I:%M:%S %p') - timedelta(hours=4)
         xname = self.company_id.name
@@ -77,30 +77,30 @@ class Days(models.TransientModel):
 
         #CABECERA DE LA TABLA 
         ws1.col(col).width = 250
-        ws1.write(row,col+0, _("Date of Expiration"),sub_header_style_c)
+        ws1.write(row,col+0, _("Fecha de Vencimiento"),sub_header_style_c)
         ws1.col(col+0).width = int((len('xx/xx/xxxx')+10)*256)
-        ws1.write(row,col+1, _("Date of Expiration with Slack"),sub_header_style_c)
-        ws1.col(col+1).width = int((len('xx/xx/xxxx')+20)*256)        
-        ws1.write(row,col+2, _("Date of Payment"),sub_header_style_c)
+        ws1.write(row,col+1, _("F Vence/H"),sub_header_style_c)
+        ws1.col(col+1).width = int((len('xx/xx/xxxx')+10)*256)        
+        ws1.write(row,col+2, _("Fecha de Pago"),sub_header_style_c)
         ws1.col(col+2).width = int((len('xx/xx/xxxx')+10)*256)
-        ws1.write(row,col+3, _("Average Days"),sub_header_style_c)
-        ws1.col(col+3).width = int((len('Average Days')+10)*256)
-        ws1.write(row,col+4, _("Average Days with Slack"),sub_header_style_c)
-        ws1.col(col+4).width = int((len('Average Days with Slack')+10)*256)
-        ws1.write(row,col+5, _("Street Days"),sub_header_style_c)
-        ws1.col(col+5).width = int((len('Street Days')+10)*256)
-        ws1.write(row,col+6, _("Payment Reference"),sub_header_style_c)
-        ws1.col(col+6).width = int((len('Payment Reference')+20)*256)
-        ws1.write(row,col+7, _("Bill"),sub_header_style_c)
-        ws1.col(col+7).width = int((len('Bill')+20)*256)
-        ws1.write(row,col+8, _("Customer"),sub_header_style_c)
-        ws1.col(col+8).width = int((len('Customer')+26)*256)
-        ws1.write(row,col+9, _("Amount in Bs"),sub_header_style_c)
-        ws1.col(col+9).width = int((len('Amount in Bs')+10)*256)
-        ws1.write(row,col+10, _("Rate"),sub_header_style_c)
-        ws1.col(col+10).width = int((len('Rate')+15)*256)
-        ws1.write(row,col+11, _("Amount in $"),sub_header_style_c)
-        ws1.col(col+11).width = int((len('Amount in $')+10)*256)
+        ws1.write(row,col+3, _("Días Prom"),sub_header_style_c)
+        ws1.col(col+3).width = int((len('Días Prom')+4)*256)
+        ws1.write(row,col+4, _("Días Prom/H"),sub_header_style_c)
+        ws1.col(col+4).width = int((len('Días Prom/H')+4)*256)
+        ws1.write(row,col+5, _("Días C"),sub_header_style_c)
+        ws1.col(col+5).width = int((len('Días C')+4)*256)
+        ws1.write(row,col+6, _("Nro Pago"),sub_header_style_c)
+        ws1.col(col+6).width = int((len('Nro Pago')+20)*256)
+        ws1.write(row,col+7, _("Doc. Afect"),sub_header_style_c)
+        ws1.col(col+7).width = int((len('Doc. Afect')+20)*256)
+        ws1.write(row,col+8, _("Cliente"),sub_header_style_c)
+        ws1.col(col+8).width = int((len('Cliente')+26)*256)
+        ws1.write(row,col+9, _("Monto en Bs"),sub_header_style_c)
+        ws1.col(col+9).width = int((len('Monto en Bs')+10)*256)
+        ws1.write(row,col+10, _("Tasa"),sub_header_style_c)
+        ws1.col(col+10).width = int((len('Tasa')+15)*256)
+        ws1.write(row,col+11, _("Monto en $"),sub_header_style_c)
+        ws1.col(col+11).width = int((len('Monto en $')+10)*256)
 
         center = xlwt.easyxf("align: horiz center")
         right = xlwt.easyxf("align: horiz right")
@@ -182,7 +182,7 @@ class Days(models.TransientModel):
             total_usd += item.amount_currency
                 
         row += 1
-        ws1.write_merge(row,row, 0, 2, ("Totals..."), sub_header_style_c)
+        ws1.write_merge(row,row, 0, 2, ("Totales..."), sub_header_style_c)
         ws1.write(row,col+3, total_days,center)
         ws1.write(row,col+4, total_slack_days,center)
         ws1.write(row,col+5, total_street_days,center)
@@ -192,7 +192,7 @@ class Days(models.TransientModel):
         wb1.save(fp)
         out = base64.encodestring(fp.getvalue())
         fecha  = datetime.now().strftime('%d/%m/%Y') 
-        self.write({'state': 'get', 'report': out, 'name': _('Average Days Report ')+ fecha +'.xls'})
+        self.write({'state': 'get', 'report': out, 'name': _('Reporte de Días Promedio ')+ fecha +'.xls'})
         return {
             'type': 'ir.actions.act_window',
             'res_model': 'days.report',

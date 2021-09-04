@@ -1,6 +1,6 @@
 <odoo>
 
-    <data noupdate="0">
+    <data>
         <record id="wizard_closing_report" model="ir.ui.view">
             <field name="name">Asistente de Reporte de Cierre de Cobranza</field>
             <field name="model">closing.report</field>

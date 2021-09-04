@@ -8,7 +8,7 @@
     <report
             id="action_days_report"
             model="days.report"
-            string="days report"
+            string="Reporte_días"
             report_type="qweb-pdf"
             name="reports_days.days_report"
             file="reports_days.days_report"
@@ -25,12 +25,12 @@
                             <img t-if="o.company_id.logo" t-att-src="'data:image/png;base64,%s' % to_text(o.company_id.logo)" style="max-height: 100px; max-width: 150px; margin-top:22px;"/>
                         </div>
                         <div class="col-4 text-center"><br/>
-                            <b style="font-size:20px;">Collections</b><br/>
+                            <b style="font-size:20px;">Cobranzas</b><br/>
                             <b style="font-size:12px;"><t t-esc="o.company_id.name"/> <t t-esc="o.company_id.vat"/></b><br/>
-                            <small style="font-size:12px;">From: <t t-esc="o.date_from.strftime('%d/%m/%y')"/> To: <t t-esc="o.date_to.strftime('%d/%m/%y')"/></small><br/>
+                            <small style="font-size:12px;">Desde: <t t-esc="o.date_from.strftime('%d/%m/%y')"/> Hasta: <t t-esc="o.date_to.strftime('%d/%m/%y')"/></small><br/>
                         </div>
                         <div class="col-4 text-center"><br/>
-                            <b style="font-size:12px;">Page <span class="page" style="font-size:12px;"/> / <span class="topage" style="font-size:12px;"/></b><br/>
+                            <b style="font-size:12px;">Página <span class="page" style="font-size:12px;"/> / <span class="topage" style="font-size:12px;"/></b><br/>
                             <b style="font-size:12px;" t-field="o.date_now"></b>
                         </div>
                     </div>
@@ -73,68 +73,66 @@
                                 <thead>
                                     <tr style="background-color: #cacaca">
                                         <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle;">
-                                            <span style="font-size:14px;">Date of Expiration</span>
+                                            <span style="font-size:14px;">F Vencimiento</span>
                                         </th>
                                         <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle;">
-                                            <span style="font-size:14px;">Date of Expiration with Slack</span>
+                                            <span style="font-size:14px;">F Vence/H</span>
                                         </th>
                                         <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle;">
-                                            <span style="font-size:14px;">Date of Payment</span>
+                                            <span style="font-size:14px;">Fecha de Pago</span>
                                         </th>
                                         <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle;">
-                                            <span style="font-size:14px;">Average Days</span>
+                                            <span style="font-size:14px;">Días Prom</span>
                                         </th>
                                         <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle;">
-                                            <span style="font-size:14px;">Average Days with Slack</span>
+                                            <span style="font-size:14px;">Días Prom/H</span>
                                         </th>
                                         <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle;">
-                                            <span style="font-size:14px;">Street Days</span>
+                                            <span style="font-size:14px;">Días C</span>
                                         </th>
                                         <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle;">
-                                            <span style="font-size:14px;">Payment Reference</span>
+                                            <span style="font-size:14px;">Nro Pago</span>
                                         </th>
                                         <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle;">
-                                            <span style="font-size:14px;">Bill</span>
+                                            <span style="font-size:14px;">Doc. Afect</span>
                                         </th>
                                         <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle;">
-                                            <span style="font-size:14px;">Customer</span>
+                                            <span style="font-size:14px;">Cliente</span>
                                         </th>
                                         <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle;">
-                                            <span style="font-size:14px;">Amount in Bs</span>
+                                            <span style="font-size:14px;">Monto en Bs</span>
                                         </th>
                                         <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle;">
-                                            <span style="font-size:14px;">Rate</span>
+                                            <span style="font-size:14px;">Tasa</span>
                                         </th>
                                         <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle;">
-                                            <span style="font-size:14px;">Amount in $</span>
+                                            <span style="font-size:14px;">Monto en $</span>
                                         </th>
                                     </tr>
                                 </thead>
-
-                                    <t t-set="invoices" t-value="o.get_lines()"/>
                                     
-                                    <t t-set="days_gen" t-value="0"/>
-                                    <t t-set="slack_gen" t-value="0"/>
-                                    <t t-set="street_days_gen" t-value="0"/>
-                                    <t t-set="total_bs_gen" t-value="0"/>
-                                    <t t-set="total_usd_gen" t-value="0"/>
+                                <t t-set="days_gen" t-value="0"/>
+                                <t t-set="slack_gen" t-value="0"/>
+                                <t t-set="street_days_gen" t-value="0"/>
+                                <t t-set="total_bs_gen" t-value="0"/>
+                                <t t-set="total_usd_gen" t-value="0"/>
 
                                 <tbody>
 
-                                    <t t-foreach="invoices" t-as="item">
+                                    <t t-foreach="o.get_lines()" t-as="item">
 
                                         <t t-set="currency_bs_id" t-value="item.currency_bs_id"/>
                                         <t t-set="currency_usd_id" t-value="item.currency_usd_id"/>
                                 
                                         <tr>
                                             <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center">
-                                                <span style="font-size:12px;"><t t-esc="item.invoice_date_due"/></span>
+                                                <span style="font-size:12px;"><t t-esc="item.invoice_date_due.strftime('%d/%m/%y')"/></span>
                                             </td>
                                             <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center">
-                                                <span style="font-size:12px;"><t t-esc="item.date_due_slack"/></span>
+                                                <span style="font-size:12px;"><t t-esc="item.date_due_slack.strftime('%d/%m/%y')"/></span>
                                             </td>
                                             <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center">
-                                                <span style="font-size:12px;"><t t-esc="item.payment_date"/></span>
+                                                <span style="font-size:12px;"><t t-esc="item.payment_date.strftime('%d/%m/%y')"/></span>
                                             </td>
                                             <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center">
                                                 <span style="font-size:12px;"><t t-esc="item.days"/></span>
@@ -173,7 +171,7 @@
 
                                     </t>
                                     <tr>
-                                        <td colspan="3" style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center"><b style="font-size:12px;">Totals...</b></td>
+                                        <td colspan="3" style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center"><b style="font-size:12px;">Totales...</b></td>
                                         <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center"><span style="font-size:12px;"><t t-esc="days_gen"/></span></td>
                                         <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center"><span style="font-size:12px;"><t t-esc="slack_gen"/></span></td>                                        
                                         <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center"><span style="font-size:12px;"><t t-esc="street_days_gen"/></span></td>

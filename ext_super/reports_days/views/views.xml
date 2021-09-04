@@ -12,13 +12,13 @@
                 <field name= "type_name" optional="show"/>
                 <field name= "agent_id" optional="show"/>
                 <field name= "team_id" optional="show"/>
-                <field name= "payment_date" string="Payment Date" optional="show"/>
+                <field name= "payment_date" string="Fecha de Pago" optional="show"/>
                 <field name= "days" optional="show"/>
-                <field name= "amount_total" string="Amount in Bs" sum="Total in Bs" optional="show"/>
+                <field name= "amount_total" string="Monto en Bs" sum="Total en Bs" optional="show"/>
                 <field name= "currency_bs_id" string="Currency" optional="show"/>
                 <field name= "rate" optional="show"/>
-                <field name= "amount_currency" string="Amount in $" sum="Total in $" optional="show"/>
-                <field name= "currency_usd_id" string="Currency" optional="show"/>
+                <field name= "amount_currency" string="Monto en $" sum="Total en $" optional="show"/>
+                <field name= "currency_usd_id" string="Moneda" optional="show"/>
                 <field name= "invoice_payment_state" optional="show"/>
                 <field name="state" optional="show"/>
             </tree>
@@ -26,7 +26,7 @@
     </record>
 
     <record id="type_days_name_action" model="ir.actions.act_window">
-        <field name="name">Average Days Report</field>
+        <field name="name">Reporte de Promedio de Días</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">account.move</field>
         <field name="domain">[('type', 'in', ('out_invoice','in_invoice'))]</field>
@@ -34,7 +34,7 @@
         <field name="view_mode">tree</field>
     </record>
 
-    <menuitem id="menu_reports" name="Report" parent="account.menu_finance_reports" sequence="2"/>
+    <menuitem id="menu_reports" name="Reporte" parent="account.menu_finance_reports" sequence="2"/>
 
         <record id="view_tree_street" model="ir.ui.view">
         <field name="name">view.tree.street</field>
@@ -49,13 +49,13 @@
                 <field name= "agent_id" optional="show"/>
                 <field name= "team_id" optional="show"/>
                 <field name= "invoice_date_due" optional="show"/>
-                <field name= "amount_total" string="Amount in Bs" sum="Total in Bs" optional="show"/>
+                <field name= "amount_total" string="Monto en Bs" sum="Total en Bs" optional="show"/>
                 <field name= "currency_bs_id" string="Currency" optional="show"/>
                 <field name= "rate" optional="show"/>
-                <field name= "amount_currency" string="Amount in $" sum="Total in $" optional="show"/>
-                <field name= "currency_usd_id" string="Currency" optional="show"/>
+                <field name= "amount_currency" string="Monto en $" sum="Total en $" optional="show"/>
+                <field name= "currency_usd_id" string="Moneda" optional="show"/>
                 <field name= "invoice_payment_state" optional="show"/>
-                <field name= "payment_date" string="Payment Date" optional="show"/>
+                <field name= "payment_date" string="Fecha de Pago" optional="show"/>
                 <field name= "street_days" optional="show"/>
                 <field name="state" optional="show"/>
             </tree>
@@ -63,7 +63,7 @@
     </record>
 
     <record id="type_street_name_action" model="ir.actions.act_window">
-        <field name="name">Street Days Report</field>
+        <field name="name">Reporte de Días Calle</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">account.move</field>
         <field name="domain">[('type', 'in', ('out_invoice','in_invoice'))]</field>
@@ -71,5 +71,5 @@
         <field name="view_mode">tree</field>
     </record>
 
-    <menuitem id="menu_reports" name="Report" parent="account.menu_finance_reports" sequence="2"/>
+    <menuitem id="menu_reports" name="Reporte" parent="account.menu_finance_reports" sequence="2"/>
 </odoo>

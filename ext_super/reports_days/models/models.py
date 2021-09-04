@@ -13,23 +13,17 @@ import json
 class Reports(models.Model):
     _inherit ='account.move'
 
-    agent_id = fields.Many2one('res.partner', string="Sales Agent")
-    team_id = fields.Many2one('crm.team', string="Sales Team")
-    date_due_slack = fields.Date(compute='_compute_due_slack', string='Expiration Date with Slack')
-    amount_total_signed = fields.Monetary(string='Total Signed', store=True, readonly=True,
-        compute='_compute_amount', currency_field='currency_bs_id')
+    agent_id = fields.Many2one('res.partner', string="Agente de Ventas")
+    team_id = fields.Many2one('crm.team', string="Equipo de Ventas")
+    date_due_slack = fields.Date(compute='_compute_due_slack', string='Fecha de Vencimiento con Holgura')
     rate = fields.Float(compute='_compute_rate', string="Rate")
-    server = fields.Selection(string='Server', selection=[
-        ('BCV', 'Banco Central de Venezuela'),
-        ('dolar-today', 'DolarToday'),
-        ('sunacrip', 'SUNACRIP')], default='BCV')
     amount_currency = fields.Monetary(compute='_compute_amount_currency', currency_field='currency_usd_id')
     currency_bs_id = fields.Many2one('res.currency', default=lambda self: self.env.user.company_id.currency_id.id)
     currency_usd_id = fields.Many2one('res.currency', default= lambda self: self.env['res.currency'].search([('id', '=', 2)]))
-    days = fields.Integer(compute='_compute_days', string="Average Days")
-    slack = fields.Integer(compute='_compute_slack', string="Average Days with Slack")
-    street_days = fields.Integer(compute='_compute_street_days', string="Streets Days")
-    payment_date = fields.Date(compute='_compute_payment_date', string='Date', required=True, readonly=True, states={'draft': [('readonly', False)]}, copy=False, tracking=True)
+    days = fields.Integer(compute='_compute_days', string="Días Promedio")
+    slack = fields.Integer(compute='_compute_slack', string="Días Promedio sin Holgura")
+    street_days = fields.Integer(compute='_compute_street_days', string="Días Calle")
+    payment_date = fields.Date(compute='_compute_payment_date', string='Fecha', required=True, readonly=True, states={'draft': [('readonly', False)]}, copy=False, tracking=True)
 
     def _compute_payment_date(self):
         for item in self:
