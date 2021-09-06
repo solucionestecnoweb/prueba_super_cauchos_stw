@@ -63,7 +63,7 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        <span>Emisión</span> <b><t t-if="o.date_approve" t-esc="o.date_approve.strftime('%d de %B del %Y')"/></b>
+                                        <span>Emisión</span> <b><t t-if="o.date_approve" t-esc="o.date_approve.strftime('%d/%m/%Y')"/></b>
                                     </td>
                                 </tr>
                                 <tr>
@@ -73,7 +73,7 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        <span>Vencimiento</span> <b t-if="o.date_end"><t t-esc="o.date_end.strftime('%d de %B del %Y')"/></b>
+                                        <span>Vencimiento</span> <b t-if="o.date_end"><t t-esc="o.date_end.strftime('%d/%m/%Y')"/></b>
                                     </td>
                                 </tr>
                                 <tr>

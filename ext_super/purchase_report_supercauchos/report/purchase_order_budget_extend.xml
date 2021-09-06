@@ -20,7 +20,7 @@
                         <div class="col-2">
                         </div>
                         <div class="col-5 text-right">
-                            <span style="font-size:12px;"><t t-esc="o._date_now_purchase().strftime('%d/%B/%Y %r')"/></span>
+                            <span style="font-size:12px;"><t t-esc="o._date_now_purchase().strftime('%d/%m/%Y %r')"/></span>
                         </div>
                     </div>
                 </div>
@@ -64,7 +64,7 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        <span>Emisión</span> <b><t t-esc="o.date_order.strftime('%d de %B del %Y')"/></b>
+                                        <span>Emisión</span> <b><t t-esc="o.date_order.strftime('%d/%m/%Y')"/></b>
                                     </td>
                                 </tr>
                                 <tr>
