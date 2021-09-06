@@ -42,7 +42,7 @@ class PurchaseCompareMultiple(models.Model):
             for item in self.purchase_order_ids: #Inicia el ciclo para comparar precios
                 for line in item.order_line: #Ubica en las lineas de productos
                     values = {
-                        'product_id': line.product_template_id.id,
+                        'product_id': line.product_id.id,
                         'provider_id': item.partner_id.id,
                         'qty': line.product_qty,
                         'price': line.price_unit,
