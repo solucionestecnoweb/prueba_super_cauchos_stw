@@ -9,8 +9,8 @@ class ResPartnerLogicExtend(models.Model):
     payment_condition_id = fields.Many2one(comodel_name='account.condition.payment', string='Payment Condition')
     is_seller = fields.Boolean(string='Is Seller?')
 
-    delivery_schedule = fields.Date(string='Delivery Schedule')
-    direction_map = fields.Binary(string='Direction Map')
+    delivery_schedule = fields.Datetime(string='Delivery Schedule')
+    direction_map = fields.Binary(string='Direction Map')    
 
 class ResPartnerZone(models.Model):
     _name='res.partner.zone'

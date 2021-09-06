@@ -11,6 +11,7 @@
                 <!-- Add your xpath here -->
                 <xpath expr="//field[@name='authorized_transaction_ids']" position="after">
                     <button string="Approval Request" name="approvals_request_sale" type="object" class="oe_highlight" states="draft"/>
+                    <button string="Approval Request" name="approvals_request_sale" type="object" class="oe_highlight" states="sent"/>
                     <field name="is_approved" invisible="1"/>
                 </xpath>
                 <xpath expr="//field[@name='arrive_date']" position="after">
