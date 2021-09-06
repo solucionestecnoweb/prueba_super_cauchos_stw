@@ -10,7 +10,7 @@ class PurchaseRequisitions(models.Model):
     _description = 'Requisitions Request for Purchase Orders'
     _inherit = ['mail.thread', 'mail.activity.mixin']
 
-    name = fields.Char(string='Reference', default=_('Draft'), copy=False)
+    name = fields.Char(string='Reference', default='Nuevo', copy=False)
     
     employee_id = fields.Many2one(comodel_name='hr.employee', string='Employee', default=lambda self: self.env['hr.employee'].search([('user_id', '=', self.env.uid)], limit=1))
     department_id = fields.Many2one(comodel_name='hr.department', string='Department', default=lambda self: self.env['hr.employee'].search([('user_id', '=', self.env.uid)], limit=1).department_id.id)
@@ -31,7 +31,7 @@ class PurchaseRequisitions(models.Model):
 
     @api.constrains('state')
     def _compute_name(self):
-        if self.name == _('Draft') and self.state == 'confirmed':
+        if self.name == 'Nuevo' and self.state == 'confirmed':
             self.name = self.env['ir.sequence'].next_by_code('purchase.requisition.seq')
     
     @api.onchange('employee_id')
