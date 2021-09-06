@@ -50,7 +50,7 @@
                 <field name= "team_id" optional="show"/>
                 <field name= "invoice_date_due" optional="show"/>
                 <field name= "amount_total" string="Monto en Bs" sum="Total en Bs" optional="show"/>
-                <field name= "currency_bs_id" string="Currency" optional="show"/>
+                <field name= "currency_bs_id" string="Moneda" optional="show"/>
                 <field name= "rate" optional="show"/>
                 <field name= "amount_currency" string="Monto en $" sum="Total en $" optional="show"/>
                 <field name= "currency_usd_id" string="Moneda" optional="show"/>

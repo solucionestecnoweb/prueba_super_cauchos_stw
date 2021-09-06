@@ -89,16 +89,32 @@ class PurchaseRequisitions(models.Model):
             item.state = 'reject'
 
     def show_orders(self):
-        self.ensure_one()
-        res = self.env.ref('purchase.purchase_form_action').read()[0]
-        res['domain'] = str([('requisition_id','=',self.id)])
-        return res
+        # self.ensure_one()
+        # res = self.env.ref('purchase.purchase_form_action').read()[0]
+        # res['domain'] = str([('requisition_id','=',self.id)])
+        # return res
+        return {
+            "type": "ir.actions.act_window",
+            "res_model": "purchase.order",
+            "context" : "{'default_requisition_id':"+ str(self.id) + "}",
+            "views": [[self.env.ref('purchase.purchase_order_view_tree').id, "tree"],[False, "form"]],
+            "domain": [['requisition_id', '=', self.id]],
+            "name": "Orden de Compra",
+        }
 
     def show_picking(self):
-        self.ensure_one()
-        res = self.env.ref('stock.action_picking_tree_all').read()[0]
-        res['domain'] = str([('requisition_id','=',self.id)])
-        return res
+        # self.ensure_one()
+        # res = self.env.ref('stock.action_picking_tree_all').read()[0]
+        # res['domain'] = str([('requisition_id','=',self.id)])
+        # return res
+        return {
+            "type": "ir.actions.act_window",
+            "res_model": "stock.picking",
+            "context" : "{'default_requisition_id':"+ str(self.id) + "}",
+            "views": [[self.env.ref('stock.vpicktree').id, "tree"],[False, "form"]],
+            "domain": [['requisition_id', '=', self.id]],
+            "name": "Orden de Entrega",
+        }
 
     def approvals_request(self):
         xfind = self.env['approval.request'].search([('requisition_id', '=', self.id), ('request_status', 'not in', ['refused', 'cancel'])])
