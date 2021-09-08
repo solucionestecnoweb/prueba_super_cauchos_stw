@@ -40,6 +40,12 @@ class Exchange(models.Model):
                 rate_value = rate
             item.rate = rate_value
 
+    @api.onchange('request')
+    def _onchange_rate(self):
+        rate = self.env['res.currency.rate'].search([('name','=', self.request)], limit=1).sell_rate
+        if not rate:
+            return {'warning': {'message':'No existe una tasa para esta fecha'}}
+
     def calculate(self):
         if(self.origin_currency_id.name == 'USD' or self.origin_currency_id.name == 'EUR'):
             self.final_amount = self.amount * self.rate
