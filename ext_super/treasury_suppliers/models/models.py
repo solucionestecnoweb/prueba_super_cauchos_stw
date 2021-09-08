@@ -19,7 +19,7 @@ class Suppliers(models.Model):
             attachment_ids = []
             attach = {}
 
-            result_pdf, type = self.env['ir.actions.report']._get_report_from_name('account.action_report_payment_receipt')._render_qweb_pdf(self.id)
+            result_pdf, type = self.env['ir.actions.report']._get_report_from_name('account_move_extend_fields_reports.account_payment_extend').render_qweb_pdf(self.id)
             attach['name'] = 'Recibo de Pago.pdf' 
             attach['type'] = 'binary'
             attach['datas'] = encodestring(result_pdf)

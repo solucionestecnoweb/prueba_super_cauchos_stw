@@ -38,7 +38,7 @@ class Internal(models.TransientModel):
     communication = fields.Char(string='Memo')
     payment_concept = fields.Char(string='Concepto de Pago')
 
-    partner_type = fields.Selection([('customer', 'Cliente'), ('supplier', 'Proveedor')], default='Proveedor')
+    partner_type = fields.Selection([('customer', 'Cliente'), ('supplier', 'Proveedor')], default='supplier')
 
     state = fields.Selection([('choose', 'choose'), ('get', 'get')],default='choose')
     report = fields.Binary('Prepared file', filters='.xls', readonly=True)
