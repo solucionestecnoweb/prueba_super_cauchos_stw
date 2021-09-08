@@ -29,18 +29,13 @@ class AccountMoveExtend(models.Model):
 			return {'warning': {'message':'El cliente posee un anticipo disponible'}}
 	
 	def get_currency_rate(self):
-		xfind = self.env['res.currency.rate.server'].search([
-			('name.name', '=', 'USD')
-		], limit=1)
-		for item in xfind.res_currency:
-			if item.name == self.invoice_date:
-				return item.sell_rate
-			elif item.name == (self.invoice_date - timedelta(days=1)):
-				return item.sell_rate
-			elif item.name == (self.invoice_date + timedelta(days=1)):
-				return item.sell_rate
-			else:
-				return 1
+		xfind = self.env['res.currency.rate'].search([
+			('name', '=', self.invoice_date)
+		], limit=1).sell_rate
+		if xfind:
+			return xfind
+		else:
+			return 1
 
 	def invoice_letter_bs(self):
 		return {'type': 'ir.actions.report','report_name': 'account_move_extend_fields_reports.account_move_invoice_extend_multirepuestos_bs','report_type':"qweb-pdf"}

@@ -21,7 +21,7 @@
                             <b style="font-size:12px;">Factura: <t t-esc="o.name"/></b><br/>
                             <b style="font-size:12px;">Emisión: <t t-esc="o.invoice_date.strftime('%d/%m/%Y')"/></b><br/>
                             <t t-if="o.invoice_payment_term_id">
-                                <b style="font-size:12px;">Vencimiento: <t t-esc="o.invoice_payment_term_id.name.strftime('%d/%m/%Y')"/></b><br/>
+                                <b style="font-size:12px;">Vencimiento: <t t-esc="o.invoice_payment_term_id.name"/></b><br/>
                             </t>
                             <t t-else="">
                                 <b style="font-size:12px;">Vencimiento: <t t-esc="o.invoice_date_due.strftime('%d/%m/%Y')"/></b><br/>
