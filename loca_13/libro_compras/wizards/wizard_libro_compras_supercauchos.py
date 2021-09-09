@@ -403,7 +403,7 @@ class libro_ventas(models.TransientModel):
         fec_hasta = self.line.formato_fecha2(self.date_to)
         ws1.write(row, col+1, fec_hasta, sub_header_content_style)
         row += 2
-        ws1.write_merge(row, row, 15, 21,"Compras Internas o Importacion Gravada",sub_header_style_c)
+        ws1.write_merge(row, row, 13, 18,"Compras Internas o Importacion Gravada",sub_header_style_c)
         row += 1
         #CABECERA DE LA TABLA 
         ws1.write(row,col+0,"#",sub_header_style_c)
@@ -413,56 +413,43 @@ class libro_ventas(models.TransientModel):
         ws1.col(col+2).width = int((len('J-456987531')+2)*256)
         ws1.write(row,col+3,"Nombre Razon Social",sub_header_style_c)
         ws1.col(col+3).width = int(len('Nombre Razon Social')*256)
-        ws1.write(row,col+4,"Tipo de Persona",sub_header_style_c)
-        ws1.col(col+4).width = int(len('Tipo de Persona')*256)
-        ws1.write(row,col+5,"Numero de Planilla de exportacion",sub_header_style_c)
-        ws1.col(col+5).width = int(len('Numero de Planilla de Importaciones')*256)
+        ws1.write(row,col+4,"Tipo de Doc",sub_header_style_c)
+        ws1.col(col+4).width = int((len('Tipo de Doc')+2)*256)
+        ws1.write(row,col+5,"Nro Factura / Entrega",sub_header_style_c)
+        ws1.col(col+5).width = int(len('Nro. Factura / Entrega')*256)
+        ws1.write(row,col+6,"Nro de Control",sub_header_style_c)
+        ws1.col(col+6).width = int(len('Nro de control')*256)
 
-        ws1.write(row,col+6,"Número Expediente Importaciones",sub_header_style_c)
-        ws1.col(col+6).width = int(len('Número Expediente Importaciones')*256)
-        ws1.write(row,col+7,"Fecha de Importaciones",sub_header_style_c)
-        ws1.col(col+7).width = int(len('Fecha de Importaciones')*256)
+        ws1.write(row,col+7,"Tipo de transacc.",sub_header_style_c)
+        ws1.col(col+7).width = int(len('Tipo de transacc.')*256)
+        ws1.write(row,col+8,"Numero de Planilla de exportacion",sub_header_style_c)
+        ws1.col(col+8).width = int(len('Numero de Planilla de Importaciones')*256)
+        ws1.write(row,col+9,"Número Expediente Importaciones",sub_header_style_c)
+        ws1.col(col+9).width = int(len('Número Expediente Importaciones')*256)
+        ws1.write(row,col+10,"Nro Factura Afectada",sub_header_style_c)
+        ws1.col(col+10).width = int(len('Nro de factura afectada')*256)
+        ws1.write(row,col+11,"Base Imponible Comp. No Ded",sub_header_style_c)
+        ws1.col(col+11).width = int(len('Base Imponible Comp. No Ded')*256)
 
-        ws1.write(row,col+8,"Nro Factura / Entrega",sub_header_style_c)
-        ws1.col(col+8).width = int(len('Nro. Factura / Entrega')*256)
-        ws1.write(row,col+9,"Nro de Control",sub_header_style_c)
-        ws1.col(col+9).width = int(len('Nro de control')*256)
-        ws1.write(row,col+10,"Nro de nota de debito",sub_header_style_c)
-        ws1.col(col+10).width = int(len('Nro de nota de debito')*256)
-        ws1.write(row,col+11,"Numero de nota de credito ",sub_header_style_c)
-        ws1.col(col+11).width = int(len('Numero de nota de credito')*256)
-        ws1.write(row,col+12,"Nro Factura Afectada",sub_header_style_c)
-        ws1.col(col+12).width = int(len('Nro de factura afectada')*256)
-        ws1.write(row,col+13,"Tipo de transacc.",sub_header_style_c)
-        ws1.col(col+13).width = int(len('Tipo de transacc.')*256)
-        ws1.write(row,col+14,"Compras Incluyendo el IVA",sub_header_style_c)
-        ws1.col(col+14).width = int(len('Compras Incluyendo el IVA')*256)
-        ws1.write(row,col+15,"Valor Total de Importaciones",sub_header_style_c)
-        ws1.col(col+15).width = int(len('Valor Total de Importacione')*256)
-        ws1.write(row,col+16,"Compras Exentas o Exoneradas",sub_header_style_c)
-        ws1.col(col+16).width = int(len('Compras Exentas o Exoneradas')*256)
+        ws1.write(row,col+12,"I.V.A. Alic. Comp. No Ded",sub_header_style_c)
+        ws1.col(col+12).width = int(len('I.V.A. Alic. Comp. No Ded')*256)
+        ws1.write(row,col+13,"Compras Incluyendo el IVA",sub_header_style_c)
+        ws1.col(col+13).width = int(len('Compras Incluyendo el IVA')*256)
+        ws1.write(row,col+14,"Compras Exentas o Exoneradas",sub_header_style_c)
+        ws1.col(col+14).width = int(len('Compras Exentas o Exoneradas')*256)
+        ws1.write(row,col+15,"Monto Alic. Gral. Base Imponible",sub_header_style_c)
+        ws1.col(col+15).width = int(len('Monto Alic. Gral. Base Imponible')*256)
         # CONTRIBUYENTES
-        ws1.write(row,col+17,"Base Imponible",sub_header_style_c)
-        ws1.col(col+17).width = int(len('Base Imponible')*256)
-        ws1.write(row,col+18,"Alicuota Reducida",sub_header_style_c)
-        ws1.col(col+18).width = int(len('Alicuota Reducida')*256)
-        ws1.write(row,col+19,"Impuesto Iva",sub_header_style_c)
-        ws1.col(col+19).width = int(len('Impuesto Iva')*256)
-        ws1.write(row,col+20,"Alicuota General",sub_header_style_c)
-        ws1.col(col+20).width = int(len('Alicuota General')*256)
-        ws1.write(row,col+21,"Base Imponible",sub_header_style_c)
-        ws1.col(col+21).width = int(len('Base Imponible')*256)
-        ws1.write(row,col+22,"Alicuota General + Adicional",sub_header_style_c)
-        ws1.col(col+22).width = int(len('Alicuota General + Adicional')*256)
-        ws1.write(row,col+23,"Impuesto Iva",sub_header_style_c)
-        ws1.col(col+23).width = int(len('Impuesto Iva')*256)
-        
-        ws1.write(row,col+24,"Iva retenido (Vendedor)",sub_header_style_c)
-        ws1.col(col+24).width = int(len('Iva retenido (Vendedor)')*256)
-        ws1.write(row,col+25,"Nro Comprobante",sub_header_style_c)
-        ws1.col(col+25).width = int(len('Nro Comprobante')*256)
-        ws1.write(row,col+26,"Fecha Comp.",sub_header_style_c)
-        ws1.col(col+26).width = int(len('Fecha Comp.')*256)
+        ws1.write(row,col+16,"% Alic. I.V.A.",sub_header_style_c)
+        ws1.col(col+16).width = int(len('% Alic. I.V.A.')*256)
+        ws1.write(row,col+17,"Monto I.V.A. alicuota Gral. 16%",sub_header_style_c)
+        ws1.col(col+17).width = int(len('Monto I.V.A. alicuota Gral. 16%')*256)
+        ws1.write(row,col+18,"Monto I.V.A. alicuota Redu. 8%",sub_header_style_c)
+        ws1.col(col+18).width = int(len('Monto I.V.A. alicuota Redu. 8%')*256)
+        ws1.write(row,col+19,"Nro Comprobante",sub_header_style_c)
+        ws1.col(col+19).width = int(len('Nro Comprobante')*256)
+        ws1.write(row,col+20,"Fecha Comp.",sub_header_style_c)
+        ws1.col(col+20).width = int(len('Fecha Comp.')*256)
 
         center = xlwt.easyxf("align: horiz center")
         right = xlwt.easyxf("align: horiz right")
@@ -504,6 +491,10 @@ class libro_ventas(models.TransientModel):
         total_debitos=0
         total_retenidos=0
 
+        total_base_noded = 0
+        total_iva_noded = 0
+        total_base_imponible = 0
+
         for invoice in self.line.sorted(key=lambda x: (x.invoice_id.invoice_date,x.invoice_id.id ),reverse=False):
             # variables para los resumenes de totales
             acum_base_general=acum_base_general+invoice.base_general
@@ -515,198 +506,159 @@ class libro_ventas(models.TransientModel):
                 acum_ret_general=acum_ret_general+invoice.retenido_general
                 acum_ret_adicional=acum_ret_adicional+invoice.retenido_adicional
                 acum_ret_reducida=acum_ret_reducida+invoice.retenido_reducida
+            base_noded = 0
+            iva_noded = 0
+            for val in invoice.invoice_id.alicuota_line_ids:
+                base_noded += val.total_base_nd
+                iva_noded += val.total_valor_iva_nd
+                total_base_noded += val.total_base_nd
+                total_iva_noded += val.total_valor_iva_nd
+
             # fin variables resumenes totales
             row += 1
+            # #
             ws1.write(row,col+0,str(numero),center)
+            # Fecha de Documento
             ws1.write(row,col+1,str(invoice.formato_fecha2(invoice.invoice_id.invoice_date)),center)
+            # Rif
             ws1.write(row,col+2,str(invoice.doc_cedula(invoice.partner.id)),center)
+            # Nombre Razón Social
             ws1.write(row,col+3,str(invoice.partner.name),center)
-            if invoice.partner.people_type == 'resident_nat_people':
-                ws1.write(row,col+4,'PNRE',center)
-            elif invoice.partner.people_type == 'non_resit_nat_people':
-                ws1.write(row,col+4,'PNNR',center)
-            elif invoice.partner.people_type == 'domi_ledal_entity':
-                ws1.write(row,col+4,'PJDO',center)
-            elif invoice.partner.people_type == 'legal_ent_not_domicilied':
-                ws1.write(row,col+4,'PJND',center)
-            else :
-                ws1.write(row,col+4,'')
-
+            # Tipo de Doc.
+            ws1.write(row,col+4, invoice.invoice_id.journal_id.code,center)
+            # Nro Factura / Entrega
+            ws1.write(row,col+5,str(invoice.invoice_number),center)
+            # Tipo de Transacc.
+            ws1.write(row,col+6,str(invoice.tipo_doc+'-Reg'),center)
+            # Nro. de Control
+            ws1.write(row,col+7,str(invoice.invoice_ctrl_number),center)
+            # Número de Planilla de Importaciones
             if invoice.invoice_id.import_form_num:
-                ws1.write(row,col+5,str(invoice.invoice_id.import_form_num),center) # planilla de exportacion
-            else:
-                ws1.write(row,col+5,'')
-
-            if invoice.invoice_id.import_dossier:
-                ws1.write(row,col+6,invoice.invoice_id.import_dossier,center)
-            else:
-                ws1.write(row,col+6,'')
-
-            if invoice.invoice_id.import_date:
-                ws1.write(row,col+7,invoice.invoice_id.import_date,center)
-            else:
-                ws1.write(row,col+7,'')
-
-            if invoice.tipo_doc == '01':
-                ws1.write(row,col+8,str(invoice.invoice_number),center)
+                ws1.write(row,col+8,str(invoice.invoice_id.import_form_num),center) # planilla de exportacion
             else:
                 ws1.write(row,col+8,'')
-
-            ws1.write(row,col+9,str(invoice.invoice_ctrl_number),center)
-
-            if invoice.tipo_doc == '02':
-                ws1.write(row,col+10,str(invoice.invoice_number),center)
+            # Número Expediente Importaciones
+            if invoice.invoice_id.import_dossier:
+                ws1.write(row,col+9,invoice.invoice_id.import_dossier,center)
+            else:
+                ws1.write(row,col+9,'')
+            # Nro. Factura Afectada
+            if invoice.tipo_doc == '03' or invoice.tipo_doc == '02':
+                ws1.write(row,col+10,str(invoice.ref),center)
             else:
                 ws1.write(row,col+10,' ',center)
-            if invoice.tipo_doc == '03':
-                 ws1.write(row,col+11,str(invoice.invoice_number),center)
-            else:
-                ws1.write(row,col+11,' ',center)
 
-            if invoice.tipo_doc == '03' or invoice.tipo_doc == '02':
-                ws1.write(row,col+12,str(invoice.ref),center)
-            else:
-                ws1.write(row,col+12,' ',center)
-
-            ws1.write(row,col+13,str(invoice.tipo_doc+'-Reg'),center)
-
-# corregir a partir de aqui
+            # Base Imponible Comp. No Ded
+            ws1.write(row,col+11, base_noded,right)
+            # I.V.A. Alic. Comp. No Ded
+            ws1.write(row,col+12, iva_noded,right)
+            # Total Compras Incluyendo Iva
             if invoice.invoice_id.partner_id.vendor != 'international':
-                ws1.write(row,col+14,invoice.sale_total,right) # total venta iva incluido
+                ws1.write(row,col+13,invoice.sale_total,right) # total venta iva incluido
                 acum_venta_iva=acum_venta_iva+invoice.sale_total
-
-            if invoice.invoice_id.partner_id.vendor == 'international':
-                ws1.write(row,col+15,invoice.sale_total,right) # total valor FOB
-                acum_fob=acum_fob+invoice.sale_total
-
+            # Compras Exentas o Exoneradas 
             if invoice.invoice_id.partner_id.vendor != 'international':
-                ws1.write(row,col+16,invoice.total_exento,right) # total exento
+                ws1.write(row,col+14,invoice.total_exento,right) # total exento
                 acum_exento=acum_exento+invoice.total_exento
-
-            # CAMPOS CONTRIBUYENTES ***************
-
-            if invoice.invoice_id.partner_id.vendor != 'international':
-                ws1.write(row,col+17,invoice.base_reducida,right)
+            # Monto Alic. Gral. Base Imponible
+            if invoice.invoice_id.partner_id.vendor != 'international' and invoice.base_reducida != 0:
+                ws1.write(row,col+15,invoice.base_reducida,right)
+                total_base_imponible += invoice.base_reducida
                 acum_b_reducida=acum_b_reducida+invoice.base_reducida
-
+            elif invoice.invoice_id.partner_id.vendor != 'international' and invoice.base_general != 0:
+                ws1.write(row,col+15,invoice.base_general,right)
+                total_base_imponible += invoice.base_general
+                acum_b_general=acum_b_general+(invoice.base_general)
+            else:
+                ws1.write(row,col+15, 0,right)
+            # % Alic. I.V.A.
             if invoice.invoice_id.partner_id.vendor != 'international':
                 if invoice.base_reducida!=0:
-                    ws1.write(row,col+18,"8%",center)
+                    ws1.write(row,col+16,"8%",center)
+                elif invoice.base_general!=0:
+                    ws1.write(row,col+16,"16%",center)
                 else:
-                    ws1.write(row,col+18," ",center)
-
+                    ws1.write(row,col+16," ",center)
+            # Monto I.V.A. alicuota Gral. 16%
             if invoice.invoice_id.partner_id.vendor != 'international':
-                ws1.write(row,col+19,invoice.alicuota_reducida,right)
+                ws1.write(row,col+17,invoice.alicuota_general,right)
+                acum_iva=acum_iva+(invoice.alicuota_general)
+            # Monto I.V.A. alicuota Redu. 8%
+            if invoice.invoice_id.partner_id.vendor != 'international':
+                ws1.write(row,col+18,invoice.alicuota_reducida,right)
                 acum_reducida=acum_reducida+invoice.alicuota_reducida
-
-            if invoice.invoice_id.partner_id.vendor != 'international':
-                if invoice.base_general!=0:
-                    ws1.write(row,col+20,"16%",center)
-                else:
-                    ws1.write(row,col+20," ",center)
-
-            if invoice.invoice_id.partner_id.vendor != 'international':
-                ws1.write(row,col+21,invoice.base_general+invoice.base_adicional,right)
-                acum_b_general=acum_b_general+(invoice.base_general+invoice.base_adicional)
-
-            if invoice.invoice_id.partner_id.vendor != 'international':
-                if invoice.base_adicional!=0:
-                    ws1.write(row,col+22,"31%",center)
-                else:
-                    ws1.write(row,col+22," ",center)
-
-            if invoice.invoice_id.partner_id.vendor != 'international':
-                ws1.write(row,col+23,invoice.alicuota_general+invoice.alicuota_adicional,right)
-                acum_iva=acum_iva+(invoice.alicuota_general+invoice.alicuota_adicional)
-
-            
+            # Nro Comprobante
+            # Fecha Comp.
             if invoice.vat_ret_id.state == 'posted':
-                if invoice.invoice_id.partner_id.vendor != 'international':
-                    ws1.write(row,col+24,invoice.iva_retenido,right) # IVA RETENIDO
-                    acum_iva_ret=acum_iva_ret+invoice.iva_retenido
+                ws1.write(row,col+19,str(invoice.retenido),right) # NRO CONTROL
+                ws1.write(row,col+20,str(invoice.formato_fecha2(invoice.retenido_date)),right) # FECHA COMPROBANTE
 
-            if invoice.vat_ret_id.state == 'posted':
-                ws1.write(row,col+25,str(invoice.retenido),right) # NRO CONTROL
-                ws1.write(row,col+26,str(invoice.formato_fecha2(invoice.retenido_date)),right) # FECHA COMPROBANTE
             numero=numero+1
+
 
         # ******* FILA DE TOTALES **********
         row=row+1
-        ws1.write(row,col+13," TOTALES",sub_header_style)
-        ws1.write(row,col+14,str(acum_venta_iva),right)
-        ws1.write(row,col+15,str(acum_fob),right)
-        ws1.write(row,col+16,str(acum_exento),right)
-        # contribuyentes
-        ws1.write(row,col+17,str(acum_b_reducida),right)
-        ws1.write(row,col+18,'---',center)
-        ws1.write(row,col+19,str(acum_reducida),right)
-        #ws1.write(row,col+17,str(),right)
+        ws1.write(row,col+10," TOTALES",sub_header_style)
+        ws1.write(row,col+11,str(total_base_noded),right)
+        ws1.write(row,col+12,str(total_iva_noded),right)
+        ws1.write(row,col+13,str(acum_venta_iva),right)
+        ws1.write(row,col+14,str(acum_exento),right)
+        ws1.write(row,col+15,str(total_base_imponible),right)
+        ws1.write(row,col+16,'---',center)
+        ws1.write(row,col+17,str(acum_iva),right)
+        ws1.write(row,col+18,str(acum_reducida),right)
+        ws1.write(row,col+19,'---',center)
         ws1.write(row,col+20,'---',center)
-        ws1.write(row,col+21,str(acum_b_general),right)
-        ws1.write(row,col+22,'---',center)
-        ws1.write(row,col+23,str(acum_iva),right)
-
-        ws1.write(row,col+24,str(acum_iva_ret),right)
 
         # ********* FILA DE TITULOS DE RESUMENES DE VENTAS
         row=row+1
-        ws1.write_merge(row, row, 15, 17,"RESUMEN DE COMPRAS",sub_header_style_c)
-        ws1.write_merge(row, row, 18, 20,"Base Imponible",sub_header_style_c)
-        ws1.write_merge(row, row, 21, 22,"Crédito Fiscal",sub_header_style_c)
-        ws1.write_merge(row, row, 23, 25,"Iva Retenidos por Compras",sub_header_style_c)
+        ws1.write_merge(row, row, 11, 13,"RESUMEN DE COMPRAS",sub_header_style_c)
+        ws1.write_merge(row, row, 14, 16,"Base Imponible",sub_header_style_c)
+        ws1.write_merge(row, row, 17, 18,"Crédito Fiscal",sub_header_style_c)
+        ws1.write_merge(row, row, 19, 20,"Iva Retenidos por Compras",sub_header_style_c)
 
         # ************* fila exentas o exoneradas *********
         row=row+1
-        ws1.write_merge(row, row, 15, 17,"Compras internas Exentas o Exoneradas",right)
-        ws1.write_merge(row, row, 18, 20,acum_exento,right)
+        ws1.write_merge(row, row, 11, 13,"Compras internas Exentas o Exoneradas",right)
+        ws1.write_merge(row, row, 14, 16,acum_exento,right)
         total_bases=total_bases+acum_exento
-        ws1.write_merge(row, row, 21, 22,"0.00",right)
-        ws1.write_merge(row, row, 23, 25,"0.00",right)
+        ws1.write_merge(row, row, 17, 18,"0.00",right)
+        ws1.write_merge(row, row, 19, 20,"0.00",right)
 
         # ************* fila SOLO ALICUOTA GENERAL *********
         row=row+1
-        ws1.write_merge(row, row, 15, 17,"Compras Internas Afectadas sólo Alícuota General",right)
-        ws1.write_merge(row, row, 18, 20,acum_base_general,right)
+        ws1.write_merge(row, row, 11, 13,"Compras Internas Afectadas sólo Alícuota General",right)
+        ws1.write_merge(row, row, 14, 16,acum_base_general,right)
         total_bases=total_bases+acum_base_general
-        ws1.write_merge(row, row, 21, 22,acum_general,right)
+        ws1.write_merge(row, row, 17, 18,acum_general,right)
         total_debitos=total_debitos+(acum_general)
-        ws1.write_merge(row, row, 23, 25,acum_ret_general,right)
+        ws1.write_merge(row, row, 19, 20,acum_ret_general,right)
         total_retenidos=total_retenidos+acum_ret_general
-
-        # ************* fila ALICUOTA GENERAL MAS ADICIONAL *********
-        row=row+1
-        ws1.write_merge(row, row, 15, 17,"Compras Internas Afectadas sólo Alícuota General + Adicional",right)
-        ws1.write_merge(row, row, 18, 20,acum_base_adicional,right)
-        total_bases=total_bases+acum_base_adicional
-        ws1.write_merge(row, row, 21, 22,acum_adicional,right)
-        total_debitos=total_debitos+acum_adicional
-        ws1.write_merge(row, row, 23, 25,acum_ret_adicional,right)
-        total_retenidos=total_retenidos+acum_ret_adicional
 
         # ************* fila REDUCIDA *********
         row=row+1
-        ws1.write_merge(row, row, 15, 17,"Compras Internas Afectadas sólo Alícuota Reducida",right)
-        ws1.write_merge(row, row, 18, 20,acum_base_reducida,right)
+        ws1.write_merge(row, row, 11, 13,"Compras Internas Afectadas sólo Alícuota Reducida",right)
+        ws1.write_merge(row, row, 14, 16,acum_base_reducida,right)
         total_bases=total_bases+acum_base_reducida
-        ws1.write_merge(row, row, 21, 22,acum_reducida+acum_reducida2,right)
+        ws1.write_merge(row, row, 17, 18,acum_reducida+acum_reducida2,right)
         total_debitos=total_debitos+(acum_reducida+acum_reducida2)
-        ws1.write_merge(row, row, 23, 25,acum_ret_reducida,right)
+        ws1.write_merge(row, row, 19, 20,acum_ret_reducida,right)
         total_retenidos=total_retenidos+acum_ret_reducida
 
         # ************* fila EXPORTACION *********
         row=row+1
-        ws1.write_merge(row, row, 15, 17,"Compras Internacionales",right)
-        ws1.write_merge(row, row, 18, 20,acum_fob,right)
+        ws1.write_merge(row, row, 11, 13,"Compras Internacionales",right)
+        ws1.write_merge(row, row, 14, 16,acum_fob,right)
         total_bases=total_bases+acum_fob
-        ws1.write_merge(row, row, 21, 22,"0.00",right)
-        ws1.write_merge(row, row, 23, 25,"0.00",right)
+        ws1.write_merge(row, row, 17, 18,"0.00",right)
+        ws1.write_merge(row, row, 19, 20,"0.00",right)
 
         # ************* fila totales*********
         row=row+1
-        ws1.write_merge(row, row, 15, 17,"TOTAL:",right)
-        ws1.write_merge(row, row, 18, 20,total_bases,right)
-        ws1.write_merge(row, row, 21, 22,total_debitos,right)
-        ws1.write_merge(row, row, 23, 25,total_retenidos,right)
+        ws1.write_merge(row, row, 11, 13,"TOTAL:",right)
+        ws1.write_merge(row, row, 14, 16,total_bases,right)
+        ws1.write_merge(row, row, 17, 18,total_debitos,right)
+        ws1.write_merge(row, row, 19, 20,total_retenidos,right)
 
         wb1.save(fp)
         out = base64.encodestring(fp.getvalue())
