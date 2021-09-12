@@ -170,7 +170,7 @@ class PurchaseCompareMultiple(models.Model):
 class PurchaseComparedPrices(models.Model):
     _name = 'purchase.compared.prices'
 
-    product_id = fields.Many2one(comodel_name='product.template', string='Product')
+    product_id = fields.Many2one(comodel_name='product.product', string='Product')
     provider_id1 = fields.Many2one(comodel_name='res.partner', string='Provider')
     qty1 = fields.Integer(string='Quantity')
     price1 = fields.Float(string='Lower price')
@@ -191,7 +191,7 @@ class PurchaseComparedPrices(models.Model):
 class PurchaseComparedPricesLines(models.Model):
     _name = 'purchase.compared.prices.lines'
 
-    product_id = fields.Many2one(comodel_name='product.template', string='Product')
+    product_id = fields.Many2one(comodel_name='product.product', string='Product')
     provider_id = fields.Many2one(comodel_name='res.partner', string='Provider')
     qty = fields.Integer(string='Quantity')
     price = fields.Float(string='Price')

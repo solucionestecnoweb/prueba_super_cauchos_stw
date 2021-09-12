@@ -19,9 +19,13 @@ class ProductPricesList(models.Model):
             for line in xfind:
                 if line.applied_on == '3_global':
                     item.prices_list_item_ids += line
-                elif line.applied_on == '2_product_category' and item.categ_id.id in (line.categ_id.id):
+                elif line.applied_on == '2_product_category' and item.categ_id in (line.categ_id):
                     item.prices_list_item_ids += line
-                elif line.applied_on == '0_product_variant' and item.product_id.id in (line.product_id.id):
+                elif line.applied_on == '2_product_category' and item.categ_id in (line.categ_id.parent_id):
+                    item.prices_list_item_ids += line
+                elif line.applied_on == '1_product' and item.product_tmpl_id in (line.product_tmpl_id):
+                    item.prices_list_item_ids += line
+                elif line.applied_on == '0_product_variant' and item.product_id in (line.product_id):
                     item.prices_list_item_ids += line
 
 class TemplatePricesList(models.Model):
@@ -36,7 +40,9 @@ class TemplatePricesList(models.Model):
             for line in xfind:
                 if line.applied_on == '3_global':
                     item.prices_list_item_ids += line
-                elif line.applied_on == '2_product_category' and item.categ_id.id in (line.categ_id.id):
+                elif line.applied_on == '2_product_category' and item.categ_id in (line.categ_id):
                     item.prices_list_item_ids += line
-                elif line.applied_on == '1_product' and item.product_tmpl_id.id in (line.product_tmpl_id.id):
+                elif line.applied_on == '2_product_category' and item.categ_id in (line.categ_id.parent_id):
+                    item.prices_list_item_ids += line
+                elif line.applied_on == '1_product' and item.product_tmpl_id in (line.product_tmpl_id):
                     item.prices_list_item_ids += line
