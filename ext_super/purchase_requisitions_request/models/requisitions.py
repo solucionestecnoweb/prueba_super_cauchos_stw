@@ -102,20 +102,6 @@ class PurchaseRequisitions(models.Model):
             "name": "Orden de Compra",
         }
 
-    def show_picking(self):
-        # self.ensure_one()
-        # res = self.env.ref('stock.action_picking_tree_all').read()[0]
-        # res['domain'] = str([('requisition_id','=',self.id)])
-        # return res
-        return {
-            "type": "ir.actions.act_window",
-            "res_model": "stock.picking",
-            "context" : "{'default_requisition_id':"+ str(self.id) + "}",
-            "views": [[self.env.ref('stock.vpicktree').id, "tree"],[False, "form"]],
-            "domain": [['requisition_id', '=', self.id]],
-            "name": "Orden de Entrega",
-        }
-
     def approvals_request(self):
         xfind = self.env['approval.request'].search([('requisition_id', '=', self.id), ('request_status', 'not in', ['refused', 'cancel'])])
         if len(xfind) == 0:
@@ -165,11 +151,6 @@ class PurchaseRequisitionsLines(models.Model):
 
 class PurchaseOrdersRequisition(models.Model):
     _inherit = 'purchase.order'
-
-    requisition_id = fields.Many2one(comodel_name='purchase.requisitions', string='Requisition')
-    
-class StockPickingRequisition(models.Model):
-    _inherit = 'stock.picking'
 
     requisition_id = fields.Many2one(comodel_name='purchase.requisitions', string='Requisition')
     

@@ -15,11 +15,14 @@ class ProductPricesList(models.Model):
     def _compute_prices_list_item(self):
         for item in self:
             item.prices_list_item_ids = False
-            xfind = self.env['product.pricelist.item'].search([
-                ('product_id', '=', item.id)
-            ])
-            if len(xfind) > 0:
-                item.prices_list_item_ids = xfind
+            xfind = self.env['product.pricelist.item'].search([])
+            for line in xfind:
+                if line.applied_on == '3_global':
+                    item.prices_list_item_ids += line
+                elif line.applied_on == '2_product_category' and item.categ_id.id in (line.categ_id.id):
+                    item.prices_list_item_ids += line
+                elif line.applied_on == '0_product_variant' and item.product_id.id in (line.product_id.id):
+                    item.prices_list_item_ids += line
 
 class TemplatePricesList(models.Model):
     _inherit = 'product.template'
@@ -29,8 +32,11 @@ class TemplatePricesList(models.Model):
     def _compute_prices_list_item(self):
         for item in self:
             item.prices_list_item_ids = False
-            xfind = self.env['product.pricelist.item'].search([
-                ('product_tmpl_id', '=', item.id)
-            ])
-            if len(xfind) > 0:
-                item.prices_list_item_ids = xfind
+            xfind = self.env['product.pricelist.item'].search([])
+            for line in xfind:
+                if line.applied_on == '3_global':
+                    item.prices_list_item_ids += line
+                elif line.applied_on == '2_product_category' and item.categ_id.id in (line.categ_id.id):
+                    item.prices_list_item_ids += line
+                elif line.applied_on == '1_product' and item.product_tmpl_id.id in (line.product_tmpl_id.id):
+                    item.prices_list_item_ids += line
