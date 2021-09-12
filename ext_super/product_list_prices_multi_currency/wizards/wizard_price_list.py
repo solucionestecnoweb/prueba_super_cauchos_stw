@@ -40,8 +40,11 @@ class PriceList(models.TransientModel):
             temp.append(category.id)
         else:
             xfind = self.env['product.category'].search([('parent_id', '=', category.id)])
-            for line in xfind:
-                temp.append(line.id)
+            if xfind:
+                for line in xfind:
+                    temp.append(line.id)
+            else:
+                temp.append(category.id)
         temp = set(temp)
         for item in temp:
             categ.append(item)
@@ -63,7 +66,7 @@ class PriceList(models.TransientModel):
 
     def _get_rate(self):
         xfind = self.env['res.currency.rate'].search([
-            ('name', '=', fields.date.today()),
+            ('name', '<=', fields.date.today()),
             ('company_id', '=', self.env.user.company_id.id)
         ], limit=1).sell_rate
         return xfind
