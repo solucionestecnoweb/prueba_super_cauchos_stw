@@ -35,6 +35,8 @@ class SaleMerchandiseTransit(models.TransientModel):
         xfind = self.env['purchase.order.line'].search([
             ('date_order', '>=', self.date_from),
             ('date_order', '<=', self.date_to),
+            ('state', 'in', ('draft', 'sent', 'purchase')),
+            ('qty_received', '=', 0),
         ])
         return xfind
 

@@ -240,7 +240,7 @@
                                                             <t t-set="ctrl" t-value="False"/>
                                                         </t>
                                                         
-                                                        <t t-elif="lines.applied_on == '0_product_variant' and item.product_id in (lines.product_id)">
+                                                        <t t-elif="lines.applied_on == '0_product_variant' and item in (lines.product_id)">
                                                             <t t-if="line.currency_id.id == 3">
                                                                 <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-right">
                                                                     <span style="font-size:12px;"><t t-esc="lines.fixed_price" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
