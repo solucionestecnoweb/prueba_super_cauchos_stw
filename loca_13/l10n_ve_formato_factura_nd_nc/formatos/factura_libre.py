@@ -46,9 +46,9 @@ class AccountMove(models.Model):
         nombre: 'l10n_ve_cuenta_retencion_iva'''
 
         self.ensure_one()
-        SEQUENCE_CODE = 'l10n_ve_nro_control_nota_entrega'
-        company_id = 1
-        IrSequence = self.env['ir.sequence'].with_context(force_company=1)
+        SEQUENCE_CODE = 'l10n_ve_nro_control_nota_entrega'+str(self.company_id.id) # loca 14
+        company_id = self.company_id.id # loca 14
+        IrSequence = self.env['ir.sequence'].with_context(force_company=company_id) # loca 14
         name = IrSequence.next_by_code(SEQUENCE_CODE)
 
         # si aún no existe una secuencia para esta empresa, cree una
@@ -60,7 +60,7 @@ class AccountMove(models.Model):
                 'implementation': 'no_gap',
                 'padding': 4,
                 'number_increment': 1,
-                'company_id': 1,
+                'company_id': company_id, # loca 14
             })
             name = IrSequence.next_by_code(SEQUENCE_CODE)
         #self.refuld_number_pro=name
@@ -132,6 +132,202 @@ class AccountMove(models.Model):
             resultado=valor
         return resultado
 
+    def get_invoice_number_cli(self):
+        '''metodo que crea el Nombre del asiento contable si la secuencia no esta creada, crea una con el
+        nombre: 'l10n_ve_cuenta_retencion_iva'''
+        name=''
+        if self.act_nota_entre==False:
+            self.ensure_one()
+            SEQUENCE_CODE = 'l10n_ve_nro_factura_cliente'+str(self.company_id.id) #loca 14
+            company_id = self.company_id.id #loca 14
+            IrSequence = self.env['ir.sequence'].with_context(force_company=company_id) #loca 14
+            name = IrSequence.next_by_code(SEQUENCE_CODE)
+
+            # si aún no existe una secuencia para esta empresa, cree una
+            if not name:
+                IrSequence.sudo().create({
+                    'prefix': 'FACT/',
+                    'name': 'Localización Venezolana Factura cliente %s' % 1,
+                    'code': SEQUENCE_CODE,
+                    'implementation': 'no_gap',
+                    'padding': 4,
+                    'number_increment': 1,
+                    'company_id': company_id, #loca 14
+                })
+                name = IrSequence.next_by_code(SEQUENCE_CODE)
+            #self.invoice_number_cli=name
+        """else:
+            name='0'"""
+        return name
+
+    def get_invoice_ctrl_number_cli(self):
+        '''metodo que crea el Nombre del asiento contable si la secuencia no esta creada, crea una con el
+        nombre: 'l10n_ve_cuenta_retencion_iva'''
+        name=''
+        if self.act_nota_entre==False:
+            self.ensure_one()
+            SEQUENCE_CODE = 'l10n_ve_nro_control_factura_cliente'+str(self.company_id.id) #loca 14
+            company_id = self.company_id.id #loca 14
+            IrSequence = self.env['ir.sequence'].with_context(force_company=company_id) # loca 14
+            name = IrSequence.next_by_code(SEQUENCE_CODE)
+
+            # si aún no existe una secuencia para esta empresa, cree una
+            if not name:
+                IrSequence.sudo().create({
+                    'prefix': '00-',
+                    'name': 'Localización Venezolana nro control Factura cliente %s' % 1,
+                    'code': SEQUENCE_CODE,
+                    'implementation': 'no_gap',
+                    'padding': 4,
+                    'number_increment': 1,
+                    'company_id': company_id, #loca 14
+                })
+                name = IrSequence.next_by_code(SEQUENCE_CODE)
+            #self.invoice_number_cli=name
+        """else:
+            name='0'"""
+        return name
+
+    def get_refuld_number_cli(self):# nota de credito cliente
+        '''metodo que crea el Nombre del asiento contable si la secuencia no esta creada, crea una con el
+        nombre: 'l10n_ve_cuenta_retencion_iva'''
+        name=''
+        if self.act_nota_entre==False:
+            self.ensure_one()
+            SEQUENCE_CODE = 'l10n_ve_nro_factura_nota_credito_cliente'+str(self.company_id.id) #loca 14
+            company_id = self.company_id.id # loca 14
+            IrSequence = self.env['ir.sequence'].with_context(force_company=company_id) # loca 14
+            name = IrSequence.next_by_code(SEQUENCE_CODE)
+
+            # si aún no existe una secuencia para esta empresa, cree una
+            if not name:
+                IrSequence.sudo().create({
+                    'prefix': 'NCC/',
+                    'name': 'Localización Venezolana Nota Credito Cliente %s' % 1,
+                    'code': SEQUENCE_CODE,
+                    'implementation': 'no_gap',
+                    'padding': 4,
+                    'number_increment': 1,
+                    'company_id': company_id, # loca 14
+                })
+                name = IrSequence.next_by_code(SEQUENCE_CODE)
+            #self.refuld_number_cli=name
+        """else:
+            name='0'"""
+        return name
+
+    def get_refuld_ctrl_number_cli(self):
+        '''metodo que crea el Nombre del asiento contable si la secuencia no esta creada, crea una con el
+        nombre: 'l10n_ve_cuenta_retencion_iva'''
+        name=''
+        if self.act_nota_entre==False:  
+            self.ensure_one()
+            SEQUENCE_CODE = 'l10n_ve_nro_control_nota_credito_cliente'+str(self.company_id.id) #loca 14
+            company_id = self.company_id.id #loca 14
+            IrSequence = self.env['ir.sequence'].with_context(force_company=company_id) #loca 14
+            name = IrSequence.next_by_code(SEQUENCE_CODE)
+
+            # si aún no existe una secuencia para esta empresa, cree una
+            if not name:
+                IrSequence.sudo().create({
+                    'prefix': '00-',
+                    'name': 'Localización Venezolana nro control Nota Credito Cliente %s' % 1,
+                    'code': SEQUENCE_CODE,
+                    'implementation': 'no_gap',
+                    'padding': 4,
+                    'number_increment': 1,
+                    'company_id': company_id, #loca 14
+                })
+                name = IrSequence.next_by_code(SEQUENCE_CODE)
+            #self.refuld_number_cli=name
+        """else:
+            name='0'"""
+        return name
+
+    def get_refuld_number_pro(self): #nota de debito Cliente
+        '''metodo que crea el Nombre del asiento contable si la secuencia no esta creada, crea una con el
+        nombre: 'l10n_ve_cuenta_retencion_iva'''
+        name=''
+        if self.act_nota_entre==False:
+            self.ensure_one()
+            SEQUENCE_CODE = 'l10n_ve_nro_factura_nota_debito_cliente'+str(self.company_id.id) #loca 14
+            company_id = self.company_id.id #loca14
+            IrSequence = self.env['ir.sequence'].with_context(force_company=company_id) #loca 14
+            name = IrSequence.next_by_code(SEQUENCE_CODE)
+
+            # si aún no existe una secuencia para esta empresa, cree una
+            if not name:
+                IrSequence.sudo().create({
+                    'prefix': 'NDC/',
+                    'name': 'Localización Venezolana Nota Debito Cliente %s' % 1,
+                    'code': SEQUENCE_CODE,
+                    'implementation': 'no_gap',
+                    'padding': 4,
+                    'number_increment': 1,
+                    'company_id': company_id, #loca 14
+                })
+                name = IrSequence.next_by_code(SEQUENCE_CODE)
+            #self.refuld_number_pro=name
+        """else:
+            name='0'"""
+        return name
+
+    def get_refuld_ctrl_number_pro(self):
+        '''metodo que crea el Nombre del asiento contable si la secuencia no esta creada, crea una con el
+        nombre: 'l10n_ve_cuenta_retencion_iva'''
+        name=''
+        if self.act_nota_entre==False:
+            self.ensure_one()
+            SEQUENCE_CODE = 'l10n_ve_nro_control_nota_debito_cliente'+str(self.company_id.id) #loca 14
+            company_id = self.company_id.id #loca 14
+            IrSequence = self.env['ir.sequence'].with_context(force_company=company_id) #loca 14
+            name = IrSequence.next_by_code(SEQUENCE_CODE)
+
+            # si aún no existe una secuencia para esta empresa, cree una
+            if not name:
+                IrSequence.sudo().create({
+                    'prefix': '00-',
+                    'name': 'Localización Venezolana Nro control Nota debito cliente %s' % 1,
+                    'code': SEQUENCE_CODE,
+                    'implementation': 'no_gap',
+                    'padding': 4,
+                    'number_increment': 1,
+                    'company_id': company_id, # loca 14
+                })
+                name = IrSequence.next_by_code(SEQUENCE_CODE)
+            #self.refuld_number_pro=name
+        """else:
+            name='0'"""
+        return name
+
+    def get_invoice_ctrl_number_unico(self):
+        '''metodo que crea el Nombre del asiento contable si la secuencia no esta creada, crea una con el
+        nombre: 'l10n_ve_cuenta_retencion_iva'''
+        name=''
+        if self.act_nota_entre==False:
+            self.ensure_one()
+            SEQUENCE_CODE = 'l10n_ve_nro_control_unico_formato_libre'+str(self.company_id.id) #loca 14
+            company_id = self.company_id.id #loca 14
+            IrSequence = self.env['ir.sequence'].with_context(force_company=company_id) #loca 14
+            name = IrSequence.next_by_code(SEQUENCE_CODE)
+
+            # si aún no existe una secuencia para esta empresa, cree una
+            if not name:
+                IrSequence.sudo().create({
+                    'prefix': '00-',
+                    'name': 'Localización Venezolana nro control Unico Factura Forma Libre %s' % 1,
+                    'code': SEQUENCE_CODE,
+                    'implementation': 'no_gap',
+                    'padding': 4,
+                    'number_increment': 1,
+                    'company_id': company_id, #loca 14
+                })
+                name = IrSequence.next_by_code(SEQUENCE_CODE)
+            #self.invoice_number_cli=name
+        """else:
+            name='0'"""
+        return name
+
 class AccountMoveLine(models.Model):
     _inherit = 'account.move.line'
 
@@ -170,4 +366,3 @@ class AccountMoveLine(models.Model):
         else:
             resultado=valor
         return resultado
-

@@ -13,7 +13,7 @@
     'website': 'http://soluciones-tecno.com/',
 
     # any module necessary for this one to work correctly
-    'depends': ['base','account'],
+    'depends': ['base','account','vat_retention','ext_personalizacion_lanta','l10n_ve_fiscal_requirements'],
 
     # always loaded
     'data': [
