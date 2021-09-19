@@ -185,11 +185,11 @@ class WizardLegalLedger(models.TransientModel):
             else:
                 ws1.write(row,col+1, '',lines_style_center)
             # Saldo Anterior
-            ws1.write(row,col+2, self.float_format(item.previous),lines_style_center)
+            ws1.write(row,col+2, self.float_format(item.previous),lines_style_right)
             # Débitos
             ws1.write(row,col+4, self.float_format(item.debit),lines_style_right)
             # Créditos
-            ws1.write(row,col+3, self.float_format(item.credit),lines_style_center)
+            ws1.write(row,col+3, self.float_format(item.credit),lines_style_right)
             # Saldo Actual
             ws1.write(row,col+5, self.float_format(item.current),lines_style_right)
 
