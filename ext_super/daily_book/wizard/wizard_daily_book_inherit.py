@@ -124,6 +124,7 @@ class LibroDiario(models.TransientModel):
             haber += item.total_haber
                 
         row += 1
+        ws1.write_merge(row,row, 1, 2, 'Total General', lines_style_center)
         ws1.write(row,col+3, self.float_format2(deber), lines_style_right)
         ws1.write(row,col+4, self.float_format2(haber), lines_style_right)
 

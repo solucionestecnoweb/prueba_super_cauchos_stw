@@ -156,7 +156,7 @@ class WizardLegalLedger(models.TransientModel):
         ws1.col(col+0).width = int((len('x.x.x.xx.xxx')+2)*256)
         ws1.write(row,col+1, _("Descripción de la Cuenta"),header_content_style)
         ws1.col(col+1).width = int((len('Descripción de la Cuenta')+20)*256)
-        ws1.write(row,col+2,col+3, _("Saldo Anterior"),header_content_style)
+        ws1.write(row,col+2, _("Saldo Anterior"),header_content_style)
         ws1.col(col+2).width = int((len('xxx.xxx.xxx,xx xxx')+2)*256)
         ws1.write(row,col+3, _("Débitos"),header_content_style)
         ws1.col(col+3).width = int((len('xxx.xxx.xxx,xx xxx')+2)*256)
