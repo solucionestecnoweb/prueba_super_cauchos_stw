@@ -162,7 +162,7 @@ class AccountMove(models.Model):
                  'debit': 0.0, # aqi va cero
                  'balance':-1*self.conv_div_extranjera(valores),#loca14
                  'currency_id':self.moneda(), #loca14
-                 'amount_currency': -1*self.amount_currency(valores), #loca14
+                 #'amount_currency': -1*self.amount_currency(valores), #loca14
                  'amount_residual_currency': -1*self.amount_currency(valores), #loca14
 
             }
@@ -177,7 +177,7 @@ class AccountMove(models.Model):
             value['balance'] = self.conv_div_extranjera(valores)#loca14
             value['balance'] = self.currency_id.id #loca14
             value['currency_id'] = self.moneda() #loca14
-            value['amount_currency'] = self.amount_currency(valores) #loca14
+            #value['amount_currency'] = self.amount_currency(valores) #loca14
             value['amount_residual_currency'] = self.amount_currency(valores) #loca14
             move_line_id2 = move_line_obj.create(value)
 
