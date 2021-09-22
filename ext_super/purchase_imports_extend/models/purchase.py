@@ -27,6 +27,31 @@ class PurchaseOrderImports(models.Model):
 
 	aduana_payment_ids = fields.One2many(comodel_name='purchase.order.imports.aduana.payment', inverse_name='purchase_order_id', string=' Aduana Payment')
 
+	###### Shipping Information #####
+	policy = fields.Char(string='policy')
+	price_type = fields.Char(string='price type')
+	freight_type = fields.Char(string='freight type')
+	expedient_import_number = fields.Char(string='expedient import number')
+	
+	arrival_date = fields.Char(string='arrival date')
+	harbor = fields.Char(string='harbor')
+	proforma_number = fields.Char(string='proforma number')
+	reference = fields.Char(string='reference')
+	doc_reception = fields.Char(string='doc reception')
+	cus_hou_remitance = fields.Char(string='custom house remitance')
+	dua = fields.Char(string='dua')
+
+	shipping_number = fields.Char(string='shipping number')
+	shipping_date = fields.Char(string='shipping date')
+	arrival_shipping_date = fields.Char(string='arrival shipping date')
+	country_id = fields.Char(string='country')
+	shipping_city = fields.Char(string='shipping city')
+
+	vessel_name = fields.Char(string='vessel name')
+	vessel_containers = fields.Char(string='vessel containers')
+	origin_vessel = fields.Char(string='origin vessel')
+	transfer_vessel = fields.Char(string='transfer vessel')
+
 class PurchaseOrderLineImports(models.Model):
 	_inherit = "purchase.order.line"
 

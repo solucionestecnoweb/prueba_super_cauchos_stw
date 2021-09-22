@@ -13,5 +13,6 @@ class SaleOrderLogicExtend(models.Model):
     def onchange_seller_id(self):
         if self.partner_id.assigned_seller_id.id:
             self.seller_id = self.partner_id.assigned_seller_id.id
+            self.user_id = self.env['res.users'].search([('partner_id', '=', self.partner_id.assigned_seller_id.id)], limit=1).id
         else:
             self.seller_id = False
