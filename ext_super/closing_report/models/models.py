@@ -13,21 +13,20 @@ class Report(models.Model):
     
     _inherit ='account.payment'
 
-    rate = fields.Float(compute='_compute_rate', string="Rate", digits=(12,2))
+    def get_rate(self):
+        rate_value = 1
+        rate = self.env['res.currency.rate'].search([('name','=', self.payment_date)], limit=1).sell_rate
+        if rate:
+            rate_value = rate
+        return rate_value
+
+    rate = fields.Float(string="Rate", default=lambda self: self.get_rate(), digits=(12,2))
     amount_bs = fields.Monetary(compute='_compute_amount_bs', currency_field='currency_bs_id', digits=(12,2))
     amount_currency = fields.Monetary(compute='_compute_amount_currency', currency_field='currency_usd_id', digits=(12,2))
     currency_bs_id = fields.Many2one('res.currency', default=lambda self: self.env.user.company_id.currency_id.id)
     currency_usd_id = fields.Many2one('res.currency', default= lambda self: self.env['res.currency'].search([('id', '=', 2)]))
     amount_currency_cash = fields.Monetary(compute='_compute_cash', currency_field='currency_usd_id', digits=(12,2))
     amount_currency_transfer =fields.Monetary(compute='_compute_transfer', currency_field='currency_usd_id', digits=(12,2))
-
-    def _compute_rate(self):
-        for item in self:
-            rate_value = 1
-            rate = item.env['res.currency.rate'].search([('name','=', item.payment_date)], limit=1).sell_rate
-            if rate:
-                rate_value = rate
-            item.rate = rate_value
 
     def _compute_amount_bs(self):
         for item in self:
