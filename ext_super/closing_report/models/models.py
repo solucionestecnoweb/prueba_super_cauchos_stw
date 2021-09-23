@@ -28,13 +28,13 @@ class Report(models.Model):
     amount_currency_cash = fields.Monetary(compute='_compute_cash', currency_field='currency_usd_id', digits=(12,2))
     amount_currency_transfer =fields.Monetary(compute='_compute_transfer', currency_field='currency_usd_id', digits=(12,2))
 
-    @api.onchage('payment_date')
-    def _onchange_rate(self):
-        rate_value = 1
-        rate = self.env['res.currency.rate'].search([('name','=', self.payment_date)], limit=1).sell_rate
-        if rate:
-            rate_value = rate
-        rate = rate_value
+    # @api.onchage('payment_date')
+    # def _onchange_rate(self):
+    #     rate_value = 1
+    #     rate = self.env['res.currency.rate'].search([('name','=', self.payment_date)], limit=1).sell_rate
+    #     if rate:
+    #         rate_value = rate
+    #     rate = rate_value
 
     def _compute_amount_bs(self):
         for item in self:
