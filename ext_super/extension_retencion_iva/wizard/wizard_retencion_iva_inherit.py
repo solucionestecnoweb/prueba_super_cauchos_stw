@@ -21,8 +21,20 @@ class LibroDiario(models.TransientModel):
     date_now = fields.Datetime(string='Fecha Actual', default=lambda *a:datetime.now())
     currency_id = fields.Many2one(comodel_name='res.currency', string='Moneda')
 
-    def get_convertion(self, monto, fecha):
-        conversion = self.env['res.currency']._convert(monto, self.currency_id, self.company_id, fecha)
+    def get_convertion(self, monto, fecha, moneda):
+        tasa = self.env['res.currency.rate'].search([('name', '=', fecha)], limit=1).sell_rate
+        if not tasa:
+            tasa = 1
+        if self.currency_id.id == 3:
+            if moneda == self.currency_id.id:
+                conversion = monto
+            else:
+                conversion = monto * tasa
+        else:
+            if moneda == 3:
+                conversion = monto / tasa
+            else:
+                conversion = monto
         return conversion
 
     def get_invoice_extended(self):
@@ -45,26 +57,26 @@ class LibroDiario(models.TransientModel):
             'invoice_number': det.invoice_id.invoice_number,#darrell
             'tipo_doc': det.tipo_doc,
             'invoice_ctrl_number': det.invoice_id.invoice_ctrl_number,
-            'sale_total': self.get_convertion(det.total_con_iva, det.invoice_id.invoice_date),
-            'base_imponible': self.get_convertion(det.total_base, det.invoice_id.invoice_date),
-            'iva' : self.get_convertion(det.total_valor_iva, det.invoice_id.invoice_date),
-            'iva_retenido': self.get_convertion(det.total_ret_iva, det.invoice_id.invoice_date),
+            'sale_total': self.get_convertion(det.total_con_iva, det.invoice_id.invoice_date, det.invoice_id.currency_id.id),
+            'base_imponible': self.get_convertion(det.total_base, det.invoice_id.invoice_date, det.invoice_id.currency_id.id),
+            'iva' : self.get_convertion(det.total_valor_iva, det.invoice_id.invoice_date, det.invoice_id.currency_id.id),
+            'iva_retenido': self.get_convertion(det.total_ret_iva, det.invoice_id.invoice_date, det.invoice_id.currency_id.id),
             'retenido': det.vat_ret_id.name,
             'retenido_date':det.vat_ret_id.voucher_delivery_date,
             'state_retantion': det.vat_ret_id.state,
             'state': det.invoice_id.state,
             'currency_id':det.invoice_id.currency_id.id,
             'ref':det.invoice_id.ref,
-            'total_exento':self.get_convertion(det.total_exento, det.invoice_id.invoice_date),
-            'alicuota_reducida':self.get_convertion(det.alicuota_reducida, det.invoice_id.invoice_date),
-            'alicuota_general':self.get_convertion(det.alicuota_general, det.invoice_id.invoice_date),
-            'alicuota_adicional':self.get_convertion(det.alicuota_adicional, det.invoice_id.invoice_date),
-            'base_adicional':self.get_convertion(det.base_adicional, det.invoice_id.invoice_date),
-            'base_reducida':self.get_convertion(det.base_reducida, det.invoice_id.invoice_date),
-            'base_general':self.get_convertion(det.base_general, det.invoice_id.invoice_date),
-            'retenido_reducida':self.get_convertion(det.retenido_reducida, det.invoice_id.invoice_date),
-            'retenido_adicional':self.get_convertion(det.retenido_adicional, det.invoice_id.invoice_date),
-            'retenido_general':self.get_convertion(det.retenido_general, det.invoice_id.invoice_date),
+            'total_exento':self.get_convertion(det.total_exento, det.invoice_id.invoice_date, det.invoice_id.currency_id.id),
+            'alicuota_reducida':self.get_convertion(det.alicuota_reducida, det.invoice_id.invoice_date, det.invoice_id.currency_id.id),
+            'alicuota_general':self.get_convertion(det.alicuota_general, det.invoice_id.invoice_date, det.invoice_id.currency_id.id),
+            'alicuota_adicional':self.get_convertion(det.alicuota_adicional, det.invoice_id.invoice_date, det.invoice_id.currency_id.id),
+            'base_adicional':self.get_convertion(det.base_adicional, det.invoice_id.invoice_date, det.invoice_id.currency_id.id),
+            'base_reducida':self.get_convertion(det.base_reducida, det.invoice_id.invoice_date, det.invoice_id.currency_id.id),
+            'base_general':self.get_convertion(det.base_general, det.invoice_id.invoice_date, det.invoice_id.currency_id.id),
+            'retenido_reducida':self.get_convertion(det.retenido_reducida, det.invoice_id.invoice_date, det.invoice_id.currency_id.id),
+            'retenido_adicional':self.get_convertion(det.retenido_adicional, det.invoice_id.invoice_date, det.invoice_id.currency_id.id),
+            'retenido_general':self.get_convertion(det.retenido_general, det.invoice_id.invoice_date, det.invoice_id.currency_id.id),
             'vat_ret_id':det.vat_ret_id.id,
             'invoice_id':det.invoice_id.id,
             'tax_id':det.tax_id.id,

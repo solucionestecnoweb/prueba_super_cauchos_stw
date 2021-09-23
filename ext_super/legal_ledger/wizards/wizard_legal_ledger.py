@@ -122,7 +122,6 @@ class WizardLegalLedger(models.TransientModel):
                         previous -= line.debit / rate
                         previous += line.credit / rate
 
-
                 values = {
                     'code': item.account_id.code,
                     'description': item.account_id.name,
