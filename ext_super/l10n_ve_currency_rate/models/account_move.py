@@ -81,4 +81,4 @@ class AccountMove(models.Model):
     
     @api.onchange('invoice_date','currency_id')
     def _onchange_os_currency_rate(self):
-        self.set_os_currency_rate()
+        self.set_os_currency_rate()    

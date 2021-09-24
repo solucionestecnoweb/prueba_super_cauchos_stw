@@ -5,6 +5,7 @@
     "depends":['account', 'account_accountant', 'administration_module'],
     "data":[
         'views/wizards_closing_report.xml',
+        'views/account_payment_views.xml',
         'security/security.xml',
         'reports/closing_report.xml'
     ]

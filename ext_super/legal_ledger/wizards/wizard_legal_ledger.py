@@ -95,15 +95,32 @@ class WizardLegalLedger(models.TransientModel):
                 ])
 
                 for line in caccount:
-                    debit += self.env['res.currency']._convert(line.debit, self.currency_id, self.company_id, line.date)
-                    credit += self.env['res.currency']._convert(line.credit, self.currency_id, self.company_id, line.date)
-                    
-                    current -= self.env['res.currency']._convert(line.debit, self.currency_id, self.company_id, line.date)
-                    current += self.env['res.currency']._convert(line.credit, self.currency_id, self.company_id, line.date)
+                    rate = self.env['res.currency.rate'].search([('name', '=', line.date)], limit=1).sell_rate
+                    if not rate:
+                        rate = 1
+                    if self.currency_id.id == 3:
+                        debit += line.debit
+                        credit += line.credit
+                        
+                        current -= line.debit
+                        current += line.credit
+                    else:
+                        debit += line.debit / rate
+                        credit += line.credit / rate
+                        
+                        current -= line.debit / rate
+                        current += line.credit / rate
                 
                 for line in paccount:
-                    previous -= self.env['res.currency']._convert(line.debit, self.currency_id, self.company_id, line.date)
-                    previous += self.env['res.currency']._convert(line.credit, self.currency_id, self.company_id, line.date)
+                    rate = self.env['res.currency.rate'].search([('name', '=', line.date)], limit=1).sell_rate
+                    if not rate:
+                        rate = 1
+                    if self.currency_id.id == 3:
+                        previous -= line.debit
+                        previous += line.credit
+                    else:
+                        previous -= line.debit / rate
+                        previous += line.credit / rate
 
                 values = {
                     'code': item.account_id.code,
