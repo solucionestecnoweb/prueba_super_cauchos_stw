@@ -20,6 +20,7 @@ class LibroDiario(models.TransientModel):
 
     date_now = fields.Datetime(string='Fecha Actual', default=lambda *a:datetime.now())
     currency_id = fields.Many2one(comodel_name='res.currency', string='Moneda')
+    type = fields.Selection(string='Tipo', selection=[('in_invoice', 'Proveedor'), ('out_invoice', 'Cliente')], default='in_invoice')
 
     def get_convertion(self, monto, fecha, moneda):
         tasa = self.env['res.currency.rate'].search([('name', '=', fecha)], limit=1).sell_rate
@@ -41,14 +42,24 @@ class LibroDiario(models.TransientModel):
         t=self.env['resumen.iva.wizard.pdf']
         d=t.search([])
         d.unlink()
-        cursor_resumen = self.env['account.move.line.resumen'].search([
-            ('fecha_fact','>=',self.date_from),
-            ('fecha_fact','<=',self.date_to),
-            ('state_voucher_iva','=','posted'),
-            ('state','in',('posted','cancel' )),
-            ('type','in',('in_invoice','in_refund','in_receipt')),
-            #('company_id','=',self.env.company.id)#loca14 aqui se quito porque en isneiker daba peo
-            ])
+        if self.type == 'in_invoice':
+            cursor_resumen = self.env['account.move.line.resumen'].search([
+                ('fecha_fact','>=',self.date_from),
+                ('fecha_fact','<=',self.date_to),
+                ('state_voucher_iva','=','posted'),
+                ('state','in',('posted','cancel' )),
+                ('type', 'in', ('in_invoice','in_refund','in_receipt')),
+                #('company_id','=',self.env.company.id)#loca14 aqui se quito porque en isneiker daba peo
+                ])
+        else:
+            cursor_resumen = self.env['account.move.line.resumen'].search([
+                ('fecha_fact','>=',self.date_from),
+                ('fecha_fact','<=',self.date_to),
+                ('state_voucher_iva','=','posted'),
+                ('state','in',('posted','cancel' )),
+                ('type', 'in', ('out_invoice','out_refund','out_receipt')),
+                #('company_id','=',self.env.company.id)#loca14 aqui se quito porque en isneiker daba peo
+                ])
         for det in cursor_resumen:
             values={
             'name':det.fecha_fact,

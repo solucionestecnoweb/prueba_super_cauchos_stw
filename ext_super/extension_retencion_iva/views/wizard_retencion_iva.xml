@@ -14,6 +14,7 @@
                         </group>
                         <group>
                             <field name="date_to" required="1" string="Hasta"/>
+                            <field name="type" required="1" string="Tipo"/>
                         </group>
                     </group>
                     <footer>
