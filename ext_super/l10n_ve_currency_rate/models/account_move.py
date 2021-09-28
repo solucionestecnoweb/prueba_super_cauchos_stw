@@ -71,10 +71,10 @@ class AccountMove(models.Model):
                 else :
                     raise UserError(_("No existe tasa de cambio para  " + str(self.invoice_date) + " registre el la siguiente ruta Contabilidad/Configuracion/Contabilidad/Monedas" ))
 
-            if rate :
+            """if rate :
                 for rates in rate:
                     exchange_rate =  1 / rates.rate
-                self.os_currency_rate = exchange_rate
+                self.os_currency_rate = exchange_rate"""
     
     @api.constrains('invoice_date','currency_id')
     def _check_os_currency_rate(self):
