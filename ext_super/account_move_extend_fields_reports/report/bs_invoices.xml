@@ -86,12 +86,12 @@
 
                                 <!-- Tipo de moneda -->
                                 <thead>
-                                    <th class="text-center" style="background-color: #cacaca;">Código</th>
-                                    <th class="text-center" style="background-color: #cacaca;">Descripción</th>
-                                    <th class="text-center" style="background-color: #cacaca;">Cant.</th>
-                                    <th class="text-center" style="background-color: #cacaca;">Alíc.</th>
-                                    <th class="text-center" style="background-color: #cacaca;">Precio Unit.</th>
-                                    <th class="text-center" style="background-color: #cacaca;">Total Bs</th>
+                                    <th class="text-center" style="border: 1px black solid; border-right: 0px;">Código</th>
+                                    <th class="text-center" style="border: 1px black solid; border-right: 0px; border-left: 0px;">Descripción</th>
+                                    <th class="text-center" style="border: 1px black solid; border-right: 0px; border-left: 0px;">Cant.</th>
+                                    <th class="text-center" style="border: 1px black solid; border-right: 0px; border-left: 0px;">Alíc.</th>
+                                    <th class="text-center" style="border: 1px black solid; border-right: 0px; border-left: 0px;">Precio Unit.</th>
+                                    <th class="text-center" style="border: 1px black solid; border-left: 0px;">Total Bs</th>
                                 </thead>
                                 <!-- Fin tipo de moneda -->
                                 
@@ -144,9 +144,9 @@
                                         <!-- Fin lineas -->
 
                                         <!-- Totales -->
-                                        <tr>
+                                        <tr style="border-top: 1px black solid;">
                                             <td colspan="4"></td>
-                                            <td class="text-center">
+                                            <td class="text-right">
                                                 <b>Subtotal</b>
                                             </td>
                                             <td class="text-right">
@@ -155,7 +155,7 @@
                                         </tr>
                                         <tr>
                                             <td colspan="4"></td>
-                                            <td class="text-center">
+                                            <td class="text-right">
                                                 <b>Descuentos</b>
                                             </td>
                                             <td class="text-right">
@@ -164,7 +164,7 @@
                                         </tr>
                                         <tr>
                                             <td colspan="4"></td>
-                                            <td class="text-center">
+                                            <td class="text-right">
                                                 <b>Monto Neto</b>
                                             </td>
                                             <td class="text-right">
@@ -180,7 +180,7 @@
                                         </t>
                                         <tr>
                                             <td colspan="4"></td>
-                                            <td class="text-center">
+                                            <td class="text-right">
                                                 <b>Base Neta Imponible</b>
                                             </td>
                                             <td class="text-right">
@@ -190,7 +190,7 @@
                                         <t t-if="iva_exempt > 0">
                                             <tr>
                                                 <td colspan="4"></td>
-                                                <td class="text-center">
+                                                <td class="text-right">
                                                     <b>Total Exento</b>
                                                 </td>
                                                 <td class="text-right">
@@ -201,7 +201,7 @@
                                         <t t-if="iva_8 > 0">
                                             <tr>
                                                 <td colspan="4"></td>
-                                                <td class="text-center">
+                                                <td class="text-right">
                                                     <b>Total IVA 8%</b>
                                                 </td>
                                                 <td class="text-right">
@@ -212,7 +212,7 @@
                                         <t t-if="iva_16 > 0">
                                             <tr>
                                                 <td colspan="4"></td>
-                                                <td class="text-center">
+                                                <td class="text-right">
                                                     <b>Total IVA 16%</b>
                                                 </td>
                                                 <td class="text-right">
@@ -223,7 +223,7 @@
                                         <t t-if="iva_24 > 0">
                                             <tr>
                                                 <td colspan="4"></td>
-                                                <td class="text-center">
+                                                <td class="text-right">
                                                     <b>Total IVA 31%</b>
                                                 </td>
                                                 <td class="text-right">
@@ -233,7 +233,7 @@
                                         </t>
                                         <tr>
                                             <td colspan="4"></td>
-                                            <td class="text-center">
+                                            <td class="text-right">
                                                 <b>Total a Pagar</b>
                                             </td>
                                             <td class="text-right">
@@ -281,9 +281,9 @@
                                         <!-- Fin lineas -->
 
                                         <!-- Totales -->
-                                        <tr>
+                                        <tr style="border-top: 1px black solid;">
                                             <td colspan="4"></td>
-                                            <td class="text-center">
+                                            <td class="text-right">
                                                 <b>Subtotal</b>
                                             </td>
                                             <td class="text-right">
@@ -292,7 +292,7 @@
                                         </tr>
                                         <tr>
                                             <td colspan="4"></td>
-                                            <td class="text-center">
+                                            <td class="text-right">
                                                 <b>Descuentos</b>
                                             </td>
                                             <td class="text-right">
@@ -301,7 +301,7 @@
                                         </tr>
                                         <tr>
                                             <td colspan="4"></td>
-                                            <td class="text-center">
+                                            <td class="text-right">
                                                 <b>Monto Neto</b>
                                             </td>
                                             <td class="text-right">
@@ -310,7 +310,7 @@
                                         </tr>
                                         <tr>
                                             <td colspan="4"></td>
-                                            <td class="text-center">
+                                            <td class="text-right">
                                                 <b>Base Neta Imponible</b>
                                             </td>
                                             <td class="text-right">
@@ -326,7 +326,7 @@
                                         <t t-if="iva_exempt > 0">
                                             <tr>
                                                 <td colspan="4"></td>
-                                                <td class="text-center">
+                                                <td class="text-right">
                                                     <b>Total Exento</b>
                                                 </td>
                                                 <td class="text-right">
@@ -337,7 +337,7 @@
                                         <t t-if="iva_8 > 0">
                                             <tr>
                                                 <td colspan="4"></td>
-                                                <td class="text-center">
+                                                <td class="text-right">
                                                     <b>Total IVA 8%</b>
                                                 </td>
                                                 <td class="text-right">
@@ -348,7 +348,7 @@
                                         <t t-if="iva_16 > 0">
                                             <tr>
                                                 <td colspan="4"></td>
-                                                <td class="text-center">
+                                                <td class="text-right">
                                                     <b>Total IVA 16%</b>
                                                 </td>
                                                 <td class="text-right">
@@ -359,7 +359,7 @@
                                         <t t-if="iva_24 > 0">
                                             <tr>
                                                 <td colspan="4"></td>
-                                                <td class="text-center">
+                                                <td class="text-right">
                                                     <b>Total IVA 31%</b>
                                                 </td>
                                                 <td class="text-right">
@@ -369,7 +369,7 @@
                                         </t>
                                         <tr>
                                             <td colspan="4"></td>
-                                            <td class="text-center">
+                                            <td class="text-right">
                                                 <b>Total a Pagar</b>
                                             </td>
                                             <td class="text-right">
@@ -420,12 +420,12 @@
 
                                 <!-- Tipo de moneda -->
                                 <thead>
-                                    <th class="text-center" style="background-color: #cacaca;">Código</th>
-                                    <th class="text-center" style="background-color: #cacaca;">Descripción</th>
-                                    <th class="text-center" style="background-color: #cacaca;">Cant.</th>
-                                    <th class="text-center" style="background-color: #cacaca;">Alíc.</th>
-                                    <th class="text-center" style="background-color: #cacaca;">Precio Unit.</th>
-                                    <th class="text-center" style="background-color: #cacaca;">Total Bs</th>
+                                    <th class="text-center" style="border: 1px black solid; border-right: 0px;">Código</th>
+                                    <th class="text-center" style="border: 1px black solid; border-right: 0px; border-left: 0px;">Descripción</th>
+                                    <th class="text-center" style="border: 1px black solid; border-right: 0px; border-left: 0px;">Cant.</th>
+                                    <th class="text-center" style="border: 1px black solid; border-right: 0px; border-left: 0px;">Alíc.</th>
+                                    <th class="text-center" style="border: 1px black solid; border-right: 0px; border-left: 0px;">Precio Unit.</th>
+                                    <th class="text-center" style="border: 1px black solid; border-left: 0px;">Total Bs</th>
                                 </thead>
                                 <!-- Fin tipo de moneda -->
                                 
@@ -478,9 +478,9 @@
                                         <!-- Fin lineas -->
 
                                         <!-- Totales -->
-                                        <tr>
+                                        <tr style="border-top: 1px black solid;">
                                             <td colspan="4"></td>
-                                            <td class="text-center">
+                                            <td class="text-right">
                                                 <b>Subtotal</b>
                                             </td>
                                             <td class="text-right">
@@ -489,7 +489,7 @@
                                         </tr>
                                         <tr>
                                             <td colspan="4"></td>
-                                            <td class="text-center">
+                                            <td class="text-right">
                                                 <b>Descuentos</b>
                                             </td>
                                             <td class="text-right">
@@ -498,7 +498,7 @@
                                         </tr>
                                         <tr>
                                             <td colspan="4"></td>
-                                            <td class="text-center">
+                                            <td class="text-right">
                                                 <b>Monto Neto</b>
                                             </td>
                                             <td class="text-right">
@@ -507,7 +507,7 @@
                                         </tr>
                                         <tr>
                                             <td colspan="4"></td>
-                                            <td class="text-center">
+                                            <td class="text-right">
                                                 <b>Base Neta Imponible</b>
                                             </td>
                                             <td class="text-right">
@@ -523,7 +523,7 @@
                                         <t t-if="iva_exempt > 0">
                                             <tr>
                                                 <td colspan="4"></td>
-                                                <td class="text-center">
+                                                <td class="text-right">
                                                     <b>Total Exento</b>
                                                 </td>
                                                 <td class="text-right">
@@ -534,7 +534,7 @@
                                         <t t-if="iva_8 > 0">
                                             <tr>
                                                 <td colspan="4"></td>
-                                                <td class="text-center">
+                                                <td class="text-right">
                                                     <b>Total IVA 8%</b>
                                                 </td>
                                                 <td class="text-right">
@@ -545,7 +545,7 @@
                                         <t t-if="iva_16 > 0">
                                             <tr>
                                                 <td colspan="4"></td>
-                                                <td class="text-center">
+                                                <td class="text-right">
                                                     <b>Total IVA 16%</b>
                                                 </td>
                                                 <td class="text-right">
@@ -556,7 +556,7 @@
                                         <t t-if="iva_24 > 0">
                                             <tr>
                                                 <td colspan="4"></td>
-                                                <td class="text-center">
+                                                <td class="text-right">
                                                     <b>Total IVA 31%</b>
                                                 </td>
                                                 <td class="text-right">
@@ -566,7 +566,7 @@
                                         </t>
                                         <tr>
                                             <td colspan="4"></td>
-                                            <td class="text-center">
+                                            <td class="text-right">
                                                 <b>Total a Pagar</b>
                                             </td>
                                             <td class="text-right">
@@ -614,9 +614,9 @@
                                         <!-- Fin lineas -->
 
                                         <!-- Totales -->
-                                        <tr>
+                                        <tr style="border-top: 1px black solid;">
                                             <td colspan="4"></td>
-                                            <td class="text-center">
+                                            <td class="text-right">
                                                 <b>Subtotal</b>
                                             </td>
                                             <td class="text-right">
@@ -625,7 +625,7 @@
                                         </tr>
                                         <tr>
                                             <td colspan="4"></td>
-                                            <td class="text-center">
+                                            <td class="text-right">
                                                 <b>Descuentos</b>
                                             </td>
                                             <td class="text-right">
@@ -634,7 +634,7 @@
                                         </tr>
                                         <tr>
                                             <td colspan="4"></td>
-                                            <td class="text-center">
+                                            <td class="text-right">
                                                 <b>Monto Neto</b>
                                             </td>
                                             <td class="text-right">
@@ -643,7 +643,7 @@
                                         </tr>
                                         <tr>
                                             <td colspan="4"></td>
-                                            <td class="text-center">
+                                            <td class="text-right">
                                                 <b>Base Neta Imponible</b>
                                             </td>
                                             <td class="text-right">
@@ -659,7 +659,7 @@
                                         <t t-if="iva_exempt > 0">
                                             <tr>
                                                 <td colspan="4"></td>
-                                                <td class="text-center">
+                                                <td class="text-right">
                                                     <b>Total Exento</b>
                                                 </td>
                                                 <td class="text-right">
@@ -670,7 +670,7 @@
                                         <t t-if="iva_8 > 0">
                                             <tr>
                                                 <td colspan="4"></td>
-                                                <td class="text-center">
+                                                <td class="text-right">
                                                     <b>Total IVA 8%</b>
                                                 </td>
                                                 <td class="text-right">
@@ -681,7 +681,7 @@
                                         <t t-if="iva_16 > 0">
                                             <tr>
                                                 <td colspan="4"></td>
-                                                <td class="text-center">
+                                                <td class="text-right">
                                                     <b>Total IVA 16%</b>
                                                 </td>
                                                 <td class="text-right">
@@ -692,7 +692,7 @@
                                         <t t-if="iva_24 > 0">
                                             <tr>
                                                 <td colspan="4"></td>
-                                                <td class="text-center">
+                                                <td class="text-right">
                                                     <b>Total IVA 31%</b>
                                                 </td>
                                                 <td class="text-right">
@@ -702,7 +702,7 @@
                                         </t>
                                         <tr>
                                             <td colspan="4"></td>
-                                            <td class="text-center">
+                                            <td class="text-right">
                                                 <b>Total a Pagar</b>
                                             </td>
                                             <td class="text-right">
@@ -753,12 +753,12 @@
 
                                 <!-- Tipo de moneda -->
                                 <thead>
-                                    <th class="text-center" style="background-color: #cacaca;">Código</th>
-                                    <th class="text-center" style="background-color: #cacaca;">Descripción</th>
-                                    <th class="text-center" style="background-color: #cacaca;">Cant.</th>
-                                    <th class="text-center" style="background-color: #cacaca;">Alíc.</th>
-                                    <th class="text-center" style="background-color: #cacaca;">Precio Unit.</th>
-                                    <th class="text-center" style="background-color: #cacaca;">Total Bs</th>
+                                    <th class="text-center" style="border: 1px black solid; border-right: 0px;">Código</th>
+                                    <th class="text-center" style="border: 1px black solid; border-right: 0px; border-left: 0px;">Descripción</th>
+                                    <th class="text-center" style="border: 1px black solid; border-right: 0px; border-left: 0px;">Cant.</th>
+                                    <th class="text-center" style="border: 1px black solid; border-right: 0px; border-left: 0px;">Alíc.</th>
+                                    <th class="text-center" style="border: 1px black solid; border-right: 0px; border-left: 0px;">Precio Unit.</th>
+                                    <th class="text-center" style="border: 1px black solid; border-left: 0px;">Total Bs</th>
                                 </thead>
                                 <!-- Fin tipo de moneda -->
                                 
@@ -811,9 +811,9 @@
                                         <!-- Fin lineas -->
 
                                         <!-- Totales -->
-                                        <tr>
+                                        <tr style="border-top: 1px black solid;">
                                             <td colspan="4"></td>
-                                            <td class="text-center">
+                                            <td class="text-right">
                                                 <b>Subtotal</b>
                                             </td>
                                             <td class="text-right">
@@ -822,7 +822,7 @@
                                         </tr>
                                         <tr>
                                             <td colspan="4"></td>
-                                            <td class="text-center">
+                                            <td class="text-right">
                                                 <b>Descuentos</b>
                                             </td>
                                             <td class="text-right">
@@ -831,7 +831,7 @@
                                         </tr>
                                         <tr>
                                             <td colspan="4"></td>
-                                            <td class="text-center">
+                                            <td class="text-right">
                                                 <b>Monto Neto</b>
                                             </td>
                                             <td class="text-right">
@@ -840,7 +840,7 @@
                                         </tr>
                                         <tr>
                                             <td colspan="4"></td>
-                                            <td class="text-center">
+                                            <td class="text-right">
                                                 <b>Base Neta Imponible</b>
                                             </td>
                                             <td class="text-right">
@@ -856,7 +856,7 @@
                                         <t t-if="iva_exempt > 0">
                                             <tr>
                                                 <td colspan="4"></td>
-                                                <td class="text-center">
+                                                <td class="text-right">
                                                     <b>Total Exento</b>
                                                 </td>
                                                 <td class="text-right">
@@ -867,7 +867,7 @@
                                         <t t-if="iva_8 > 0">
                                             <tr>
                                                 <td colspan="4"></td>
-                                                <td class="text-center">
+                                                <td class="text-right">
                                                     <b>Total IVA 8%</b>
                                                 </td>
                                                 <td class="text-right">
@@ -878,7 +878,7 @@
                                         <t t-if="iva_16 > 0">
                                             <tr>
                                                 <td colspan="4"></td>
-                                                <td class="text-center">
+                                                <td class="text-right">
                                                     <b>Total IVA 16%</b>
                                                 </td>
                                                 <td class="text-right">
@@ -889,7 +889,7 @@
                                         <t t-if="iva_24 > 0">
                                             <tr>
                                                 <td colspan="4"></td>
-                                                <td class="text-center">
+                                                <td class="text-right">
                                                     <b>Total IVA 31%</b>
                                                 </td>
                                                 <td class="text-right">
@@ -899,7 +899,7 @@
                                         </t>
                                         <tr>
                                             <td colspan="4"></td>
-                                            <td class="text-center">
+                                            <td class="text-right">
                                                 <b>Total a Pagar</b>
                                             </td>
                                             <td class="text-right">
@@ -947,9 +947,9 @@
                                         <!-- Fin lineas -->
 
                                         <!-- Totales -->
-                                        <tr>
+                                        <tr style="border-top: 1px black solid;">
                                             <td colspan="4"></td>
-                                            <td class="text-center">
+                                            <td class="text-right">
                                                 <b>Subtotal</b>
                                             </td>
                                             <td class="text-right">
@@ -958,7 +958,7 @@
                                         </tr>
                                         <tr>
                                             <td colspan="4"></td>
-                                            <td class="text-center">
+                                            <td class="text-right">
                                                 <b>Descuentos</b>
                                             </td>
                                             <td class="text-right">
@@ -967,7 +967,7 @@
                                         </tr>
                                         <tr>
                                             <td colspan="4"></td>
-                                            <td class="text-center">
+                                            <td class="text-right">
                                                 <b>Monto Neto</b>
                                             </td>
                                             <td class="text-right">
@@ -976,7 +976,7 @@
                                         </tr>
                                         <tr>
                                             <td colspan="4"></td>
-                                            <td class="text-center">
+                                            <td class="text-right">
                                                 <b>Base Neta Imponible</b>
                                             </td>
                                             <td class="text-right">
@@ -992,7 +992,7 @@
                                         <t t-if="iva_exempt > 0">
                                             <tr>
                                                 <td colspan="4"></td>
-                                                <td class="text-center">
+                                                <td class="text-right">
                                                     <b>Total Exento</b>
                                                 </td>
                                                 <td class="text-right">
@@ -1003,7 +1003,7 @@
                                         <t t-if="iva_8 > 0">
                                             <tr>
                                                 <td colspan="4"></td>
-                                                <td class="text-center">
+                                                <td class="text-right">
                                                     <b>Total IVA 8%</b>
                                                 </td>
                                                 <td class="text-right">
@@ -1014,7 +1014,7 @@
                                         <t t-if="iva_16 > 0">
                                             <tr>
                                                 <td colspan="4"></td>
-                                                <td class="text-center">
+                                                <td class="text-right">
                                                     <b>Total IVA 16%</b>
                                                 </td>
                                                 <td class="text-right">
@@ -1025,7 +1025,7 @@
                                         <t t-if="iva_24 > 0">
                                             <tr>
                                                 <td colspan="4"></td>
-                                                <td class="text-center">
+                                                <td class="text-right">
                                                     <b>Total IVA 31%</b>
                                                 </td>
                                                 <td class="text-right">
@@ -1035,7 +1035,7 @@
                                         </t>
                                         <tr>
                                             <td colspan="4"></td>
-                                            <td class="text-center">
+                                            <td class="text-right">
                                                 <b>Total a Pagar</b>
                                             </td>
                                             <td class="text-right">

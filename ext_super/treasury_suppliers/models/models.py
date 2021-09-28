@@ -34,6 +34,15 @@ class Suppliers(models.Model):
                 self.state_dte_partner = 'sent'
                 print('Correo Enviado a '+ str(self.partner_id.email))
 
+    @api.onchange('partner_type', 'partner_id')
+    def onchange_facturas(self):
+        if self.partner_type == 'customer':
+            res = {'domain':{'invoice_ids':[('type', '=', 'out_invoice'), ('invoice_payment_state', '=', 'not_paid'), ('state', '=', 'posted'), ('partner_id', '=', self.partner_id.id)]}}
+            return res
+        else:
+            res = {'domain':{'invoice_ids':[('type', '=', 'in_invoice'), ('invoice_payment_state', '=', 'not_paid'), ('state', '=', 'posted'), ('partner_id', '=', self.partner_id.id)]}}
+            return res
+
 class InvoicesDisplayName(models.Model):
     _inherit ='account.move'
 
