@@ -62,19 +62,19 @@ class AccountMove(models.Model):
         return super(AccountMove, self)._check_balanced()
         
     def set_os_currency_rate(self):
-        if self.invoice_date: 
-            rate = self.env['res.currency.rate'].search([('currency_id', '=', self.currency_id.id),('name','=',self.invoice_date)], limit=1).sorted(lambda x: x.name)
+        for selff in self:
+            if selff.invoice_date: 
+                rate = selff.env['res.currency.rate'].search([('currency_id', '=', selff.currency_id.id),('name','=',selff.invoice_date)], limit=1).sorted(lambda x: x.name)
 
-            if self.currency_id.id != self.company_currency_id.id:
-                if rate:
-                    pass
-                else :
-                    raise UserError(_("No existe tasa de cambio para  " + str(self.invoice_date) + " registre el la siguiente ruta Contabilidad/Configuracion/Contabilidad/Monedas" ))
+                if selff.currency_id.id != selff.company_currency_id.id:
+                    if rate:
+                        pass
+                    else :
+                        raise UserError(_("No existe tasa de cambio para  " + str(selff.invoice_date) + " registre el la siguiente ruta Contabilidad/Configuracion/Contabilidad/Monedas" ))
 
-            """if rate :
-                for rates in rate:
-                    exchange_rate =  1 / rates.rate
-                self.os_currency_rate = exchange_rate"""
+                if rate :
+                    exchange_rate =  1 / rate.rate
+                    selff.os_currency_rate = exchange_rate
     
     @api.constrains('invoice_date','currency_id')
     def _check_os_currency_rate(self):
