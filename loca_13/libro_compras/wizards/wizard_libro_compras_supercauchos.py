@@ -349,19 +349,19 @@ class libro_ventas(models.TransientModel):
             ('type','in',('in_invoice','in_refund','in_receipt')),
             ('company_id','=',self.env.company.id),#loca14
             ])
-        compras_internas_16 = 0
-        compras_internas_16_iva = 0
-        compras_importacion_16 = 0
-        compras_importacion_16_iva = 0
-        compras_internas_8 = 0
-        compras_internas_8_iva = 0
-        compras_importacion_8 = 0
-        compras_importacion_8_iva = 0
-        total_compras_creditos = 0
-        total_compras_creditos_iva = 0
 
         xfind = []
         for item in facturas:
+            compras_internas_16 = 0
+            compras_internas_16_iva = 0
+            compras_importacion_16 = 0
+            compras_importacion_16_iva = 0
+            compras_internas_8 = 0
+            compras_internas_8_iva = 0
+            compras_importacion_8 = 0
+            compras_importacion_8_iva = 0
+            total_compras_creditos = 0
+            total_compras_creditos_iva = 0
             for line in item.alicuota_line_ids:
                 if item.import_form_num:
                     if line.alicuota_general > 0:
@@ -475,7 +475,7 @@ class libro_ventas(models.TransientModel):
         ws1.write(row,col+2,"RIF",sub_header_style_c)
         ws1.col(col+2).width = int((len('J-456987531')+2)*256)
         ws1.write(row,col+3,"Nombre Razon Social",sub_header_style_c)
-        ws1.col(col+3).width = int(len('Nombre Razon Social')*256)
+        ws1.col(col+3).width = int((len('Nombre Razon Social')+20)*256)
         ws1.write(row,col+4,"Tipo de Doc",sub_header_style_c)
         ws1.col(col+4).width = int((len('Tipo de Doc')+2)*256)
         ws1.write(row,col+5,"Nro Factura / Entrega",sub_header_style_c)
@@ -510,7 +510,7 @@ class libro_ventas(models.TransientModel):
         ws1.write(row,col+18,"Monto I.V.A. alicuota Redu. 8%",sub_header_style_c)
         ws1.col(col+18).width = int(len('Monto I.V.A. alicuota Redu. 8%')*256)
         ws1.write(row,col+19,"Nro Comprobante",sub_header_style_c)
-        ws1.col(col+19).width = int(len('Nro Comprobante')*256)
+        ws1.col(col+19).width = int(len(' Nro Comprobante ')*256)
         ws1.write(row,col+20,"Fecha Comp.",sub_header_style_c)
         ws1.col(col+20).width = int(len('Fecha Comp.')*256)
 
@@ -662,66 +662,81 @@ class libro_ventas(models.TransientModel):
         # ******* FILA DE TOTALES **********
         row=row+1
         ws1.write(row,col+10," TOTALES",sub_header_style)
-        ws1.write(row,col+11,str(total_base_noded),right)
-        ws1.write(row,col+12,str(total_iva_noded),right)
-        ws1.write(row,col+13,str(acum_venta_iva),right)
-        ws1.write(row,col+14,str(acum_exento),right)
-        ws1.write(row,col+15,str(total_base_imponible),right)
+        ws1.write(row,col+11,self.float_format2(total_base_noded),right)
+        ws1.write(row,col+12,self.float_format2(total_iva_noded),right)
+        ws1.write(row,col+13,self.float_format2(acum_venta_iva),right)
+        ws1.write(row,col+14,self.float_format2(acum_exento),right)
+        ws1.write(row,col+15,self.float_format2(total_base_imponible),right)
         ws1.write(row,col+16,'---',center)
-        ws1.write(row,col+17,str(acum_iva),right)
-        ws1.write(row,col+18,str(acum_reducida),right)
+        ws1.write(row,col+17,self.float_format2(acum_iva),right)
+        ws1.write(row,col+18,self.float_format2(acum_reducida),right)
         ws1.write(row,col+19,'---',center)
         ws1.write(row,col+20,'---',center)
 
+        # ********* TOTALES TABLA
+        compras_internas_16 = 0
+        compras_internas_16_iva = 0
+        compras_importacion_16 = 0
+        compras_importacion_16_iva = 0
+        compras_internas_8 = 0
+        compras_internas_8_iva = 0
+        compras_importacion_8 = 0
+        compras_importacion_8_iva = 0
+        total_compras_creditos = 0
+        total_compras_creditos_iva = 0
+        total_no_gravadas = acum_exento + total_base_noded + total_iva_noded
+        for item in self.get_purchases():
+            compras_internas_16 += item['compras_internas_16']
+            compras_internas_16_iva += item['compras_internas_16_iva']
+            compras_importacion_16 += item['compras_importacion_16']
+            compras_importacion_16_iva += item['compras_importacion_16_iva']
+            compras_internas_8 += item['compras_internas_8']
+            compras_internas_8_iva += item['compras_internas_8_iva']
+            compras_importacion_8 += item['compras_importacion_8']
+            compras_importacion_8_iva += item['compras_importacion_8_iva']
+            total_compras_creditos += item['total_compras_creditos']
+            total_compras_creditos_iva += item['total_compras_creditos_iva']
+
         # ********* FILA DE TITULOS DE RESUMENES DE VENTAS
         row=row+1
-        ws1.write_merge(row, row, 11, 13,"RESUMEN DE COMPRAS",sub_header_style_c)
-        ws1.write_merge(row, row, 14, 16,"Base Imponible",sub_header_style_c)
-        ws1.write_merge(row, row, 17, 18,"Crédito Fiscal",sub_header_style_c)
-        ws1.write_merge(row, row, 19, 20,"Iva Retenidos por Compras",sub_header_style_c)
+        ws1.write_merge(row, row, 1, 3,"RESUMEN DE COMPRAS",sub_header_style_c)
+        ws1.write_merge(row, row, 4, 6,"Base Imponible",sub_header_style_c)
+        ws1.write_merge(row, row, 7, 8,"Crédito Fiscal",sub_header_style_c)
 
-        # ************* fila exentas o exoneradas *********
+        # ************* Fila Compras internas (16%)*********
         row=row+1
-        ws1.write_merge(row, row, 11, 13,"Compras internas Exentas o Exoneradas",right)
-        ws1.write_merge(row, row, 14, 16,acum_exento,right)
-        total_bases=total_bases+acum_exento
-        ws1.write_merge(row, row, 17, 18,"0.00",right)
-        ws1.write_merge(row, row, 19, 20,"0.00",right)
+        ws1.write_merge(row, row, 1, 3,"Compras internas gravadas alicuota general (16%)",line_content_style)
+        ws1.write_merge(row, row, 4, 6,self.float_format2(compras_internas_16),right)
+        ws1.write_merge(row, row, 7, 8,self.float_format2(compras_internas_16_iva),right)
 
-        # ************* fila SOLO ALICUOTA GENERAL *********
+        # ************* Fila Importacion (16%) *********
         row=row+1
-        ws1.write_merge(row, row, 11, 13,"Compras Internas Afectadas sólo Alícuota General",right)
-        ws1.write_merge(row, row, 14, 16,acum_base_general,right)
-        total_bases=total_bases+acum_base_general
-        ws1.write_merge(row, row, 17, 18,acum_general,right)
-        total_debitos=total_debitos+(acum_general)
-        ws1.write_merge(row, row, 19, 20,acum_ret_general,right)
-        total_retenidos=total_retenidos+acum_ret_general
+        ws1.write_merge(row, row, 1, 3,"Importacion gravadas por alicuota general (16%)",line_content_style)
+        ws1.write_merge(row, row, 4, 6,self.float_format2(compras_importacion_16),right)
+        ws1.write_merge(row, row, 7, 8,self.float_format2(compras_importacion_16_iva),right)
 
-        # ************* fila REDUCIDA *********
+        # ************* fila Compras internas (8%) *********
         row=row+1
-        ws1.write_merge(row, row, 11, 13,"Compras Internas Afectadas sólo Alícuota Reducida",right)
-        ws1.write_merge(row, row, 14, 16,acum_base_reducida,right)
-        total_bases=total_bases+acum_base_reducida
-        ws1.write_merge(row, row, 17, 18,acum_reducida+acum_reducida2,right)
-        total_debitos=total_debitos+(acum_reducida+acum_reducida2)
-        ws1.write_merge(row, row, 19, 20,acum_ret_reducida,right)
-        total_retenidos=total_retenidos+acum_ret_reducida
+        ws1.write_merge(row, row, 1, 3,"Compras internas gravadas alicuota reducida (8%)",line_content_style)
+        ws1.write_merge(row, row, 4, 6,self.float_format2(compras_internas_8),right)
+        ws1.write_merge(row, row, 7, 8,self.float_format2(compras_internas_8_iva),right)
 
-        # ************* fila EXPORTACION *********
+        # ************* fila Importacion (8%) *********
         row=row+1
-        ws1.write_merge(row, row, 11, 13,"Compras Internacionales",right)
-        ws1.write_merge(row, row, 14, 16,acum_fob,right)
-        total_bases=total_bases+acum_fob
-        ws1.write_merge(row, row, 17, 18,"0.00",right)
-        ws1.write_merge(row, row, 19, 20,"0.00",right)
+        ws1.write_merge(row, row, 1, 3,"Importacion gravadas por alicuota reducida (8%)",line_content_style)
+        ws1.write_merge(row, row, 4, 6,self.float_format2(compras_importacion_8),right)
+        ws1.write_merge(row, row, 7, 8,self.float_format2(compras_importacion_8_iva),right)
 
-        # ************* fila totales*********
+        # ************* fila Total Compras y créditos fiscales *********
         row=row+1
-        ws1.write_merge(row, row, 11, 13,"TOTAL:",right)
-        ws1.write_merge(row, row, 14, 16,total_bases,right)
-        ws1.write_merge(row, row, 17, 18,total_debitos,right)
-        ws1.write_merge(row, row, 19, 20,total_retenidos,right)
+        ws1.write_merge(row, row, 1, 3,"Total Compras y créditos fiscales del período",line_content_style)
+        ws1.write_merge(row, row, 4, 6,self.float_format2(total_compras_creditos),right)
+        ws1.write_merge(row, row, 7, 8,self.float_format2(total_compras_creditos_iva),right)
+
+        # ************* fila Compras no gravadas y/o sin derecho a credito fiscal *********
+        row=row+1
+        ws1.write_merge(row, row, 1, 3,"Compras no gravadas y/o sin derecho a credito fiscal",line_content_style)
+        ws1.write_merge(row, row, 4, 8,self.float_format2(total_no_gravadas),right)
 
         wb1.save(fp)
         out = base64.encodestring(fp.getvalue())
