@@ -119,6 +119,7 @@
                           <t t-set="acum_iva_ret" t-value="0"/>
 
                           <t t-set="acum_base_general" t-value="0"/>
+                          <t t-set="acum_base_general_import" t-value="0"/>
                           <t t-set="acum_base_adicional" t-value="0"/>
                           <t t-set="acum_base_reducida" t-value="0"/>
 
@@ -140,7 +141,6 @@
                           <t t-foreach="o.line.sorted(key=lambda x: (x.invoice_id.invoice_date,x.invoice_id.id ),reverse=False)" t-as="line" >
                             <!-- variables para los resumenes de totales-->
                             <t t-set="contador" t-value="contador+1"/>
-
                             <t t-set="acum_base_general" t-value="acum_base_general+line.base_general"/>
                             <t t-set="acum_base_adicional" t-value="acum_base_adicional+line.base_adicional"/>
                             <t t-set="acum_base_reducida" t-value="acum_base_reducida+line.base_reducida"/>
@@ -395,234 +395,172 @@
  
                           </tr>
                           <!-- FIN FILA TOTALES-->
-                          <tr>
-                            <td></td><!--1 -->
-                            <td></td><!--2 -->
-                            <td></td><!-- 3 -->
-                            <td></td><!--4 -->
-                            <td></td><!--5 -->
-                            <td></td><!--6 -->
-                            <td></td><!--7 -->
-                            <td></td><!--8 -->
-                            <td></td><!--9 -->
-                            <td></td><!--10 -->
-                            <td></td><!--11 -->
-                            <td></td><!--12 -->
+                          <t t-set="compras_internas_16" t-value="0"/>
+                          <t t-set="compras_internas_16_iva" t-value="0"/>
 
-                            <td colspan="3" style="background-color:#D3D3D3">
+                          <t t-set="compras_importacion_16" t-value="0"/>
+                          <t t-set="compras_importacion_16_iva" t-value="0"/>
+
+                          <t t-set="compras_internas_8" t-value="0"/>
+                          <t t-set="compras_internas_8_iva" t-value="0"/>
+
+                          <t t-set="compras_importacion_8" t-value="0"/>
+                          <t t-set="compras_importacion_8_iva" t-value="0"/>
+
+                          <t t-set="total_compras_creditos" t-value="0"/>
+                          <t t-set="total_compras_creditos_iva" t-value="0"/>
+
+                          <t t-set="total_no_gravadas" t-value="total_base_noded + total_iva_noded + acum_exento"/>
+
+                          <t t-foreach="o.get_purchases()" t-as="item">
+                            <t t-set="compras_internas_16" t-value="compras_internas_16 + item['compras_internas_16']"/>
+                            <t t-set="compras_internas_16_iva" t-value="compras_internas_16_iva + item['compras_internas_16_iva']"/>
+
+                            <t t-set="compras_importacion_16" t-value="compras_importacion_16 + item['compras_importacion_16']"/>
+                            <t t-set="compras_importacion_16_iva" t-value="compras_importacion_16_iva + item['compras_importacion_16_iva']"/>
+
+                            <t t-set="compras_internas_8" t-value="compras_internas_8 + item['compras_internas_8']"/>
+                            <t t-set="compras_internas_8_iva" t-value="compras_internas_8_iva + item['compras_internas_8_iva']"/>
+
+                            <t t-set="compras_importacion_8" t-value="compras_importacion_8 + item['compras_importacion_8']"/>
+                            <t t-set="compras_importacion_8_iva" t-value="compras_importacion_8_iva + item['compras_importacion_8_iva']"/>
+                            
+                            <t t-set="total_compras_creditos" t-value="total_compras_creditos + item['total_compras_creditos']"/>
+                            <t t-set="total_compras_creditos_iva" t-value="total_compras_creditos_iva + item['total_compras_creditos_iva']"/>
+
+                          </t>
+
+                          <tr>
+                            <td colspan="3">
                               <div align="center">
                               RESUMEN DE COMPRAS
                               </div>
-                            </td><!-- 13, 14 y 15-->
+                            </td><!-- 1, 2 y 3-->
                             
 
-                            <td colspan="2" style="background-color:#CCCCCC">
+                            <td colspan="2">
                               <div align="center">
                               Base Imponible
                               </div>
-                            </td><!-- 16 y 17-->
+                            </td><!-- 4 y 5-->
                             
-                            <td colspan="2" style="background-color:#D3D3D3">
+                            <td colspan="2">
                                <div align="center">Crédito Fiscal</div>
-                            </td><!--18 --><!-- 19-->
+                            </td><!--6 --><!-- 7-->
                          
-
-                            <td colspan="2" style="background-color:#CCCCCC">
-                              <div align="center">Iva Retenido por Compras.</div>
-                            </td><!-- 20 y 21-->                        
-
                           </tr>
                           <!-- AQUI-->
 
                           <tr>
-                            <td></td><!--1-->
-                            <td></td><!--2-->
-                            <td></td><!--3 -->
-                            <td></td><!--4-->
-                            <td></td><!--5-->                            
-                            <td></td><!--6-->
-                            <td></td><!--7-->
-                            <td></td><!--8-->
-                            <td></td><!--9-->
-                            <td></td><!-- 10-->
-                            <td></td><!-- 11-->                      
-
-                            <td colspan="4">
-                              Compras internas Exentas o Exoneradas
-                            </td><!-- 12--><!-- 13--><!-- 14 y 15-->                           
+                            <td colspan="3">
+                              Compras internas gravadas alicuota general (16%)
+                            </td><!-- 1 --><!-- 2 --><!-- 3 -->                           
 
                             <td colspan="2">
                               <div align="right">
-                                <t t-esc="o.float_format2(acum_exento)"/>
-                                <t t-set="total_bases" t-value="total_bases+acum_exento"/>
+                                <t t-esc="o.float_format2(compras_internas_16)"/>
                               </div>
-                            </td><!-- 16--><!-- 17-->
+                            </td><!-- 4 --><!-- 5 -->
 
-                            <td colspan="2"><div align="right">0,00</div></td><!-- 18 y 19-->
-
-                            <td colspan="2"><div align="right">0,00</div></td><!-- 20 y 21-->
-                            </tr>
+                            <td colspan="2"><div align="right"><t t-esc="o.float_format2(compras_internas_16_iva)"/></div></td><!-- 6 y 7-->
+                          </tr>
 
                           <tr>
-                            <td></td><!--1-->
-                            <td></td><!--2-->
-                            <td></td><!--3 -->
-                            <td></td><!--4-->
-                            <td></td><!--5-->                            
-                            <td></td><!--6-->
-                            <td></td><!--7-->
-                            <td></td><!--8-->
-                            <td></td><!--9-->
-                            <td></td><!-- 10-->
-                            <td></td><!-- 11-->
-
-                            <td colspan="4">
-                              Compras Internas Afectadas sólo Alícuota General
-                            </td><!-- 12, 13, 14 y 15--> 
+                            <td colspan="3">
+                              Importacion gravadas por alicuota general (16%)
+                            </td><!-- 1, 2 y 3 --> 
 
                             <td colspan="2">
                               <div align="right">
-                              <t t-esc="o.float_format2(acum_base_general)"/>
-                              <t t-set="total_bases" t-value="total_bases+acum_general"/>
+                              <t t-esc="o.float_format2(compras_importacion_16)"/>
                               </div>
-                            </td><!-- 16, 17-->
+                            </td><!-- 4, 5-->
 
                             <td colspan="2">
                               <div align="right">
-                              <t t-esc="o.float_format2(acum_gen)"/>
-                              <t t-set="total_debitos" t-value="total_debitos+(acum_gen)"/>
+                              <t t-esc="o.float_format2(compras_importacion_16_iva)"/>
                               </div>
-                            </td><!-- 18 y 19-->
-
-                            <td colspan="2">
-                              <div align="right">
-                                <t t-esc="o.float_format2(acum_ret_general)"/>
-                                <t t-set="total_retenidos" t-value="total_retenidos+acum_ret_general"/>
-                              </div>
-                            </td><!-- 20 y 21-->
+                            </td><!-- 6 y 7 -->
                             
                             </tr>
 
                             <tr>
-                            <td></td><!--1-->
-                            <td></td><!--2-->
-                            <td></td><!--3 -->
-                            <td></td><!--4-->
-                            <td></td><!--5-->                            
-                            <td></td><!--6-->
-                            <td></td><!--7-->
-                            <td></td><!--8-->
-                            <td></td><!--9-->
-                            <td></td><!-- 10-->
-                            <td></td><!-- 11-->
-
-                            <td colspan="4">
-                              Compras Internas Afectadas sólo Alícuota Reducida
-                            </td><!-- 12--><!-- 13--><!-- 14 y 15--> 
+                            <td colspan="3">
+                              Compras internas gravadas alicuota reducida (8%)
+                            </td><!-- 1 --><!-- 2 --><!-- 3 --> 
 
 
                             <td colspan="2">
                               <div align="right">
-                              <t t-esc="o.float_format2(acum_base_reducida)"/>
-                              <t t-set="total_bases" t-value="total_bases+acum_base_reducida"/>
+                                <t t-esc="o.float_format2(compras_internas_8)"/>
                               </div>
-                            </td><!-- 16--><!-- 17-->
+                            </td><!-- 4 --><!-- 5 -->
 
                             <td colspan="2">
                               <div align="right">
-                              <t t-esc="o.float_format2(acum_reducida+acum_reducida2)"/>
-                              <t t-set="total_debitos" t-value="total_debitos+(acum_reducida+acum_reducida2)"/>
+                                <t t-esc="o.float_format2(compras_internas_8_iva)"/>
                               </div>
-                            </td><!-- 18 y 19-->
-
-                            <td colspan="2">
-                              <div align="right">
-                                <t t-esc="o.float_format2(acum_ret_reducida)"/>
-                                <t t-set="total_retenidos" t-value="total_retenidos+acum_ret_reducida"/>
-                              </div>
-                            </td><!-- 20 y 21-->
+                            </td><!-- 6 y 7 -->
                             
-                            </tr>
+                          </tr>
 
                             <tr>
-                            <td></td><!--1-->
-                            <td></td><!--2-->
-                            <td></td><!--3 -->
-                            <td></td><!--4-->
-                            <td></td><!--5-->                            
-                            <td></td><!--6-->
-                            <td></td><!--7-->
-                            <td></td><!--8-->
-                            <td></td><!--9-->
-                            <td></td><!-- 10-->
-                            <td></td><!-- 11-->
 
-                            <td colspan="4">
-                              Compras Internacionales
-                            </td><!-- 12--><!-- 13--><!-- 14 y 15--> 
+                            <td colspan="3">
+                              Importacion gravadas por alicuota reducida (8%)
+                            </td><!-- 1 --><!-- 2 --><!-- 3 --> 
 
 
                             <td colspan="2">
                               <div align="right">
-                              <t t-esc="o.float_format2(acum_fob)"/>
-                              <t t-set="total_bases" t-value="total_bases+acum_fob"/>
+                                <t t-esc="o.float_format2(compras_importacion_8)"/>
                               </div>
-                            </td><!-- 16--><!-- 17-->
+                            </td><!-- 4 --><!-- 5 -->
 
                             <td colspan="2">
                               <div align="right">
-                                0,00
+                                <t t-esc="o.float_format2(compras_importacion_8_iva)"/>
                               </div>
-                            </td><!-- 18 y 19-->
+                            </td><!-- 6 y 7 -->
 
-                            <td colspan="2">
-                              <div align="right">
-                                0,00
-                              </div>
-                            </td><!-- 20 y 21-->
-
-                            </tr>
-
-                            
+                          </tr>
 
                             <tr>
-                            <td></td><!--1-->
-                            <td></td><!--2-->
-                            <td></td><!--3 -->
-                            <td></td><!--4-->
-                            <td></td><!--5-->                            
-                            <td></td><!--6-->
-                            <td></td><!--7-->
-                            <td></td><!--8-->
-                            <td></td><!--9-->
-                            <td></td><!-- 10-->
-                            <td></td><!-- 11-->
 
-                            <td colspan="4">
-                              <div align="right">
-                              Total:
+                            <td colspan="3">
+                              <div>
+                                Total Compras y créditos fiscales del período
                               </div>
-                            </td><!-- 12--><!-- 13--><!-- 14 y 15-->                           
+                            </td><!-- 1 --><!-- 2 --><!-- 3 -->                           
 
                             <td colspan="2">
                               <div align="right">
-                              <t t-esc="o.float_format2(total_bases)"/>
+                              <t t-esc="o.float_format2(total_compras_creditos)"/>
                               </div>
-                            </td><!-- 16--><!-- 17-->
+                            </td><!-- 4 --><!-- 5 -->
 
                             <td colspan="2">
                               <div align="right">
-                              <t t-esc="o.float_format2(total_debitos)"/>
+                              <t t-esc="o.float_format2(total_compras_creditos_iva)"/>
                               </div>
-                            </td><!-- 18 y 19-->
+                            </td><!-- 6 y 7 -->
+
+                          </tr>
+
+                          <tr>
+
+                            <td colspan="5">
+                              Compras no gravadas y/o sin derecho a credito fiscal
+                            </td><!-- 1 --><!-- 2 --><!-- 3 --> 
+
 
                             <td colspan="2">
                               <div align="right">
-                                <t t-esc="o.float_format2(total_retenidos)"/>
+                              <t t-esc="o.float_format2(total_no_gravadas)"/>
                               </div>
-                            </td><!-- 20 y 21-->
+                            </td><!-- 4 --><!-- 5 -->
 
-                            </tr>
+                          </tr>
 
                         </table>
 

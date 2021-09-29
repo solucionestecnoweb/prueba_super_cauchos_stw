@@ -331,7 +331,70 @@ class libro_ventas(models.TransientModel):
         #return self.env.ref('libro_ventas.libro_factura_clientes').report_action(self)
         return {'type': 'ir.actions.report','report_name': 'libro_compras.libro_factura_proveedores','report_type':"qweb-pdf"}
 
+    def get_convertion(self, monto, fecha, moneda):
+        tasa = self.env['res.currency.rate'].search([('name', '=', fecha), ('currency_id', '=', moneda), ('company_id', '=', self.company_id.id)], limit=1).sell_rate
+        if not tasa:
+            tasa = 1
+        if moneda == 3:
+            conversion = monto
+        else:
+            conversion = monto * tasa
+        return conversion
 
+    def get_purchases(self):
+        facturas = self.env['account.move'].search([
+            ('invoice_date','>=',self.date_from),
+            ('invoice_date','<=',self.date_to),
+            ('state','in',('posted','cancel' )),
+            ('type','in',('in_invoice','in_refund','in_receipt')),
+            ('company_id','=',self.env.company.id),#loca14
+            ])
+        compras_internas_16 = 0
+        compras_internas_16_iva = 0
+        compras_importacion_16 = 0
+        compras_importacion_16_iva = 0
+        compras_internas_8 = 0
+        compras_internas_8_iva = 0
+        compras_importacion_8 = 0
+        compras_importacion_8_iva = 0
+        total_compras_creditos = 0
+        total_compras_creditos_iva = 0
+
+        xfind = []
+        for item in facturas:
+            for line in item.alicuota_line_ids:
+                if item.import_form_num:
+                    if line.alicuota_general > 0:
+                        compras_importacion_16 = self.get_convertion(line.total_base, item.invoice_date, item.currency_id.id)
+                    compras_importacion_16_iva = self.get_convertion(line.alicuota_general, item.invoice_date, item.currency_id.id)
+                    if line.alicuota_reducida > 0:
+                        compras_importacion_8 = self.get_convertion(line.total_base, item.invoice_date, item.currency_id.id)
+                    compras_importacion_8_iva = self.get_convertion(line.alicuota_reducida, item.invoice_date, item.currency_id.id)
+                else:
+                    if line.alicuota_general > 0:
+                        compras_internas_16 = self.get_convertion(line.total_base, item.invoice_date, item.currency_id.id)
+                    compras_internas_16_iva = self.get_convertion(line.alicuota_general, item.invoice_date, item.currency_id.id)
+                    if line.alicuota_reducida > 0:
+                        compras_internas_8 = self.get_convertion(line.total_base, item.invoice_date, item.currency_id.id)
+                    compras_internas_8_iva = self.get_convertion(line.alicuota_reducida, item.invoice_date, item.currency_id.id)
+                
+                total_compras_creditos = compras_importacion_16 + compras_importacion_8 + compras_internas_16 + compras_internas_8
+                total_compras_creditos_iva = compras_importacion_16_iva + compras_importacion_8_iva + compras_internas_16_iva + compras_internas_8_iva
+                            
+                values = {
+                    'compras_internas_16': compras_internas_16,
+                    'compras_internas_16_iva': compras_internas_16_iva,
+                    'compras_importacion_16': compras_importacion_16,
+                    'compras_importacion_16_iva': compras_importacion_16_iva,
+                    'compras_internas_8': compras_internas_8,
+                    'compras_internas_8_iva': compras_internas_8_iva,
+                    'compras_importacion_8': compras_importacion_8,
+                    'compras_importacion_8_iva': compras_importacion_8_iva,
+                    'total_compras_creditos': total_compras_creditos,
+                    'total_compras_creditos_iva': total_compras_creditos_iva,
+                }
+                xfind.append(values)
+        return xfind
 
 
     def cont_row(self):

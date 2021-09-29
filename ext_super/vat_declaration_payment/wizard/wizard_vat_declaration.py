@@ -253,7 +253,7 @@ class WizardVatDeclarationPayment(models.TransientModel):
         self.get_credits()
         xfind = self.env['temporal.credits.amounts'].search([])
         return xfind
-
+        
 class VatDeclarationPayment(models.TransientModel):
     _name = 'temporal.credits.amounts'
 

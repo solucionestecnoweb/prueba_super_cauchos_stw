@@ -17,7 +17,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-3">
-                            <img t-if="o.company_id.logo" t-att-src="'data:image/png;base64,%s' % to_text(o.company_id.logo)" style="max-height: 100px; max-width: 150px; margin-top:22px;"/>
+                            <!-- <img t-if="o.company_id.logo" t-att-src="'data:image/png;base64,%s' % to_text(o.company_id.logo)" style="max-height: 100px; max-width: 150px; margin-top:22px;"/> -->
                         </div>
                         <div class="col-6 text-center"><br/>
                             <b style="font-size:20px;"><t t-esc="o.company_id.name"/></b><br/>
@@ -58,23 +58,23 @@
                                     <col span="1" style="width: 15%;"/>
                                 </colgroup>
                                 <thead>
-                                    <tr style="background-color: #cacaca">
-                                        <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle;">
+                                    <tr>
+                                        <th class="text-center" style="border-bottom: 1px solid black; display: table-cell; vertical-align: middle;">
                                             <span style="font-size:14px;">Código</span>
                                         </th>
-                                        <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle;">
+                                        <th class="text-center" style="border-bottom: 1px solid black; display: table-cell; vertical-align: middle;">
                                             <span style="font-size:14px;">Descripción de la Cuenta</span>
                                         </th>
-                                        <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle;">
+                                        <th class="text-center" style="border-bottom: 1px solid black; display: table-cell; vertical-align: middle;">
                                             <span style="font-size:14px;">Saldo Anterior</span>
                                         </th>
-                                        <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle;">
+                                        <th class="text-center" style="border-bottom: 1px solid black; display: table-cell; vertical-align: middle;">
                                             <span style="font-size:14px;">Débito</span>
                                         </th>
-                                        <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle;">
+                                        <th class="text-center" style="border-bottom: 1px solid black; display: table-cell; vertical-align: middle;">
                                             <span style="font-size:14px;">Crédito</span>
                                         </th>
-                                        <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle;">
+                                        <th class="text-center" style="border-bottom: 1px solid black; display: table-cell; vertical-align: middle;">
                                             <span style="font-size:14px;">Saldo Actual</span>
                                         </th>
                                     </tr>
@@ -91,22 +91,22 @@
 
                                     <t t-foreach="o.lines_ids" t-as="item">
                                         <tr>
-                                            <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center">
+                                            <td style="display: table-cell; vertical-align: middle;" class="text-center">
                                                 <span style="font-size:12px;"><t t-esc="item.code"/></span>
                                             </td>
-                                            <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center">
+                                            <td style="display: table-cell; vertical-align: middle;" class="text-center">
                                                 <span style="font-size:12px;"><t t-esc="item.description"/></span>
                                             </td>
-                                            <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle; padding-right: 5;" class="text-right">
+                                            <td style="display: table-cell; vertical-align: middle; padding-right: 5;" class="text-right">
                                                 <span style="font-size:12px;"><t t-esc="item.debit" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></span>
                                             </td>
-                                            <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle; padding-right: 5;" class="text-right">
+                                            <td style="display: table-cell; vertical-align: middle; padding-right: 5;" class="text-right">
                                                 <span style="font-size:12px;"><t t-esc="item.previous" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></span>
                                             </td>
-                                            <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle; padding-right: 5;" class="text-right">
+                                            <td style="display: table-cell; vertical-align: middle; padding-right: 5;" class="text-right">
                                                 <span style="font-size:12px;"><t t-esc="item.current" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></span>
                                             </td>
-                                            <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle; padding-right: 5;" class="text-right">
+                                            <td style="display: table-cell; vertical-align: middle; padding-right: 5;" class="text-right">
                                                 <span style="font-size:12px;"><t t-esc="item.credit" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></span>
                                             </td>
                                         </tr>
@@ -118,11 +118,11 @@
                                         
                                     </t>
                                         <tr>
-                                            <td colspan="2" style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center"><b style="font-size:12px;">Total General</b></td>
-                                            <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle; padding-right: 5;" class="text-right"><span style="font-size:12px;"><t t-esc="total_previous" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></span></td>
-                                            <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle; padding-right: 5;" class="text-right"><span style="font-size:12px;"><t t-esc="total_debit" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></span></td>
-                                            <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle; padding-right: 5;" class="text-right"><span style="font-size:12px;"><t t-esc="total_credit" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></span></td>
-                                            <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle; padding-right: 5;" class="text-right"><span style="font-size:12px;"><t t-esc="total_current" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></span></td>
+                                            <td colspan="2" style="display: table-cell; vertical-align: middle;" class="text-center"><b style="font-size:12px;">Total General</b></td>
+                                            <td style="border-top: 1px solid black; display: table-cell; vertical-align: middle; padding-right: 5;" class="text-right"><span style="font-size:12px;"><t t-esc="total_previous" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></span></td>
+                                            <td style="border-top: 1px solid black; display: table-cell; vertical-align: middle; padding-right: 5;" class="text-right"><span style="font-size:12px;"><t t-esc="total_debit" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></span></td>
+                                            <td style="border-top: 1px solid black; display: table-cell; vertical-align: middle; padding-right: 5;" class="text-right"><span style="font-size:12px;"><t t-esc="total_credit" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></span></td>
+                                            <td style="border-top: 1px solid black; display: table-cell; vertical-align: middle; padding-right: 5;" class="text-right"><span style="font-size:12px;"><t t-esc="total_current" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></span></td>
                                         </tr>
                                 </tbody>
                             </table>
