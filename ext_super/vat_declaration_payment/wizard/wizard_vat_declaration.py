@@ -348,7 +348,7 @@ class WizardVatDeclarationPayment(models.TransientModel):
             }
             t.create(values)
 
-    def credit_values(self):
+    def debit_values(self):
         self.get_debits()
         xfind = self.env['temporal.debits.amounts'].search([])
         return xfind
