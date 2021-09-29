@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 13.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-08-13 00:00+0000\n"
-"PO-Revision-Date: 2021-08-13 00:00+0000\n"
+"POT-Creation-Date: 2021-09-29 15:55+0000\n"
+"PO-Revision-Date: 2021-09-29 15:55+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -255,11 +255,6 @@ msgid "Export PDF"
 msgstr "Exportar PDF"
 
 #. module: vat_declaration_payment
-#: model_terms:ir.ui.view,arch_db:vat_declaration_payment.wizard_vat_declaration_payment
-msgid "Export XLS"
-msgstr "Exportar EXCEL"
-
-#. module: vat_declaration_payment
 #: model:ir.model.fields,field_description:vat_declaration_payment.field_wizard_vat_declaration_payment__name
 msgid "File Name"
 msgstr "Nombre del Archivo"
@@ -370,7 +365,7 @@ msgstr "IVA Incluido"
 #: model:ir.model.fields,field_description:vat_declaration_payment.field_vat_declaration_payment__p_vat_withheld
 #: model:ir.model.fields,field_description:vat_declaration_payment.field_vat_declaration_payment__s_vat_withheld
 msgid "VAT Withheld"
-msgstr "IVA Retenido
+msgstr "IVA Retenido"
 
 #. module: vat_declaration_payment
 #: model:ir.model.fields,field_description:vat_declaration_payment.field_vat_declaration_payment__wizard_id

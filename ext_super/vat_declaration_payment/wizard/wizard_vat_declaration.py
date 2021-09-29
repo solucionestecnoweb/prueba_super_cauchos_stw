@@ -165,7 +165,7 @@ class WizardVatDeclarationPayment(models.TransientModel):
             ('type', 'in', ('in_invoice', 'in_refund'))
         ])
         for item in xfind:
-            rate = self.env['res.currency.rate'].search([('name', '=', item.invoice_date)]).sell_rate
+            rate = self.env['res.currency.rate'].search([('name', '=', item.invoice_date)], limit=1).sell_rate
             if not rate:
                 rate = 1
 
@@ -253,6 +253,105 @@ class WizardVatDeclarationPayment(models.TransientModel):
         self.get_credits()
         xfind = self.env['temporal.credits.amounts'].search([])
         return xfind
+    
+    def get_debits(self):
+        t = self.env['temporal.debits.amounts']
+        t.search([]).unlink()
+        xfind = self.env['account.move'].search([
+            ('invoice_date', '>=', self.date_from),
+            ('invoice_date', '<=', self.date_to),
+            ('state', '=', 'posted'),
+            ('type', 'in', ('out_invoice', 'out_refund'))
+        ])
+        for item in xfind:
+            rate = self.env['res.currency.rate'].search([('name', '=', item.invoice_date)], limit=1).sell_rate
+            if not rate:
+                rate = 1
+
+            if self.currency_id.id == 3:
+                if item.currency_id.id == 3:
+                    if item.partner_id.contribuyente:
+                        base = item.amount_untaxed
+                        debit = item.amount_tax
+                        iva_with = item.vat_ret_id.vat_retentioned
+                        iva_exempt = 0
+                        for line in item.alicuota_line_ids:
+                            iva_exempt += line.total_exento
+                        supplier_type = 'taxpayer'
+                    else:
+                        base = item.amount_untaxed
+                        debit = item.amount_tax
+                        iva_with = item.vat_ret_id.vat_retentioned
+                        iva_exempt = 0
+                        for line in item.alicuota_line_ids:
+                            iva_exempt += line.total_exento
+                        supplier_type = 'international'
+                else:
+                    if item.partner_id.contribuyente:
+                        base = item.amount_untaxed
+                        debit = item.amount_tax
+                        iva_with = item.vat_ret_id.vat_retentioned
+                        iva_exempt = 0
+                        for line in item.alicuota_line_ids:
+                            iva_exempt += line.total_exento
+                        supplier_type = 'taxpayer'
+                    else:
+                        base = item.amount_untaxed * rate
+                        debit = item.amount_tax * rate
+                        iva_with = item.vat_ret_id.vat_retentioned * rate
+                        iva_exempt = 0
+                        for line in item.alicuota_line_ids:
+                            iva_exempt += line.total_exento * rate
+                        supplier_type = 'international'
+            else:
+                if item.currency_id.id == 3:
+                    if item.partner_id.contribuyente:
+                        base = item.amount_untaxed / rate
+                        debit = item.amount_tax / rate
+                        iva_with = item.vat_ret_id.vat_retentioned / rate
+                        iva_exempt = 0
+                        for line in item.alicuota_line_ids:
+                            iva_exempt += line.total_exento / rate
+                        supplier_type = 'national'
+                    else:
+                        base = item.amount_untaxed / rate
+                        debit = item.amount_tax / rate
+                        iva_with = item.vat_ret_id.vat_retentioned / rate
+                        iva_exempt = 0
+                        for line in item.alicuota_line_ids:
+                            iva_exempt += line.total_exento / rate
+                        supplier_type = 'international'
+                else:
+                    if item.partner_id.contribuyente:
+                        base = item.amount_untaxed
+                        debit = item.amount_tax
+                        iva_with = item.vat_ret_id.vat_retentioned
+                        iva_exempt = 0
+                        for line in item.alicuota_line_ids:
+                            iva_exempt += line.total_exento
+                        supplier_type = 'national'
+                    else:
+                        base = item.amount_untaxed * rate
+                        debit = item.amount_tax * rate
+                        iva_with = item.vat_ret_id.vat_retentioned * rate
+                        iva_exempt = 0
+                        for line in item.alicuota_line_ids:
+                            iva_exempt += line.total_exento * rate
+                        supplier_type = 'international'
+
+            values = {
+                'base': base,
+                'debit': debit,
+                'iva_with': iva_with,
+                'iva_exempt': iva_exempt,
+                'supplier_type': supplier_type
+            }
+            t.create(values)
+
+    def credit_values(self):
+        self.get_debits()
+        xfind = self.env['temporal.debits.amounts'].search([])
+        return xfind
         
 class VatDeclarationPayment(models.TransientModel):
     _name = 'temporal.credits.amounts'
@@ -262,4 +361,13 @@ class VatDeclarationPayment(models.TransientModel):
     iva_with = fields.Float()
     iva_exempt = fields.Float()
     supplier_type = fields.Selection(selection=[('national', 'National'), ('international', 'International')])
+            
+class VatDeclarationPayment(models.TransientModel):
+    _name = 'temporal.debits.amounts'
+
+    base = fields.Float()
+    debit = fields.Float()
+    iva_with = fields.Float()
+    iva_exempt = fields.Float()
+    supplier_type = fields.Selection(selection=[('exempt', 'Exempt'), ('exportation', 'Exportation'), ('taxpayer', 'Taxpayer'), ('user', 'Final User')])
     

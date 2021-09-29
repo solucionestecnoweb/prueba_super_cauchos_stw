@@ -44,10 +44,10 @@
         </record>
 
         <menuitem   name="VAT Declaration and Payment Report" 
-                    parent="account.menu_finance_receivables" 
+                    parent="l10n_ve_resumen_retenciones.menu_retenciones" 
                     id="vat_declaration_payment_menu" 
                     action="action_vat_declaration_payment"
-                    sequence="35"
+                    sequence="5"
                     />
     </data>
 </odoo>
