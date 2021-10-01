@@ -14,41 +14,41 @@ class AccountPaymentApproval(models.Model):
     def post(self):
         xfind = self.env['approval.request'].search([('conciliation_id', '=', self.id)])
         is_company =  self.env['res.company'].search([('partner_id', '=', self.partner_id.id)])
-        if len(xfind) > 0 and self.state in ('draft'):
-            self.state = 'to_approve'
+        # if len(xfind) > 0 and self.state in ('draft'):
+        #     self.state = 'to_approve'
 
-        if self.state in ('to_approve'):
-            status = xfind.request_status
-            if len(xfind) > 0:
-                if status == 'approved':
-                    self.state = 'approved'
-                    self.is_approved = True
-                elif status == 'refused':
-                    self.state = 'refused'
-                    self.is_approved = False
-                else:
-                    self.is_approved = False
-        elif self.state == 'approved':
+        # if self.state in ('to_approve'):
+        #     status = xfind.request_status
+        #     if len(xfind) > 0:
+        #         if status == 'approved':
+        #             self.state = 'approved'
+        #             self.is_approved = True
+        #         elif status == 'refused':
+        #             self.state = 'refused'
+        #             self.is_approved = False
+        #         else:
+        #             self.is_approved = False
+        # elif self.state == 'approved':
+        #     self.is_approved = True
+        # elif self.state == 'refused':
+        #     self.is_approved = False
+
+        if len(is_company) > 0:
             self.is_approved = True
-        elif self.state == 'refused':
-            self.is_approved = False
-        elif len(is_company) > 0:
-            self.is_approved = True
+
         elif self.payment_method_id.aprobacion_requerida == False:
             self.is_approved = True
+
         else:
             self.is_approved = False
 
         if self.is_approved:
             super(AccountPaymentApproval, self).post()
         else:
-            raise ValidationError(_("Cannot confirm until an approval request is approved for this invoice."))
+            raise ValidationError(_("Cannot confirm until an approval request is approved for this payment."))
 
     def approved_post(self):
         xfind = self.env['approval.request'].search([('conciliation_id', '=', self.id)])
-        is_company =  self.env['res.company'].search([('partner_id', '=', self.partner_id.id)])
-        if len(xfind) > 0 and self.state in ('draft'):
-            self.state = 'to_approve'
 
         if self.state in ('to_approve'):
             status = xfind.request_status
@@ -65,8 +65,6 @@ class AccountPaymentApproval(models.Model):
             self.is_approved = True
         elif self.state == 'refused':
             self.is_approved = False
-        elif len(is_company) > 0:
-            self.is_approved = True
         elif self.payment_method_id.aprobacion_requerida == False:
             self.is_approved = True
         else:
@@ -76,7 +74,7 @@ class AccountPaymentApproval(models.Model):
             self.action_draft()
             self.post()
         else:
-            raise ValidationError(_("Cannot confirm until an approval request is approved for this invoice."))
+            raise ValidationError(_("Cannot confirm until an approval request is approved for this payment."))
 
     # def _is_approved(self):
     #     for item in self:
@@ -135,7 +133,7 @@ class AccountPaymentApproval(models.Model):
             else:
                 raise ValidationError(_("There is no approval category for this type record. Go to Approvals/Config/Approval type."))
         else:
-            raise ValidationError(_("There is an approval request ongoing for this invoice."))
+            raise ValidationError(_("There is an approval request ongoing for this payment."))
 
 class AccountPaymentMethodApproval(models.Model):
     _inherit = 'account.payment.method'

@@ -491,28 +491,30 @@ class libro_ventas(models.TransientModel):
         ws1.col(col+9).width = int(len('Número Expediente Importaciones')*256)
         ws1.write(row,col+10,"Nro Factura Afectada",sub_header_style_c)
         ws1.col(col+10).width = int(len('Nro de factura afectada')*256)
-        ws1.write(row,col+11,"Base Imponible Comp. No Ded",sub_header_style_c)
-        ws1.col(col+11).width = int(len('Base Imponible Comp. No Ded')*256)
+        ws1.write(row,col+11,"Cantidad de Deducción",sub_header_style_c)
+        ws1.col(col+11).width = int(len('Cantidad de Deducción')*256)
+        ws1.write(row,col+12,"Base Imponible Comp. No Ded",sub_header_style_c)
+        ws1.col(col+12).width = int(len('Base Imponible Comp. No Ded')*256)
 
-        ws1.write(row,col+12,"I.V.A. Alic. Comp. No Ded",sub_header_style_c)
-        ws1.col(col+12).width = int(len('I.V.A. Alic. Comp. No Ded')*256)
-        ws1.write(row,col+13,"Compras Incluyendo el IVA",sub_header_style_c)
-        ws1.col(col+13).width = int(len('Compras Incluyendo el IVA')*256)
-        ws1.write(row,col+14,"Compras Exentas o Exoneradas",sub_header_style_c)
-        ws1.col(col+14).width = int(len('Compras Exentas o Exoneradas')*256)
-        ws1.write(row,col+15,"Monto Alic. Gral. Base Imponible",sub_header_style_c)
-        ws1.col(col+15).width = int(len('Monto Alic. Gral. Base Imponible')*256)
+        ws1.write(row,col+13,"I.V.A. Alic. Comp. No Ded",sub_header_style_c)
+        ws1.col(col+13).width = int(len('I.V.A. Alic. Comp. No Ded')*256)
+        ws1.write(row,col+14,"Compras Incluyendo el IVA",sub_header_style_c)
+        ws1.col(col+14).width = int(len('Compras Incluyendo el IVA')*256)
+        ws1.write(row,col+15,"Compras Exentas o Exoneradas",sub_header_style_c)
+        ws1.col(col+15).width = int(len('Compras Exentas o Exoneradas')*256)
+        ws1.write(row,col+16,"Monto Alic. Gral. Base Imponible",sub_header_style_c)
+        ws1.col(col+16).width = int(len('Monto Alic. Gral. Base Imponible')*256)
         # CONTRIBUYENTES
-        ws1.write(row,col+16,"% Alic. I.V.A.",sub_header_style_c)
-        ws1.col(col+16).width = int(len('% Alic. I.V.A.')*256)
-        ws1.write(row,col+17,"Monto I.V.A. alicuota Gral. 16%",sub_header_style_c)
-        ws1.col(col+17).width = int(len('Monto I.V.A. alicuota Gral. 16%')*256)
-        ws1.write(row,col+18,"Monto I.V.A. alicuota Redu. 8%",sub_header_style_c)
-        ws1.col(col+18).width = int(len('Monto I.V.A. alicuota Redu. 8%')*256)
-        ws1.write(row,col+19,"Nro Comprobante",sub_header_style_c)
-        ws1.col(col+19).width = int(len(' Nro Comprobante ')*256)
-        ws1.write(row,col+20,"Fecha Comp.",sub_header_style_c)
-        ws1.col(col+20).width = int(len('Fecha Comp.')*256)
+        ws1.write(row,col+17,"% Alic. I.V.A.",sub_header_style_c)
+        ws1.col(col+17).width = int(len('% Alic. I.V.A.')*256)
+        ws1.write(row,col+18,"Monto I.V.A. alicuota Gral. 16%",sub_header_style_c)
+        ws1.col(col+18).width = int(len('Monto I.V.A. alicuota Gral. 16%')*256)
+        ws1.write(row,col+19,"Monto I.V.A. alicuota Redu. 8%",sub_header_style_c)
+        ws1.col(col+19).width = int(len('Monto I.V.A. alicuota Redu. 8%')*256)
+        ws1.write(row,col+20,"Nro Comprobante",sub_header_style_c)
+        ws1.col(col+20).width = int(len(' Nro Comprobante ')*256)
+        ws1.write(row,col+21,"Fecha Comp.",sub_header_style_c)
+        ws1.col(col+21).width = int(len('Fecha Comp.')*256)
 
         center = xlwt.easyxf("align: horiz center")
         right = xlwt.easyxf("align: horiz right")
@@ -611,67 +613,78 @@ class libro_ventas(models.TransientModel):
             else:
                 ws1.write(row,col+10,' ',center)
 
+            # Cantidad de Deducción
+            no_ded_var = 0
+            for data in invoice.invoice_id.alicuota_line_ids:
+                no_ded_var += data.total_valor_iva_nd + data.total_base_nd
+            if no_ded_var == 0:
+                ws1.write(row,col+11, 'N/A',center)
+            else:
+                if invoice.invoice_id.amount_total == no_ded_var:
+                    ws1.write(row,col+11, 'TD',center)
+                else:
+                    ws1.write(row,col+11, 'PD',center)
             # Base Imponible Comp. No Ded
-            ws1.write(row,col+11, base_noded,right)
+            ws1.write(row,col+12, base_noded,right)
             # I.V.A. Alic. Comp. No Ded
-            ws1.write(row,col+12, iva_noded,right)
+            ws1.write(row,col+13, iva_noded,right)
             # Total Compras Incluyendo Iva
             if invoice.invoice_id.partner_id.vendor != 'international':
-                ws1.write(row,col+13,invoice.sale_total,right) # total venta iva incluido
+                ws1.write(row,col+14,invoice.sale_total,right) # total venta iva incluido
                 acum_venta_iva=acum_venta_iva+invoice.sale_total
             # Compras Exentas o Exoneradas 
             if invoice.invoice_id.partner_id.vendor != 'international':
-                ws1.write(row,col+14,invoice.total_exento,right) # total exento
+                ws1.write(row,col+15,invoice.total_exento,right) # total exento
                 acum_exento=acum_exento+invoice.total_exento
             # Monto Alic. Gral. Base Imponible
             if invoice.invoice_id.partner_id.vendor != 'international' and invoice.base_reducida != 0:
-                ws1.write(row,col+15,invoice.base_reducida,right)
+                ws1.write(row,col+16,invoice.base_reducida,right)
                 total_base_imponible += invoice.base_reducida
                 acum_b_reducida=acum_b_reducida+invoice.base_reducida
             elif invoice.invoice_id.partner_id.vendor != 'international' and invoice.base_general != 0:
-                ws1.write(row,col+15,invoice.base_general,right)
+                ws1.write(row,col+16,invoice.base_general,right)
                 total_base_imponible += invoice.base_general
                 acum_b_general=acum_b_general+(invoice.base_general)
             else:
-                ws1.write(row,col+15, 0,right)
+                ws1.write(row,col+16, 0,right)
             # % Alic. I.V.A.
             if invoice.invoice_id.partner_id.vendor != 'international':
                 if invoice.base_reducida!=0:
-                    ws1.write(row,col+16,"8%",center)
+                    ws1.write(row,col+17,"8%",center)
                 elif invoice.base_general!=0:
-                    ws1.write(row,col+16,"16%",center)
+                    ws1.write(row,col+17,"16%",center)
                 else:
-                    ws1.write(row,col+16," ",center)
+                    ws1.write(row,col+17," ",center)
             # Monto I.V.A. alicuota Gral. 16%
             if invoice.invoice_id.partner_id.vendor != 'international':
-                ws1.write(row,col+17,invoice.alicuota_general,right)
+                ws1.write(row,col+18,invoice.alicuota_general,right)
                 acum_iva=acum_iva+(invoice.alicuota_general)
             # Monto I.V.A. alicuota Redu. 8%
             if invoice.invoice_id.partner_id.vendor != 'international':
-                ws1.write(row,col+18,invoice.alicuota_reducida,right)
+                ws1.write(row,col+19,invoice.alicuota_reducida,right)
                 acum_reducida=acum_reducida+invoice.alicuota_reducida
             # Nro Comprobante
             # Fecha Comp.
             if invoice.vat_ret_id.state == 'posted':
-                ws1.write(row,col+19,str(invoice.retenido),right) # NRO CONTROL
-                ws1.write(row,col+20,str(invoice.formato_fecha2(invoice.retenido_date)),right) # FECHA COMPROBANTE
+                ws1.write(row,col+20,str(invoice.retenido),right) # NRO CONTROL
+                ws1.write(row,col+21,str(invoice.formato_fecha2(invoice.retenido_date)),right) # FECHA COMPROBANTE
 
             numero=numero+1
 
 
         # ******* FILA DE TOTALES **********
         row=row+1
-        ws1.write(row,col+10," TOTALES",sub_header_style)
-        ws1.write(row,col+11,self.float_format2(total_base_noded),right)
-        ws1.write(row,col+12,self.float_format2(total_iva_noded),right)
-        ws1.write(row,col+13,self.float_format2(acum_venta_iva),right)
-        ws1.write(row,col+14,self.float_format2(acum_exento),right)
-        ws1.write(row,col+15,self.float_format2(total_base_imponible),right)
-        ws1.write(row,col+16,'---',center)
-        ws1.write(row,col+17,self.float_format2(acum_iva),right)
-        ws1.write(row,col+18,self.float_format2(acum_reducida),right)
-        ws1.write(row,col+19,'---',center)
+        ws1.write(row,col+11," TOTALES",sub_header_style)
+        ws1.write(row,col+12,self.float_format2(total_base_noded),right)
+        ws1.write(row,col+13,self.float_format2(total_iva_noded),right)
+        ws1.write(row,col+14,self.float_format2(acum_venta_iva),right)
+        ws1.write(row,col+15,self.float_format2(acum_exento),right)
+        ws1.write(row,col+16,self.float_format2(total_base_imponible),right)
+        ws1.write(row,col+17,'---',center)
+        ws1.write(row,col+18,self.float_format2(acum_iva),right)
+        ws1.write(row,col+19,self.float_format2(acum_reducida),right)
         ws1.write(row,col+20,'---',center)
+        ws1.write(row,col+21,'---',center)
 
         # ********* TOTALES TABLA
         compras_internas_16 = 0

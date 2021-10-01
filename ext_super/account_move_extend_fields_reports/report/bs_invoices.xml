@@ -145,28 +145,31 @@
 
                                         <!-- Totales -->
                                         <tr style="border-top: 1px black solid;">
-                                            <td colspan="4"></td>
+                                            <td colspan="3"></td>
                                             <td class="text-right">
                                                 <b>Subtotal</b>
                                             </td>
+                                            <td></td>
                                             <td class="text-right">
                                                 <span><t t-esc="subtotal" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td colspan="4"></td>
+                                            <td colspan="3"></td>
                                             <td class="text-right">
                                                 <b>Descuentos</b>
                                             </td>
+                                            <td></td>
                                             <td class="text-right">
                                                 <span><t t-esc="discount" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td colspan="4"></td>
+                                            <td colspan="3"></td>
                                             <td class="text-right">
                                                 <b>Monto Neto</b>
                                             </td>
+                                            <td></td>
                                             <td class="text-right">
                                                 <span><t t-esc="net_amount" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
                                             </td>
@@ -179,20 +182,22 @@
                                             <t t-set="iva_24" t-value="iva_24 + item.alicuota_adicional"/>
                                         </t>
                                         <tr>
-                                            <td colspan="4"></td>
+                                            <td colspan="3"></td>
                                             <td class="text-right">
                                                 <b>Base Neta Imponible</b>
                                             </td>
+                                            <td></td>
                                             <td class="text-right">
                                                 <span><t t-esc="net_amount" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
                                             </td>
                                         </tr>
                                         <t t-if="iva_exempt > 0">
                                             <tr>
-                                                <td colspan="4"></td>
+                                                <td colspan="3"></td>
                                                 <td class="text-right">
                                                     <b>Total Exento</b>
                                                 </td>
+                                                <td></td>
                                                 <td class="text-right">
                                                     <span><t t-esc="iva_exempt" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
                                                 </td>
@@ -200,10 +205,11 @@
                                         </t>
                                         <t t-if="iva_8 > 0">
                                             <tr>
-                                                <td colspan="4"></td>
+                                                <td colspan="3"></td>
                                                 <td class="text-right">
                                                     <b>Total IVA 8%</b>
                                                 </td>
+                                                <td></td>
                                                 <td class="text-right">
                                                     <span><t t-esc="iva_8" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
                                                 </td>
@@ -211,10 +217,11 @@
                                         </t>
                                         <t t-if="iva_16 > 0">
                                             <tr>
-                                                <td colspan="4"></td>
+                                                <td colspan="3"></td>
                                                 <td class="text-right">
                                                     <b>Total IVA 16%</b>
                                                 </td>
+                                                <td></td>
                                                 <td class="text-right">
                                                     <span><t t-esc="iva_16" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
                                                 </td>
@@ -222,20 +229,22 @@
                                         </t>
                                         <t t-if="iva_24 > 0">
                                             <tr>
-                                                <td colspan="4"></td>
+                                                <td colspan="3"></td>
                                                 <td class="text-right">
                                                     <b>Total IVA 31%</b>
                                                 </td>
+                                                <td></td>
                                                 <td class="text-right">
                                                     <span><t t-esc="iva_24" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
                                                 </td>
                                             </tr>
                                         </t>
                                         <tr>
-                                            <td colspan="4"></td>
+                                            <td colspan="3"></td>
                                             <td class="text-right">
                                                 <b>Total a Pagar</b>
                                             </td>
+                                            <td></td>
                                             <td class="text-right">
                                                 <span><t t-esc="o.amount_total" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
                                             </td>
@@ -282,37 +291,41 @@
 
                                         <!-- Totales -->
                                         <tr style="border-top: 1px black solid;">
-                                            <td colspan="4"></td>
+                                            <td colspan="3"></td>
                                             <td class="text-right">
                                                 <b>Subtotal</b>
                                             </td>
+                                            <td></td>
                                             <td class="text-right">
                                                 <span><t t-esc="subtotal" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td colspan="4"></td>
+                                            <td colspan="3"></td>
                                             <td class="text-right">
                                                 <b>Descuentos</b>
                                             </td>
+                                            <td></td>
                                             <td class="text-right">
                                                 <span><t t-esc="discount" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td colspan="4"></td>
+                                            <td colspan="3"></td>
                                             <td class="text-right">
                                                 <b>Monto Neto</b>
                                             </td>
+                                            <td></td>
                                             <td class="text-right">
                                                 <span><t t-esc="net_amount" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td colspan="4"></td>
+                                            <td colspan="3"></td>
                                             <td class="text-right">
                                                 <b>Base Neta Imponible</b>
                                             </td>
+                                            <td></td>
                                             <td class="text-right">
                                                 <span><t t-esc="net_amount" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
                                             </td>
@@ -325,10 +338,11 @@
                                         </t>
                                         <t t-if="iva_exempt > 0">
                                             <tr>
-                                                <td colspan="4"></td>
+                                                <td colspan="3"></td>
                                                 <td class="text-right">
                                                     <b>Total Exento</b>
                                                 </td>
+                                                <td></td>
                                                 <td class="text-right">
                                                     <span><t t-esc="iva_exempt * rate" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
                                                 </td>
@@ -336,10 +350,11 @@
                                         </t>
                                         <t t-if="iva_8 > 0">
                                             <tr>
-                                                <td colspan="4"></td>
+                                                <td colspan="3"></td>
                                                 <td class="text-right">
                                                     <b>Total IVA 8%</b>
                                                 </td>
+                                                <td></td>
                                                 <td class="text-right">
                                                     <span><t t-esc="iva_8 * rate" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
                                                 </td>
@@ -347,10 +362,11 @@
                                         </t>
                                         <t t-if="iva_16 > 0">
                                             <tr>
-                                                <td colspan="4"></td>
+                                                <td colspan="3"></td>
                                                 <td class="text-right">
                                                     <b>Total IVA 16%</b>
                                                 </td>
+                                                <td></td>
                                                 <td class="text-right">
                                                     <span><t t-esc="iva_16 * rate" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
                                                 </td>
@@ -358,20 +374,22 @@
                                         </t>
                                         <t t-if="iva_24 > 0">
                                             <tr>
-                                                <td colspan="4"></td>
+                                                <td colspan="3"></td>
                                                 <td class="text-right">
                                                     <b>Total IVA 31%</b>
                                                 </td>
+                                                <td></td>
                                                 <td class="text-right">
                                                     <span><t t-esc="iva_24 * rate" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
                                                 </td>
                                             </tr>
                                         </t>
                                         <tr>
-                                            <td colspan="4"></td>
+                                            <td colspan="3"></td>
                                             <td class="text-right">
                                                 <b>Total a Pagar</b>
                                             </td>
+                                            <td></td>
                                             <td class="text-right">
                                                 <span><t t-esc="o.amount_total * rate" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
                                             </td>
@@ -479,37 +497,41 @@
 
                                         <!-- Totales -->
                                         <tr style="border-top: 1px black solid;">
-                                            <td colspan="4"></td>
+                                            <td colspan="3"></td>
                                             <td class="text-right">
                                                 <b>Subtotal</b>
                                             </td>
+                                            <td></td>
                                             <td class="text-right">
                                                 <span><t t-esc="subtotal" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td colspan="4"></td>
+                                            <td colspan="3"></td>
                                             <td class="text-right">
                                                 <b>Descuentos</b>
                                             </td>
+                                            <td></td>
                                             <td class="text-right">
                                                 <span><t t-esc="discount" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td colspan="4"></td>
+                                            <td colspan="3"></td>
                                             <td class="text-right">
                                                 <b>Monto Neto</b>
                                             </td>
+                                            <td></td>
                                             <td class="text-right">
                                                 <span><t t-esc="net_amount" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td colspan="4"></td>
+                                            <td colspan="3"></td>
                                             <td class="text-right">
                                                 <b>Base Neta Imponible</b>
                                             </td>
+                                            <td></td>
                                             <td class="text-right">
                                                 <span><t t-esc="net_amount" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
                                             </td>
@@ -522,10 +544,11 @@
                                         </t>
                                         <t t-if="iva_exempt > 0">
                                             <tr>
-                                                <td colspan="4"></td>
+                                                <td colspan="3"></td>
                                                 <td class="text-right">
                                                     <b>Total Exento</b>
                                                 </td>
+                                                <td></td>
                                                 <td class="text-right">
                                                     <span><t t-esc="iva_exempt" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
                                                 </td>
@@ -533,10 +556,11 @@
                                         </t>
                                         <t t-if="iva_8 > 0">
                                             <tr>
-                                                <td colspan="4"></td>
+                                                <td colspan="3"></td>
                                                 <td class="text-right">
                                                     <b>Total IVA 8%</b>
                                                 </td>
+                                                <td></td>
                                                 <td class="text-right">
                                                     <span><t t-esc="iva_8" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
                                                 </td>
@@ -544,10 +568,11 @@
                                         </t>
                                         <t t-if="iva_16 > 0">
                                             <tr>
-                                                <td colspan="4"></td>
+                                                <td colspan="3"></td>
                                                 <td class="text-right">
                                                     <b>Total IVA 16%</b>
                                                 </td>
+                                                <td></td>
                                                 <td class="text-right">
                                                     <span><t t-esc="iva_16" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
                                                 </td>
@@ -555,20 +580,22 @@
                                         </t>
                                         <t t-if="iva_24 > 0">
                                             <tr>
-                                                <td colspan="4"></td>
+                                                <td colspan="3"></td>
                                                 <td class="text-right">
                                                     <b>Total IVA 31%</b>
                                                 </td>
+                                                <td></td>
                                                 <td class="text-right">
                                                     <span><t t-esc="iva_24" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
                                                 </td>
                                             </tr>
                                         </t>
                                         <tr>
-                                            <td colspan="4"></td>
+                                            <td colspan="3"></td>
                                             <td class="text-right">
                                                 <b>Total a Pagar</b>
                                             </td>
+                                            <td></td>
                                             <td class="text-right">
                                                 <span><t t-esc="o.amount_total" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
                                             </td>
@@ -615,37 +642,41 @@
 
                                         <!-- Totales -->
                                         <tr style="border-top: 1px black solid;">
-                                            <td colspan="4"></td>
+                                            <td colspan="3"></td>
                                             <td class="text-right">
                                                 <b>Subtotal</b>
                                             </td>
+                                            <td></td>
                                             <td class="text-right">
                                                 <span><t t-esc="subtotal" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td colspan="4"></td>
+                                            <td colspan="3"></td>
                                             <td class="text-right">
                                                 <b>Descuentos</b>
                                             </td>
+                                            <td></td>
                                             <td class="text-right">
                                                 <span><t t-esc="discount" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td colspan="4"></td>
+                                            <td colspan="3"></td>
                                             <td class="text-right">
                                                 <b>Monto Neto</b>
                                             </td>
+                                            <td></td>
                                             <td class="text-right">
                                                 <span><t t-esc="net_amount" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td colspan="4"></td>
+                                            <td colspan="3"></td>
                                             <td class="text-right">
                                                 <b>Base Neta Imponible</b>
                                             </td>
+                                            <td></td>
                                             <td class="text-right">
                                                 <span><t t-esc="net_amount" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
                                             </td>
@@ -658,10 +689,11 @@
                                         </t>
                                         <t t-if="iva_exempt > 0">
                                             <tr>
-                                                <td colspan="4"></td>
+                                                <td colspan="3"></td>
                                                 <td class="text-right">
                                                     <b>Total Exento</b>
                                                 </td>
+                                                <td></td>
                                                 <td class="text-right">
                                                     <span><t t-esc="iva_exempt * rate" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
                                                 </td>
@@ -669,10 +701,11 @@
                                         </t>
                                         <t t-if="iva_8 > 0">
                                             <tr>
-                                                <td colspan="4"></td>
+                                                <td colspan="3"></td>
                                                 <td class="text-right">
                                                     <b>Total IVA 8%</b>
                                                 </td>
+                                                <td></td>
                                                 <td class="text-right">
                                                     <span><t t-esc="iva_8 * rate" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
                                                 </td>
@@ -680,10 +713,11 @@
                                         </t>
                                         <t t-if="iva_16 > 0">
                                             <tr>
-                                                <td colspan="4"></td>
+                                                <td colspan="3"></td>
                                                 <td class="text-right">
                                                     <b>Total IVA 16%</b>
                                                 </td>
+                                                <td></td>
                                                 <td class="text-right">
                                                     <span><t t-esc="iva_16 * rate" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
                                                 </td>
@@ -691,20 +725,22 @@
                                         </t>
                                         <t t-if="iva_24 > 0">
                                             <tr>
-                                                <td colspan="4"></td>
+                                                <td colspan="3"></td>
                                                 <td class="text-right">
                                                     <b>Total IVA 31%</b>
                                                 </td>
+                                                <td></td>
                                                 <td class="text-right">
                                                     <span><t t-esc="iva_24 * rate" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
                                                 </td>
                                             </tr>
                                         </t>
                                         <tr>
-                                            <td colspan="4"></td>
+                                            <td colspan="3"></td>
                                             <td class="text-right">
                                                 <b>Total a Pagar</b>
                                             </td>
+                                            <td></td>
                                             <td class="text-right">
                                                 <span><t t-esc="o.amount_total * rate" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
                                             </td>
@@ -812,37 +848,41 @@
 
                                         <!-- Totales -->
                                         <tr style="border-top: 1px black solid;">
-                                            <td colspan="4"></td>
+                                            <td colspan="3"></td>
                                             <td class="text-right">
                                                 <b>Subtotal</b>
                                             </td>
+                                            <td></td>
                                             <td class="text-right">
                                                 <span><t t-esc="subtotal" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td colspan="4"></td>
+                                            <td colspan="3"></td>
                                             <td class="text-right">
                                                 <b>Descuentos</b>
                                             </td>
+                                            <td></td>
                                             <td class="text-right">
                                                 <span><t t-esc="discount" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td colspan="4"></td>
+                                            <td colspan="3"></td>
                                             <td class="text-right">
                                                 <b>Monto Neto</b>
                                             </td>
+                                            <td></td>
                                             <td class="text-right">
                                                 <span><t t-esc="net_amount" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td colspan="4"></td>
+                                            <td colspan="3"></td>
                                             <td class="text-right">
                                                 <b>Base Neta Imponible</b>
                                             </td>
+                                            <td></td>
                                             <td class="text-right">
                                                 <span><t t-esc="net_amount" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
                                             </td>
@@ -855,10 +895,11 @@
                                         </t>
                                         <t t-if="iva_exempt > 0">
                                             <tr>
-                                                <td colspan="4"></td>
+                                                <td colspan="3"></td>
                                                 <td class="text-right">
                                                     <b>Total Exento</b>
                                                 </td>
+                                                <td></td>
                                                 <td class="text-right">
                                                     <span><t t-esc="iva_exempt" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
                                                 </td>
@@ -866,10 +907,11 @@
                                         </t>
                                         <t t-if="iva_8 > 0">
                                             <tr>
-                                                <td colspan="4"></td>
+                                                <td colspan="3"></td>
                                                 <td class="text-right">
                                                     <b>Total IVA 8%</b>
                                                 </td>
+                                                <td></td>
                                                 <td class="text-right">
                                                     <span><t t-esc="iva_8" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
                                                 </td>
@@ -877,10 +919,11 @@
                                         </t>
                                         <t t-if="iva_16 > 0">
                                             <tr>
-                                                <td colspan="4"></td>
+                                                <td colspan="3"></td>
                                                 <td class="text-right">
                                                     <b>Total IVA 16%</b>
                                                 </td>
+                                                <td></td>
                                                 <td class="text-right">
                                                     <span><t t-esc="iva_16" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
                                                 </td>
@@ -888,20 +931,22 @@
                                         </t>
                                         <t t-if="iva_24 > 0">
                                             <tr>
-                                                <td colspan="4"></td>
+                                                <td colspan="3"></td>
                                                 <td class="text-right">
                                                     <b>Total IVA 31%</b>
                                                 </td>
+                                                <td></td>
                                                 <td class="text-right">
                                                     <span><t t-esc="iva_24" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
                                                 </td>
                                             </tr>
                                         </t>
                                         <tr>
-                                            <td colspan="4"></td>
+                                            <td colspan="3"></td>
                                             <td class="text-right">
                                                 <b>Total a Pagar</b>
                                             </td>
+                                            <td></td>
                                             <td class="text-right">
                                                 <span><t t-esc="o.amount_total" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
                                             </td>
@@ -948,37 +993,41 @@
 
                                         <!-- Totales -->
                                         <tr style="border-top: 1px black solid;">
-                                            <td colspan="4"></td>
+                                            <td colspan="3"></td>
                                             <td class="text-right">
                                                 <b>Subtotal</b>
                                             </td>
+                                            <td></td>
                                             <td class="text-right">
                                                 <span><t t-esc="subtotal" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td colspan="4"></td>
+                                            <td colspan="3"></td>
                                             <td class="text-right">
                                                 <b>Descuentos</b>
                                             </td>
+                                            <td></td>
                                             <td class="text-right">
                                                 <span><t t-esc="discount" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td colspan="4"></td>
+                                            <td colspan="3"></td>
                                             <td class="text-right">
                                                 <b>Monto Neto</b>
                                             </td>
+                                            <td></td>
                                             <td class="text-right">
                                                 <span><t t-esc="net_amount" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td colspan="4"></td>
+                                            <td colspan="3"></td>
                                             <td class="text-right">
                                                 <b>Base Neta Imponible</b>
                                             </td>
+                                            <td></td>
                                             <td class="text-right">
                                                 <span><t t-esc="net_amount" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
                                             </td>
@@ -991,10 +1040,11 @@
                                         </t>
                                         <t t-if="iva_exempt > 0">
                                             <tr>
-                                                <td colspan="4"></td>
+                                                <td colspan="3"></td>
                                                 <td class="text-right">
                                                     <b>Total Exento</b>
                                                 </td>
+                                                <td></td>
                                                 <td class="text-right">
                                                     <span><t t-esc="iva_exempt * rate" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
                                                 </td>
@@ -1002,10 +1052,11 @@
                                         </t>
                                         <t t-if="iva_8 > 0">
                                             <tr>
-                                                <td colspan="4"></td>
+                                                <td colspan="3"></td>
                                                 <td class="text-right">
                                                     <b>Total IVA 8%</b>
                                                 </td>
+                                                <td></td>
                                                 <td class="text-right">
                                                     <span><t t-esc="iva_8 * rate" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
                                                 </td>
@@ -1013,10 +1064,11 @@
                                         </t>
                                         <t t-if="iva_16 > 0">
                                             <tr>
-                                                <td colspan="4"></td>
+                                                <td colspan="3"></td>
                                                 <td class="text-right">
                                                     <b>Total IVA 16%</b>
                                                 </td>
+                                                <td></td>
                                                 <td class="text-right">
                                                     <span><t t-esc="iva_16 * rate" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
                                                 </td>
@@ -1024,20 +1076,22 @@
                                         </t>
                                         <t t-if="iva_24 > 0">
                                             <tr>
-                                                <td colspan="4"></td>
+                                                <td colspan="3"></td>
                                                 <td class="text-right">
                                                     <b>Total IVA 31%</b>
                                                 </td>
+                                                <td></td>
                                                 <td class="text-right">
                                                     <span><t t-esc="iva_24 * rate" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
                                                 </td>
                                             </tr>
                                         </t>
                                         <tr>
-                                            <td colspan="4"></td>
+                                            <td colspan="3"></td>
                                             <td class="text-right">
                                                 <b>Total a Pagar</b>
                                             </td>
+                                            <td></td>
                                             <td class="text-right">
                                                 <span><t t-esc="o.amount_total * rate" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
                                             </td>

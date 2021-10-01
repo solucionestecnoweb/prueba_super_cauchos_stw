@@ -49,10 +49,10 @@ class InvoicesDisplayName(models.Model):
     def name_get(self):
         result = []
         for record in self:
-            if record.type in ('in_invoice', 'in_refund', 'in_receipt'):
+            if record.type == 'in_invoice':
                 # Only goes in when invoice is suppliers
                 result.append((record.id, record.invoice_number_pro))
-            elif record.type in ('out_invoice', 'out_refund', 'out_receipt'):
+            elif record.type == 'out_invoice':
                 # Only goes in when invoice is customer
                 result.append((record.id, record.invoice_number_cli))
             else:

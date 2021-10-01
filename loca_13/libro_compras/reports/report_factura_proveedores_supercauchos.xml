@@ -62,7 +62,7 @@
                             <td colspan="13"> </td>
                             <td colspan="6" style="background-color:#D3D3D3">
                               <div align="center">
-                              Compras Internas o Importacion Gravada
+                              Compras Internas o Importación Gravada
                               </div>
                             </td>
                             <td colspan="2"></td>
@@ -74,8 +74,7 @@
                             <td>Rif</td>
                             <td>Nombre Razón Social </td>
                             <td>Tipo de <br/>Doc.</td>
-                            <td width="250">Nro Factura
-                            / Entrega</td>
+                            <td width="250"> Numero Docum.</td>
                             <td width="250">Nro. de
                             Control</td>
                             <td>Tipo de <br/>Transacc.</td>
@@ -84,14 +83,15 @@
                             <td>Número Expediente<br/>Importaciones</td>
                             <td>Nro. Factura Afectada
                             </td>
+                            <td>Cantidad de Deducción</td>
                             <td>Base Imponible <br/>Comp. No Ded</td>
                             <td>I.V.A. Alic. <br/>Comp. No Ded</td>
                             <td>Total Compras <br/> Incluyendo Iva</td>
                             <td>Compras Exentas <br/>o Exoneradas </td>                            
                             <td>Monto Alic. Gral. <br/>Base Imponible</td>
                             <td>% Alic.<br/>I.V.A.</td>
-                            <td>Monto I.V.A.<br/> alicuota Gral. 16%</td>
-                            <td>Monto I.V.A.<br/> alicuota Redu. 8%</td>
+                            <td>Monto I.V.A.<br/> alícuota Gral. 16%</td>
+                            <td>Monto I.V.A.<br/> alícuota Redu. 8%</td>
                             <td>Nro <br/>Comprobante</td>
                             <td>Fecha Comp.</td>
                           </tr>
@@ -204,6 +204,28 @@
                                   <td></td>
                               </t>
 
+                              <t t-set="no_ded_var" t-value="0"/>
+                              <t t-foreach="line.invoice_id.alicuota_line_ids" t-as="data">
+                                <t t-set="no_ded_var" t-value="no_ded_var + data.total_valor_iva_nd + data.total_base_nd"/>
+                              </t>
+
+                              <!-- Cantidad de Deducción -->
+                              <td>
+                                <div align="center">
+                                  <t t-if="no_ded_var == 0">
+                                    N/A
+                                  </t>
+                                  <t t-else="">
+                                    <t t-if="line.invoice_id.amount_total == no_ded_var">
+                                      TD
+                                    </t>
+                                    <t t-else="">
+                                      PD
+                                    </t>
+                                  </t>
+                                </div>
+                              </td>
+
                               <!-- Base Imponible Comp. No Ded -->
                               <td>
                                 <div align="right">
@@ -292,7 +314,7 @@
                                 </t>
                                 </td>
 
-                                <!-- Monto I.V.A. alicuota Gral. 16% -->
+                                <!-- Monto I.V.A. alícuota Gral. 16% -->
                                 <td>
                                 	<t t-if="line.invoice_id.partner_id.vendor != 'international'">
                                   <div align="right">
@@ -307,7 +329,7 @@
                                 </t>
                                 </td>
                                 
-                                <!-- Monto I.V.A. alicuota Redu. 8% -->
+                                <!-- Monto I.V.A. alícuota Redu. 8% -->
                                 <td>
                                   <t t-if="line.invoice_id.partner_id.vendor != 'international'">
                                   <div align="right">
@@ -345,7 +367,7 @@
 
                           <!-- darrell FILA DE TOTALES -->
                           <tr>
-                            <td colspan="10"> </td>
+                            <td colspan="11"> </td>
                             <td><div align="right">TOTALES:</div></td>
                             <td><div align="right"><t t-esc="o.float_format2(total_base_noded)"/></div></td>
                             <td><div align="right"><t t-esc="o.float_format2(total_iva_noded)"/></div></td>
@@ -433,7 +455,7 @@
                           <tr>
                             <td colspan="3">
                               <div align="center">
-                              RESUMEN DE COMPRAS
+                              Resumen de Créditos Fiscales
                               </div>
                             </td><!-- 1, 2 y 3-->
                             
@@ -453,7 +475,7 @@
 
                           <tr>
                             <td colspan="3">
-                              Compras internas gravadas alicuota general (16%)
+                              Compras internas gravadas alícuota general (16%)
                             </td><!-- 1 --><!-- 2 --><!-- 3 -->                           
 
                             <td colspan="2">
@@ -467,7 +489,7 @@
 
                           <tr>
                             <td colspan="3">
-                              Importacion gravadas por alicuota general (16%)
+                              Importación gravadas por alícuota general (16%)
                             </td><!-- 1, 2 y 3 --> 
 
                             <td colspan="2">
@@ -486,7 +508,7 @@
 
                             <tr>
                             <td colspan="3">
-                              Compras internas gravadas alicuota reducida (8%)
+                              Compras internas gravadas alícuota reducida (8%)
                             </td><!-- 1 --><!-- 2 --><!-- 3 --> 
 
 
@@ -507,7 +529,7 @@
                             <tr>
 
                             <td colspan="3">
-                              Importacion gravadas por alicuota reducida (8%)
+                              Importación gravadas por alícuota reducida (8%)
                             </td><!-- 1 --><!-- 2 --><!-- 3 --> 
 
 
@@ -550,7 +572,7 @@
                           <tr>
 
                             <td colspan="5">
-                              Compras no gravadas y/o sin derecho a credito fiscal
+                              Compras no gravadas y/o sin derecho a crédito fiscal
                             </td><!-- 1 --><!-- 2 --><!-- 3 --> 
 
 

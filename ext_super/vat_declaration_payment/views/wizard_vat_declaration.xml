@@ -36,7 +36,7 @@
             </field>
         </record>
         <record id="action_vat_declaration_payment" model="ir.actions.act_window">
-            <field name="name">VAT Declaration and Payment Report</field>
+            <field name="name">Reporte de Declaración y Pago de IVA</field>
             <field name="res_model">wizard.vat.declaration.payment</field>
             <field name="view_mode">form</field>
             <field name="view_id" ref="wizard_vat_declaration_payment"/>
