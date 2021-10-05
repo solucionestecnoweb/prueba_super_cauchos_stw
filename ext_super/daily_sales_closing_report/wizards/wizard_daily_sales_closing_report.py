@@ -12,6 +12,7 @@ from io import BytesIO
 import xlsxwriter
 import shutil
 import base64
+import json
 import csv
 import xlwt
 
@@ -26,7 +27,7 @@ class DailySales(models.Model):
     currency_rate = fields.Float(string='Rate')
     total_bs = fields.Float(string='Total Bs. Operation')
     total_usd = fields.Float(string='Total $ Operation')
-    payment_condition_id = fields.Many2one(comodel_name='account.condition.payment', string='Payment Condition')
+    payment_condition_id = fields.Many2one(comodel_name='account.payment.method', string='Payment Condition')
     amount = fields.Float(string='Amount')
     currency_id = fields.Many2one(comodel_name='res.currency', string='Currency')
 
@@ -51,16 +52,24 @@ class DailySalesReport(models.Model):
             'report_type':"qweb-pdf"
             }
 
+    def get_methods(self):
+        xfind = self.env['account.payment.method'].search([
+                ('sales_report', '=', True),
+            ])
+        return xfind
+
     def get_invoice(self):
         xfind = self.env['account.move'].search([
             ('invoice_date', '>=', self.date_from),
             ('invoice_date', '<=', self.date_to),
             ('type', '=', 'out_invoice'),
+            ('invoice_payment_state', '=', 'paid'),
         ])
         
         for item in xfind:
+            # Tasa y montos en bs/$
             rate = 0.00
-            if item.currency_id.name == 'Bs.':
+            if item.currency_id.id == 3:
                 rates = item.env['res.currency.rate'].search([
                     ('name', '=', item.invoice_date)
                 ], limit=1).sell_rate
@@ -74,18 +83,31 @@ class DailySalesReport(models.Model):
                 else:
                     rate = 1
 
-            if item.currency_id.name == 'Bs.':
+            if item.currency_id.id == 3:
                 total_bs = item.amount_total
                 total_usd = round(item.amount_total / rate, 2)
             else:
                 total_bs =round (item.amount_total * item.os_currency_rate, 2)
                 total_usd = item.amount_total
 
-            if item.payment_condition_id:
-                payment_condition = item.payment_condition_id.id
-            else:
-                payment_condition = False
+            # Metodos de pago admitidos
+            methods = []
+            for line in self.get_methods():
+                methods.append(line.id)
 
+            if item.invoice_payments_widget:
+                parse_dict = json.loads(item.invoice_payments_widget)
+                if parse_dict:
+                    for pay in parse_dict.get('content'):
+                        varx = pay['account_payment_id']
+            if varx:
+                payment_condition = self.env['account.payment'].search([
+                    ('id', '=', varx)
+                ]).payment_method_id.id
+            else:
+                payment_condition = varx
+                
+            #Valores finales para crear
             values = {
                 'name': item.invoice_date,
                 'invoice_num': item.invoice_number_cli,

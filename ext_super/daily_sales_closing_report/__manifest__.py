@@ -5,7 +5,7 @@
     'maintainer': 'OasisConsultora',
     'website': 'oasisconsultora.com',
     'license': 'AGPL-3',
-    'depends': ['base', 'account', 'account_move_extend_fields_reports'],
+    'depends': ['base', 'account', 'l10n_ve_check_printing'],
     'data': [
         'security/ir.model.access.csv',
         'views/wizard_daily_sales_closing_report.xml',

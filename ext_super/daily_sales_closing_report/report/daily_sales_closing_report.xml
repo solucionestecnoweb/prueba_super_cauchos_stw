@@ -55,17 +55,18 @@
                         
                         <div class="page">
                             <br/><br/>
+                            <t t-set="methods" t-value="o.get_methods()"/>
                             <table class="">
                                 <colgroup>
-                                    <col span="1" style="width: 10%;"/>
-                                    <col span="1" style="width: 10%;"/>
-                                    <col span="1" style="width: 20%;"/>
-                                    <col span="1" style="width: 10%;"/>
-                                    <col span="1" style="width: 10%;"/>
-                                    <col span="1" style="width: 10%;"/>
-                                    <col span="1" style="width: 10%;"/>
-                                    <col span="1" style="width: 10%;"/>
-                                    <col span="1" style="width: 10%;"/>
+                                    <col span="1" style="width: auto;"/>
+                                    <col span="1" style="width: auto;"/>
+                                    <col span="1" style="width: auto"/>
+                                    <col span="1" style="width: auto;"/>
+                                    <col span="1" style="width: auto;"/>
+                                    <col span="1" style="width: auto;"/>
+                                    <t t-foreach="methods" t-as="item">
+                                        <col span="1" style="width: auto;"/>
+                                    </t>
                                 </colgroup>
                                 <thead>
                                     <tr style="background-color: #cacaca">
@@ -87,15 +88,11 @@
                                         <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle;">
                                             <span style="font-size:14px;">Total $ Operation</span>
                                         </th>
-                                        <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle;">
-                                            <span style="font-size:14px;">Payment Condition</span>
-                                        </th>
-                                        <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle;">
-                                            <span style="font-size:14px;">Amount</span>
-                                        </th>
-                                        <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle;">
-                                            <span style="font-size:14px;">Currency</span>
-                                        </th>
+                                        <t t-foreach="methods" t-as="item">
+                                            <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle;">
+                                                <span style="font-size:14px;"><t t-esc="item.name"/></span>
+                                            </th>
+                                        </t>
                                     </tr>
                                 </thead>
 
@@ -103,12 +100,6 @@
 
                                     <t t-set="total_bs_gen" t-value="0"/>
                                     <t t-set="total_usd_gen" t-value="0"/>
-                                    <t t-set="total_amount" t-value="0"/>
-
-                                    <t t-set="total_bs_credit" t-value="0"/>
-                                    <t t-set="total_bs_cash" t-value="0"/>
-                                    <t t-set="total_usd_credit" t-value="0"/>
-                                    <t t-set="total_usd_cash" t-value="0"/>
 
                                 <tbody>
 
@@ -132,39 +123,37 @@
                                             <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle; padding-right: 5;" class="text-right">
                                                 <span style="font-size:12px;"><t t-esc="item.total_usd" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
                                             </td>
-                                            <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center">
-                                                <t t-if="item.payment_condition_id">
-                                                    <span style="font-size:12px;"><t t-esc="item.payment_condition_id.name"/></span>
-                                                </t>
-                                            </td>
-                                            <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle; padding-right: 5;" class="text-right">
-                                                <span style="font-size:12px;"><t t-esc="item.amount" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
-                                            </td>
-                                            <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center">
-                                                <span style="font-size:12px;"><t t-esc="item.currency_id.name"/></span>
-                                            </td>
+                                            <t t-foreach="methods" t-as="line">
+                                                <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle; padding-right: 5;" class="text-right">
+                                                    <t t-if="item.payment_condition_id.id == line.id">
+                                                        <span style="font-size:12px;"><t t-esc="item.amount" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                                    </t>
+                                                    <t t-else="">
+                                                        <span style="font-size:12px;"><t t-esc="0 + 0" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                                    </t>
+                                                </td>
+                                            </t>
                                         </tr>
 
                                         <t t-set="total_bs_gen" t-value="total_bs_gen + item.total_bs"/>
                                         <t t-set="total_usd_gen" t-value="total_usd_gen + item.total_usd"/>
-                                        <t t-set="total_amount" t-value="total_amount + item.amount"/>
                                         
-                                        <t t-if="item.payment_condition_id.name in ('credito', 'Credito', 'CREDITO', 'crédito', 'Crédito', 'CRÉDITO')">
-                                            <t t-set="total_bs_credit" t-value="total_bs_credit + item.total_bs"/>
-                                            <t t-set="total_usd_credit" t-value="total_usd_credit + item.total_usd"/>
-                                        </t>
-                                        <t t-elif="item.payment_condition_id.name in ('contado', 'Contado', 'CONTADO')">
-                                            <t t-set="total_bs_cash" t-value="total_bs_cash + item.total_bs"/>
-                                            <t t-set="total_usd_cash" t-value="total_usd_cash + item.total_usd"/>
-                                        </t>
                                     </t>
                                         <tr>
                                             <td colspan="4" style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center"><b style="font-size:12px;">Totals...</b></td>
                                             <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle; padding-right: 5;" class="text-right"><span style="font-size:12px;"><t t-esc="total_bs_gen" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span></td>
                                             <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle; padding-right: 5;" class="text-right"><span style="font-size:12px;"><t t-esc="total_usd_gen" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span></td>
-                                            <td class="text-right" style="border-bottom: 1px solid #cacaca;"></td>
-                                            <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle; padding-right: 5;" class="text-right"><span style="font-size:12px;"><t t-esc="total_amount" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span></td>
-                                            <td class="text-right" style="border-bottom: 1px solid #cacaca;"></td>
+                                            <t t-foreach="methods" t-as="line">
+                                                <t t-set="total_amount" t-value="0"/>
+                                                <t t-foreach="invoices" t-as="item">
+                                                    <t t-if="item.payment_condition_id.id == line.id">
+                                                        <t t-set="total_amount" t-value="total_amount + item.amount"/>
+                                                    </t>
+                                                </t>
+                                                <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle; padding-right: 5;" class="text-right">
+                                                    <span style="font-size:12px;"><t t-esc="total_amount" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                                </td>
+                                            </t>
                                         </tr>
                                 </tbody>
                             </table>
@@ -187,33 +176,34 @@
                                                 <th></th>
                                                 <th>Bs. Amount</th>
                                             </thead>
+
+                                            <t t-set="total_bs_final" t-value="0"/>
+
                                             <tbody>
-                                                <tr>
-                                                    <td class="text-center">
-                                                        <b>Credit Bs./$</b>
-                                                    </td>
-                                                    <td class="text-right">
-                                                        <b><t t-esc="total_usd_credit" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></b>
-                                                    </td>
-                                                    <td class="text-center">
-                                                    </td>
-                                                    <td class="text-right">
-                                                        <b><t t-esc="total_bs_credit" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></b>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="text-center">
-                                                        <b>Cash Bs./$</b>
-                                                    </td>
-                                                    <td class="text-right">
-                                                        <b><t t-esc="total_usd_cash" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></b>
-                                                    </td>
-                                                    <td class="text-center">
-                                                    </td>
-                                                    <td class="text-right">
-                                                        <b><t t-esc="total_bs_cash" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></b>
-                                                    </td>
-                                                </tr>
+                                                <t t-foreach="methods" t-as="line">
+                                                    <t t-set="total_bs" t-value="0"/>
+                                                    <t t-set="total_usd" t-value="0"/>
+                                                    <tr>
+                                                        <td class="text-center">
+                                                            <b><t t-esc="line.name"/></b>
+                                                        </td>
+                                                        <t t-foreach="invoices" t-as="item">
+                                                            <t t-if="item.payment_condition_id.id == line.id">
+                                                                <t t-set="total_bs" t-value="total_bs + item.total_bs"/>
+                                                                <t t-set="total_usd" t-value="total_usd + item.total_usd"/>
+                                                                <t t-set="total_bs_final" t-value="total_bs_final + item.total_bs"/>
+                                                            </t>
+                                                        </t>
+                                                        <td style="padding-right: 5;" class="text-right">
+                                                            <b><t t-esc="total_usd" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></b>
+                                                        </td>
+                                                        <td class="text-center">
+                                                        </td>
+                                                        <td style="padding-right: 5;" class="text-right">
+                                                            <b><t t-esc="total_bs" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></b>
+                                                        </td>
+                                                    </tr>
+                                                </t>
                                                 <tr>
                                                     <td class="text-center">
                                                         <b>Total Bs.</b>
@@ -223,7 +213,7 @@
                                                     <td>
                                                     </td>
                                                     <td class="text-right">
-                                                        <b><t t-esc="total_bs_cash + total_bs_credit" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></b>
+                                                        <b><t t-esc="total_bs_final" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></b>
                                                     </td>
                                                 </tr>
                                             </tbody>
