@@ -82,4 +82,29 @@ class AccountMove(models.Model):
     
     @api.onchange('invoice_date','currency_id')
     def _onchange_os_currency_rate(self):
-        self.set_os_currency_rate()    
+        self.set_os_currency_rate()
+    
+    @api.onchange('os_currency_rate')
+    def _onchange_custom_rate(self):
+        self.actualizar_balance()
+
+    @api.constrains('os_currency_rate')
+    def _constrains_custom_rate(self):
+        self.actualizar_balance()
+
+    def actualizar_balance(self):
+        for item in self.line_ids:
+            if item.amount_currency > 0:
+                if self.currency_id.id == self.company_id.currency_id.id:
+                    item.debit_aux = item.amount_currency / self.os_currency_rate
+                    item.debit = item.amount_currency
+                else:
+                    item.debit_aux = item.amount_currency
+                    item.debit = item.amount_currency * self.os_currency_rate
+            elif item.amount_currency < 0:
+                if self.currency_id.id == self.company_id.currency_id.id:
+                    item.credit_aux = (item.amount_currency / self.os_currency_rate) * (-1)
+                    item.credit = (item.amount_currency) * (-1)
+                else:
+                    item.credit_aux = (item.amount_currency) * (-1)
+                    item.credit = (item.amount_currency * self.os_currency_rate) * (-1)
