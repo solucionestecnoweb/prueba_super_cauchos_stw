@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 13.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-09-02 15:54+0000\n"
-"PO-Revision-Date: 2021-09-02 15:54+0000\n"
+"POT-Creation-Date: 2021-10-06 01:32+0000\n"
+"PO-Revision-Date: 2021-10-06 01:32+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -32,12 +32,12 @@ msgstr "Aprobado"
 
 #. module: account_payment_conciliation_approvals
 #: code:addons/account_payment_conciliation_approvals/models/account_payment.py:0
-#: code:addons/extra-addons/oasis/account_payment_conciliation_approvals/models/account_payment.py:0
+#: code:addons/account_payment_conciliation_approvals/models/account_payment.py:0
+#: code:addons/inm_ldr/prueba_super_cauchos_stw/ext_super/account_payment_conciliation_approvals/models/account_payment.py:0
+#: code:addons/inm_ldr/prueba_super_cauchos_stw/ext_super/account_payment_conciliation_approvals/models/account_payment.py:0
 #, python-format
-msgid "Cannot confirm until an approval request is approved for this invoice."
-msgstr ""
-"No se puede confirmar hasta que se apruebe una solicitud de aprobación para "
-"esta factura"
+msgid "Cannot confirm until an approval request is approved for this payment."
+msgstr "No se puede confirmar hasta que haya una solicitud de aprobación aprobada para este pago."
 
 #. module: account_payment_conciliation_approvals
 #: model:ir.model.fields,field_description:account_payment_conciliation_approvals.field_approval_category__has_conciliation
@@ -71,6 +71,11 @@ msgid "Payment"
 msgstr "Pago"
 
 #. module: account_payment_conciliation_approvals
+#: model:ir.model,name:account_payment_conciliation_approvals.model_account_payment_method
+msgid "Payment Methods"
+msgstr "Métodos de pago"
+
+#. module: account_payment_conciliation_approvals
 #: model:ir.model,name:account_payment_conciliation_approvals.model_account_payment
 msgid "Payments"
 msgstr "Pagos"
@@ -97,14 +102,14 @@ msgstr "Estado"
 
 #. module: account_payment_conciliation_approvals
 #: code:addons/account_payment_conciliation_approvals/models/account_payment.py:0
-#: code:addons/extra-addons/oasis/account_payment_conciliation_approvals/models/account_payment.py:0
+#: code:addons/inm_ldr/prueba_super_cauchos_stw/ext_super/account_payment_conciliation_approvals/models/account_payment.py:0
 #, python-format
-msgid "There is an approval request ongoing for this invoice."
-msgstr "Hay una solicitud de aprobación en curso para esta factura"
+msgid "There is an approval request ongoing for this payment."
+msgstr "Hay una solicitud de aprobación en curso para este pago."
 
 #. module: account_payment_conciliation_approvals
 #: code:addons/account_payment_conciliation_approvals/models/account_payment.py:0
-#: code:addons/extra-addons/oasis/account_payment_conciliation_approvals/models/account_payment.py:0
+#: code:addons/inm_ldr/prueba_super_cauchos_stw/ext_super/account_payment_conciliation_approvals/models/account_payment.py:0
 #, python-format
 msgid ""
 "There is no approval category for this type record. Go to "
@@ -117,3 +122,8 @@ msgstr ""
 #: model:ir.model.fields.selection,name:account_payment_conciliation_approvals.selection__account_payment__state__to_approve
 msgid "To be Approved"
 msgstr "Por Aprobar"
+
+#. module: account_payment_conciliation_approvals
+#: model:ir.model.fields,field_description:account_payment_conciliation_approvals.field_account_payment_method__aprobacion_requerida
+msgid "¿Necesita Aprobación?"
+msgstr ""

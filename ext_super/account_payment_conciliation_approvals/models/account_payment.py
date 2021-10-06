@@ -5,7 +5,7 @@ from odoo.exceptions import UserError, ValidationError, Warning
 from odoo.tools.float_utils import float_round
 
 
-class AccountPaymentApproval(models.Model):
+class account_payment(models.Model):
     _inherit = 'account.payment'
 
     is_approved = fields.Boolean(default=False)
@@ -14,57 +14,36 @@ class AccountPaymentApproval(models.Model):
     def post(self):
         xfind = self.env['approval.request'].search([('conciliation_id', '=', self.id)])
         is_company =  self.env['res.company'].search([('partner_id', '=', self.partner_id.id)])
-        # if len(xfind) > 0 and self.state in ('draft'):
-        #     self.state = 'to_approve'
 
-        # if self.state in ('to_approve'):
-        #     status = xfind.request_status
-        #     if len(xfind) > 0:
-        #         if status == 'approved':
-        #             self.state = 'approved'
-        #             self.is_approved = True
-        #         elif status == 'refused':
-        #             self.state = 'refused'
-        #             self.is_approved = False
-        #         else:
-        #             self.is_approved = False
-        # elif self.state == 'approved':
-        #     self.is_approved = True
-        # elif self.state == 'refused':
-        #     self.is_approved = False
-
-        if len(is_company) > 0:
+        status = xfind.request_status
+        if len(xfind) > 0:
+            if status == 'approved':
+                self.is_approved = True
+            else:
+                self.is_approved = False
+        elif len(is_company) > 0:
             self.is_approved = True
-
         elif self.payment_method_id.aprobacion_requerida == False:
             self.is_approved = True
-
         else:
             self.is_approved = False
 
         if self.is_approved:
-            super(AccountPaymentApproval, self).post()
+            super(account_payment, self).post()
+        elif status == 'refused':
+            self.state = 'refused'
         else:
             raise ValidationError(_("Cannot confirm until an approval request is approved for this payment."))
 
     def approved_post(self):
         xfind = self.env['approval.request'].search([('conciliation_id', '=', self.id)])
 
-        if self.state in ('to_approve'):
-            status = xfind.request_status
-            if len(xfind) > 0:
-                if status == 'approved':
-                    self.state = 'approved'
-                    self.is_approved = True
-                elif status == 'refused':
-                    self.state = 'refused'
-                    self.is_approved = False
-                else:
-                    self.is_approved = False
-        elif self.state == 'approved':
-            self.is_approved = True
-        elif self.state == 'refused':
-            self.is_approved = False
+        status = xfind.request_status
+        if len(xfind) > 0:
+            if status == 'approved':
+                self.is_approved = True
+            else:
+                self.is_approved = False
         elif self.payment_method_id.aprobacion_requerida == False:
             self.is_approved = True
         else:
@@ -73,38 +52,12 @@ class AccountPaymentApproval(models.Model):
         if self.is_approved:
             self.action_draft()
             self.post()
+        elif status == 'refused':
+            self.state = 'refused'
         else:
             raise ValidationError(_("Cannot confirm until an approval request is approved for this payment."))
 
-    # def _is_approved(self):
-    #     for item in self:
-    #         xfind = item.env['approval.request'].search([('conciliation_id', '=', item.id)])
-    #         is_company =  item.env['res.company'].search([('partner_id', '=', item.partner_id.id)])
-    #         if len(xfind) > 0 and item.state in ('draft'):
-    #             item.state = 'to_approve'
 
-    #         if item.state in ('to_approve'):
-    #             status = xfind.request_status
-    #             if len(xfind) > 0:
-    #                 if status == 'approved':
-    #                     item.state = 'approved'
-    #                     item.is_approved = True
-    #                 elif status == 'refused':
-    #                     item.state = 'refused'
-    #                     item.is_approved = False
-    #                 else:
-    #                     item.is_approved = False
-    #         elif item.state == 'approved':
-    #             item.is_approved = True
-    #         elif item.state == 'refused':
-    #             item.is_approved = False
-    #         elif len(is_company) > 0:
-    #             item.is_approved = True
-    #         elif not item.payment_method_id.aprobacion_requerida:
-    #             item.is_approved = True
-    #         else:
-    #             item.is_approved = False
-            
     def approvals_request_conciliation(self):
         xfind = self.env['approval.request'].search([('conciliation_id', '=', self.id), ('request_status', 'not in', ['cancel'])])
         if len(xfind) == 0:

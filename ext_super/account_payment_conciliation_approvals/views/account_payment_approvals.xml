@@ -14,7 +14,7 @@
                     <field name="is_approved" invisible="1"/>
                 </xpath>
                 <xpath expr="//button[@name='action_draft']" position="before">
-                    <button name="approved_post" class="oe_highlight" states="approved" string="Confirm" type="object"/>
+                    <button name="approved_post" class="oe_highlight" states="to_approve" string="Confirm" type="object"/>
                 </xpath>
             </field>
         </record>
