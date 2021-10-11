@@ -96,15 +96,15 @@ class AccountMove(models.Model):
         for item in self.line_ids:
             if item.amount_currency > 0:
                 if self.currency_id.id == self.company_id.currency_id.id:
-                    item.debit_aux = item.amount_currency / self.os_currency_rate
                     item.debit = item.amount_currency
+                    item.debit_aux = item.amount_currency / self.os_currency_rate
                 else:
-                    item.debit_aux = item.amount_currency
                     item.debit = item.amount_currency * self.os_currency_rate
+                    item.debit_aux = item.amount_currency
             elif item.amount_currency < 0:
                 if self.currency_id.id == self.company_id.currency_id.id:
-                    item.credit_aux = (item.amount_currency / self.os_currency_rate) * (-1)
                     item.credit = (item.amount_currency) * (-1)
+                    item.credit_aux = (item.amount_currency / self.os_currency_rate) * (-1)
                 else:
-                    item.credit_aux = (item.amount_currency) * (-1)
                     item.credit = (item.amount_currency * self.os_currency_rate) * (-1)
+                    item.credit_aux = (item.amount_currency) * (-1)

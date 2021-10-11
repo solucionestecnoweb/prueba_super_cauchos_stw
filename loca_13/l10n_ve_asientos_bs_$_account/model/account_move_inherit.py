@@ -84,29 +84,38 @@ class  AccountMoveLine(models.Model):
         valor=0
         self.env.company.currency_secundaria_id.id
         for selff in self:
-            lista_tasa = selff.env['res.currency.rate'].search([('currency_id', '=', self.env.company.currency_secundaria_id.id),('name','<=',selff.move_id.date)],order='id ASC')
-            if lista_tasa:
-                for det in lista_tasa:
-                    valor=(selff.credit*det.rate)
+            if selff.move_id.os_currency_rate > 1:
+                valor=(selff.credit / selff.move_id.os_currency_rate)
+            else:
+                lista_tasa = selff.env['res.currency.rate'].search([('currency_id', '=', self.env.company.currency_secundaria_id.id),('name','<=',selff.move_id.date)],order='id ASC')
+                if lista_tasa:
+                    for det in lista_tasa:
+                        valor=(selff.credit*det.rate)
             selff.credit_aux=abs(valor)
 
     def _compute_monto_debit_conversion(self):
         valor=0
         self.env.company.currency_secundaria_id.id
         for selff in self:
-            lista_tasa = selff.env['res.currency.rate'].search([('currency_id', '=', self.env.company.currency_secundaria_id.id),('name','<=',selff.move_id.date)],order='id ASC')
-            if lista_tasa:
-                for det in lista_tasa:
-                    valor=(selff.debit*det.rate)
+            if selff.move_id.os_currency_rate > 1:
+                valor=(selff.debit / selff.move_id.os_currency_rate)
+            else:
+                lista_tasa = selff.env['res.currency.rate'].search([('currency_id', '=', self.env.company.currency_secundaria_id.id),('name','<=',selff.move_id.date)],order='id ASC')
+                if lista_tasa:
+                    for det in lista_tasa:
+                        valor=(selff.debit*det.rate)
             selff.debit_aux=abs(valor)
 
     def _compute_balance_conversion(self):
         valor=0
         self.env.company.currency_secundaria_id.id
         for selff in self:
-            lista_tasa = selff.env['res.currency.rate'].search([('currency_id', '=', self.env.company.currency_secundaria_id.id),('name','<=',selff.move_id.date)],order='id ASC')
-            if lista_tasa:
-                for det in lista_tasa:
-                    valor=(selff.balance*det.rate)
+            if selff.move_id.os_currency_rate > 1:
+                valor=(selff.balance / selff.move_id.os_currency_rate)
+            else:
+                lista_tasa = selff.env['res.currency.rate'].search([('currency_id', '=', self.env.company.currency_secundaria_id.id),('name','<=',selff.move_id.date)],order='id ASC')
+                if lista_tasa:
+                    for det in lista_tasa:
+                        valor=(selff.balance*det.rate)
             selff.balance_aux=abs(valor)
         
