@@ -22,8 +22,11 @@ class SaleOrder(models.Model):
         for det in self.order_line:
             if det.product_id.qty_available>0:
                 if det.product_id.qty_available>=det.product_uom_qty:
-                    pass
+                    if det.product_uom_qty>0:
+                        pass
+                    else:
+                        raise UserError(_("La cantidad seleccionada no debe ser igual a cero"))
                 else:
                     raise UserError(_("La cantidad a vender del producto %s no puede ser mayor al stock actual")%det.product_id.name)
             else:
-                raise UserError(_("el producto %s no puede ser vendido con stock cero")%det.product_id.name)
+                raise UserError(_("El producto %s no puede ser vendido con stock cero")%det.product_id.name)

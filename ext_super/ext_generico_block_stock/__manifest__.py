@@ -18,7 +18,7 @@
     # always loaded
     'data': [
         'vista/sale_order_inherit.xml',
-        #'vista/landed_cost_inherit.xml',
+        'vista/stock_piking_inherit.xml',
         #'security/ir.model.access.csv',
     ],
     'application': True,
