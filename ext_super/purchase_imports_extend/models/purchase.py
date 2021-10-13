@@ -63,7 +63,7 @@ class PurchaseOrderLineImports(models.Model):
 	
 	def compute_seller(self):
 		for item in self:
-			xfind = self.env['sale.order.line'].search([
+			xfind = self.env['sale.order.line'].sudo().search([
 				('state', 'in', ('draft', 'sent')),
 				('product_id', '=', item.product_id.id),
 				('is_transit_merch', '=', True),
