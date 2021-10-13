@@ -1,32 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
-    <!-- purchase.order.line tree view -->
+    <!-- temp.merchandise.transit tree view -->
     <record id="sales_merchandise_transit_view_tree" model="ir.ui.view">
-        <field name="name">purchase.order.line.view.tree</field>
-        <field name="model">purchase.order.line</field>
+        <field name="name">temp.merchandise.transit.view.tree</field>
+        <field name="model">temp.merchandise.transit</field>
         <field name="arch" type="xml">
             <tree create="false" delete="false" editable="bottom">
                 <!-- Add your fields here -->
-                <field name="order_id" readonly="1"/>
-                <field name="product_qty" readonly="1"/>
-                <field name="product_uom" readonly="1"/>
+                <field name="compra_id" readonly="1"/>
+                <field name="cantidad" readonly="1"/>
+                <field name="unidades_id" readonly="1"/>
                 <field name="pr" readonly="1"/>
-                <field name="product_id" string="Product" readonly="1"/>
-                <field name="price_unit" widget="monetary" readonly="1"/>
-                <field name="currency_id" invisible="1" readonly="1"/>
+                <field name="producto_id" string="Product" readonly="1"/>
+                <field name="precio" widget="monetary" readonly="1"/>
+                <field name="moneda_id" invisible="1" readonly="1"/>
                 <field name="pronto_pago" readonly="1"/>
                 <field name="super_promo" readonly="1"/>
-                <field name="apart_to_seller"/>
-                <field name="apart_qty_available"/>
+                <field name="c_apartada" readonly="1"/>
+                <field name="c_disponible" readonly="1"/>
             </tree>
         </field>
     </record>
 
-    <!-- purchase.order.line search view -->
+    <!-- temp.merchandise.transit search view -->
     <record id="sales_merchandise_transit_view_search" model="ir.ui.view">
-        <field name="name">purchase.order.line.view.search</field>
-        <field name="model">purchase.order.line</field>
+        <field name="name">temp.merchandise.transit.view.search</field>
+        <field name="model">temp.merchandise.transit</field>
         <field name="arch" type="xml">
             <search>
                 <!-- Add your fields here -->
@@ -37,17 +37,9 @@
     <record id="sales_merchandise_transit_action" model="ir.actions.act_window">
         <field name="name">Merchandise in Transit</field>
         <field name="type">ir.actions.act_window</field>
-        <field name="res_model">purchase.order.line</field>
-        <field name="domain">[('state', 'in', ('draft', 'sent', 'purchase')), ('qty_received', '=', 0)]</field>
+        <field name="res_model">temp.merchandise.transit</field>
         <field name="view_id" ref="sales_merchandise_transit_view_tree"/>
         <field name="view_mode">tree</field>
     </record>
         
-    <menuitem   name="Merchandise in Transit" 
-                id="sales_merchandise_in_transit.sales_merchandise_in_transit_menu"
-                sequence="15"
-                parent="sale.menu_sale_report"
-                action="sales_merchandise_transit_action"
-                />
-
 </odoo>

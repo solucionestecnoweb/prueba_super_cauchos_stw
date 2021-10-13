@@ -3,7 +3,7 @@
 
     <report 
         id="action_sales_merchandise_in_transit" 
-        model="sale.merchandise.transit" 
+        model="wizard.merchandise.transit" 
         string="Merchandise_in_Transit" 
         report_type="qweb-pdf"
         name="sales_merchandise_in_transit.sales_merchandise_in_transit" 

@@ -17,28 +17,18 @@ import xlwt
 _logger = logging.getLogger(__name__)
 
 class SaleMerchandiseTransit(models.TransientModel):
-    _name = 'sale.merchandise.transit'
-
-    date_from = fields.Date(string='Date From', default=lambda *a:datetime.now().strftime('%Y-%m-%d'))
-    date_to = fields.Date('Date To', default=lambda *a:(datetime.now() + timedelta(days=(1))).strftime('%Y-%m-%d'))
-    date_now = fields.Datetime(string='Date Now', default=lambda *a:datetime.now())
-    
-    state = fields.Selection([('choose', 'choose'), ('get', 'get')],default='choose')
-    report = fields.Binary('Prepared file', filters='.xls', readonly=True)
-    name = fields.Char('File Name', size=50)
-    company_id = fields.Many2one('res.company','Company',default=lambda self: self.env.user.company_id.id)
+    _inherit = 'wizard.merchandise.transit'
 
     def print_pdf(self):
         return {'type': 'ir.actions.report','report_name': 'sales_merchandise_in_transit.sales_merchandise_in_transit','report_type':"qweb-pdf"}
 
-    def get_merchandise(self):
-        xfind = self.env['purchase.order.line'].search([
-            ('date_order', '>=', self.date_from),
-            ('date_order', '<=', self.date_to),
-            ('state', 'in', ('draft', 'sent', 'purchase')),
-            ('qty_received', '=', 0),
-        ])
-        return xfind
+    def show_merchandise(self):
+        return {
+            "type": "ir.actions.act_window",
+            "res_model": "temp.merchandise.transit",
+            "views": [[self.env.ref('sales_merchandise_in_transit.sales_merchandise_transit_view_tree').id, "tree"],[False, "form"]],
+            "name": "Mercancía en Tránsito",
+        }
 
     def date_fix(self):
         new_date = self.date_now - timedelta(hours=4)

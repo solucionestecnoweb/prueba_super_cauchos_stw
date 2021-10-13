@@ -17,7 +17,7 @@
                     <div class="col-6 text-center"><br/>
                         <b style="font-size:20px;"><t t-esc="o.company_id.name"/></b><br/>
                         <span style="font-size:14px;">R.I.F. <t t-esc="o.company_id.vat"/></span><br/>
-                        <b style="font-size:20px;">Diario Legal</b><br/>
+                        <b style="font-size:20px;">Comprobante Mayorizado</b><br/>
                         <small style="font-size:12px;">Desde: <t t-esc="o.date_from.strftime('%d/%m/%y')"/> Hasta: <t t-esc="o.date_to.strftime('%d/%m/%y')"/></small><br/>
                     </div>
                     <div class="col-3 text-right">
@@ -44,6 +44,41 @@
                         <table style="width: 100%">
                             <colgroup>
                                 <col span="1" style="width: 20%;"/>
+                                <col span="1" style="width: 20%;"/>
+                                <col span="1" style="width: 40%;"/>
+                                <col span="1" style="width: 20%;"/>
+                            </colgroup>
+                            <thead>
+                                <tr>
+                                    <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle;">
+                                        <span style="font-size:14px;">Número</span>
+                                    </th>
+                                    <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle;">
+                                        <span style="font-size:14px;">Fecha</span>
+                                    </th>
+                                    <th colspan="2" class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle;">
+                                        <span style="font-size:14px;">Concepto</span>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <td>
+                                    <span style="font-size:12px;"></span>
+                                </td>
+                                <td>
+                                    <span style="font-size:12px;"><t t-esc="o.date_to.strftime('%d/%m/%y')"/></span>
+                                </td>
+                                <td>
+                                    <span style="font-size:12px;"></span>
+                                </td>
+                                <td>
+                                    <span style="font-size:12px;">Regs: <t t-esc="len(o.line)"/></span>
+                                </td>
+                            </tbody>
+                        </table>
+                        <table style="width: 100%">
+                            <colgroup>
+                                <col span="1" style="width: 20%;"/>
                                 <col span="1" style="width: 40%;"/>
                                 <col span="1" style="width: 20%;"/>
                                 <col span="1" style="width: 20%;"/>
@@ -67,6 +102,8 @@
 
                                     <t t-set="deber" t-value="0" />
                                     <t t-set="haber" t-value="0" />
+                                    <t t-set="deber_usd" t-value="0" />
+                                    <t t-set="haber_usd" t-value="0" />
 
                             <tbody>
                                 <t t-foreach="o.line" t-as="item">
@@ -86,11 +123,18 @@
                                     </tr>
                                     <t t-set="deber" t-value="deber + item.total_deber"/>
                                     <t t-set="haber" t-value="haber + item.total_haber"/>
+                                    <t t-set="deber_usd" t-value="deber_usd + item.total_deber_usd"/>
+                                    <t t-set="haber_usd" t-value="haber_usd + item.total_haber_usd"/>
                                 </t>
                                 <tr>
-                                    <td colspan="2" style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center"><b style="font-size:12px;">Total General</b></td>
+                                    <td colspan="2" style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center"><b style="font-size:12px;">Total Bs</b></td>
                                     <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle; padding-right: 5;" class="text-right"><span style="font-size:12px;"><t t-esc="deber" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span></td>
                                     <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle; padding-right: 5;" class="text-right"><span style="font-size:12px;"><t t-esc="haber" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center"><b style="font-size:12px;">Total $</b></td>
+                                    <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle; padding-right: 5;" class="text-right"><span style="font-size:12px;"><t t-esc="deber_usd" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span></td>
+                                    <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle; padding-right: 5;" class="text-right"><span style="font-size:12px;"><t t-esc="haber_usd" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span></td>
                                 </tr>
                             </tbody>
                         </table>
