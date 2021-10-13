@@ -47,6 +47,6 @@
                 parent="account.menu_finance_reports" 
                 id="analysis_ledger_menu" 
                 action="action_analysis_ledger"
-                sequence="12"
+                sequence="13"
                 />
 </odoo>

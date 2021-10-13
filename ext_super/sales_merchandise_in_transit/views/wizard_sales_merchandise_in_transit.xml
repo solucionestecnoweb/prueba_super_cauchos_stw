@@ -2,7 +2,7 @@
 <odoo>
     <record id="wizard_sales_merchandise_in_transit" model="ir.ui.view">
         <field name="name">Merchandise in Transit Report Wizard</field>
-        <field name="model">sale.merchandise.transit</field>
+        <field name="model">wizard.merchandise.transit</field>
         <field name="arch" type="xml">
             <form string="Merchandise in Transit Report">
                 <field invisible="1" name="state"/>
@@ -24,6 +24,7 @@
                 </div>
                 <footer states="choose">
                     <button name="print_pdf" string="Export PDF" type="object" class="oe_highlight" />
+                    <button name="show_merchandise" string="Mostrar Mercancía" type="object" class="oe_highlight" />
                     <button special="cancel" string="Cancel" class="oe_highlight" />
                 </footer>
                 <footer states="get">
@@ -34,11 +35,11 @@
     </record>
     <record id="action_sales_merchandise_in_transit" model="ir.actions.act_window">
         <field name="name">Merchandise in Transit Report</field>
-        <field name="res_model">sale.merchandise.transit</field>
+        <field name="res_model">wizard.merchandise.transit</field>
         <field name="view_mode">form</field>
         <field name="view_id" ref="wizard_sales_merchandise_in_transit"/>
         <field name="target">new</field>
     </record>
 
-    <menuitem name="Merchandise in Transit Report" parent="sale.menu_sale_report" id="sales_merchandise_in_transit.wizard_sales_merchandise_transit" sequence="16" action="action_sales_merchandise_in_transit"/>
+    <menuitem name="Merchandise in Transit Report" parent="sale.menu_sale_report" id="sales_merchandise_in_transit.wizard_sales_merchandise_transit" sequence="15" action="action_sales_merchandise_in_transit"/>
 </odoo>

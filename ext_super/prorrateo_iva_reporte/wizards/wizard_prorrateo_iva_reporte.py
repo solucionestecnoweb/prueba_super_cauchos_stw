@@ -25,7 +25,8 @@ class DataProrrateoIVA(models.TransientModel):
     cuenta = fields.Char(string='Cuenta')
     credito_fiscal = fields.Float(string='Credito Fiscal')
     deducible = fields.Float(string='Deducible')
-    no_deducible = fields.Float(string='No Deducible')    
+    no_deducible = fields.Float(string='No Deducible')
+    tipo = fields.Selection(string='Tipo', selection=[('nd', 'nd'), ('pd', 'pd'), ('td', 'td')])
 
 class WizardProrrateoIVA(models.TransientModel):
     _name = 'wizard.prorrateo.iva'
@@ -77,7 +78,19 @@ class WizardProrrateoIVA(models.TransientModel):
 
         t = self.env['data.prorrateo.iva']
         for item in xfind.sorted(key=lambda x: x.partner_id.id):
-
+            
+            valor = 0
+            tipo = ''
+            for line in item.alicuota_line_ids:
+                valor += line.total_valor_iva_nd + line.total_base_nd
+            if valor == 0:
+                tipo = 'nd'
+            else:
+                if item.amount_total - valor == 0:
+                    tipo = 'td'
+                else:
+                    tipo = 'pd'
+                    
             if self.currency_id.id == 3:
                 if item.currency_id.id == self.currency_id.id:
                     values = {
@@ -87,6 +100,7 @@ class WizardProrrateoIVA(models.TransientModel):
                         'credito_fiscal': item.amount_tax,
                         'deducible': 0,
                         'no_deducible': 0,
+                        'tipo': tipo,
                     }
                 else:
                     values = {
@@ -96,6 +110,7 @@ class WizardProrrateoIVA(models.TransientModel):
                         'credito_fiscal': item.amount_tax * item.os_currency_rate,
                         'deducible': 0,
                         'no_deducible': 0,
+                        'tipo': tipo,
                     }
             else:
                 if item.currency_id.id == self.currency_id.id:
@@ -106,6 +121,7 @@ class WizardProrrateoIVA(models.TransientModel):
                         'credito_fiscal': item.amount_tax,
                         'deducible': 0,
                         'no_deducible': 0,
+                        'tipo': tipo,
                     }
                 else:
                     values = {
@@ -115,6 +131,7 @@ class WizardProrrateoIVA(models.TransientModel):
                         'credito_fiscal': item.amount_tax / item.os_currency_rate,
                         'deducible': 0,
                         'no_deducible': 0,
+                        'tipo': tipo,
                     }
             t.create(values)
         self.lines_ids = t.search([])

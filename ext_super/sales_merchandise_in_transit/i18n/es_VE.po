@@ -194,5 +194,5 @@ msgstr ""
 
 #. module: sales_merchandise_in_transit
 #: model:ir.model,name:sales_merchandise_in_transit.model_sale_merchandise_transit
-msgid "sale.merchandise.transit"
+msgid "wizard.merchandise.transit"
 msgstr ""
