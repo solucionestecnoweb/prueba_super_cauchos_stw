@@ -68,25 +68,29 @@ class ProofReceipt(models.TransientModel):
         for det_account in cur_account:
             acum_deber=0
             acum_haber=0
+            acum_deber_usd = 0
+            acum_haber_usd = 0
             cursor = self.env['account.move.line'].search([('date', '>=', self.date_from),('date','<=',self.date_to),('account_id','=',det_account.id),('parent_state','=','posted')])
             """if cursor:
                 raise UserError(_('cursor = %s')%cursor)"""
             if cursor:
                 for det in cursor:
-                    acum_deber=acum_deber+det.debit
-                    acum_haber=acum_haber+det.credit
+                    acum_deber += det.debit
+                    acum_haber += det.credit
+                    acum_deber_usd += self.get_convertion(det.debit,det.date, 2)
+                    acum_haber_usd += self.get_convertion(det.credit,det.date, 2)
                     #raise UserError(_('lista_mov_line = %s')%acum_deber)
-                    values=({
-                    'account_id':det_account.id,
-                    'total_deber':acum_deber,
-                    'total_haber':acum_haber,
-                    'total_deber_usd':self.get_convertion(acum_deber,det.date, 2),
-                    'total_haber_usd':self.get_convertion(acum_haber,det.date, 2),
-                    'name':det_account.name,
-                    'fecha_desde':self.date_from,
-                    'fecha_hasta':self.date_to,
-                    })
-                    diario_id = t.create(values)
+                values=({
+                'account_id':det_account.id,
+                'total_deber':acum_deber,
+                'total_haber':acum_haber,
+                'total_deber_usd':acum_deber_usd,
+                'total_haber_usd':acum_haber_usd,
+                'name':det_account.name,
+                'fecha_desde':self.date_from,
+                'fecha_hasta':self.date_to,
+                })
+                t.create(values)
         self.line=self.env['proof.receipt.wizard.pdf'].search([])
     
     def generate_pdf_report(self):
@@ -123,22 +127,6 @@ class ProofReceipt(models.TransientModel):
         row += 1
         ws1.write_merge(row,row, 2, 3, _('Desde: ') + self.date_from.strftime('%d/%m/%Y') + _(' Hasta: ') + self.date_to.strftime('%d/%m/%Y'), header_tittle_style)
         row += 2
-
-        #Tabla superior
-        ws1.write(row,col+1, _("Número"),header_content_style_left)
-        ws1.col(col+1).width = int((len('Número')+16)*256)
-        ws1.write(row,col+2, _("Fecha"),header_content_style_left)
-        ws1.col(col+2).width = int((len('xx/xx/xxxx')+2)*256)
-        ws1.write_merge(row,row,col+3,col+4, _("Concepto"),header_content_style_left)
-        ws1.col(col+3).width = int((len('Concepto')+20)*256)
-        ws1.col(col+4).width = int((len('regs: xxx')+2)*256)
-
-        #Contenido tabla superior
-        row += 1
-        ws1.write(row,col+1, '',lines_style_center)
-        ws1.write(row,col+2, self.date_to.strftime('%d/%m/%Y'),lines_style_center)
-        ws1.write(row,col+3, '',lines_style_center)
-        ws1.write(row,col+4, 'Regs: ' + str(len(self.line)),lines_style_center)
 
         #CABECERA DE LA TABLA
         row += 2 
