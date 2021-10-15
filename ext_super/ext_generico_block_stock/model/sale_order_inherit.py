@@ -15,7 +15,7 @@ class SaleOrderLine(models.Model):
         for selff in self:
             selff.stock=selff.product_id.qty_available
 
-    @api.onchange('product_id')
+    @api.onchange('product_id','product_qty')
     #@api.depends('product_id')
     def valida(self):
         #raise UserError(_("Prueba"))
