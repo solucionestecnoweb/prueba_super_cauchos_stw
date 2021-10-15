@@ -29,7 +29,7 @@ class SaleOrderLine(models.Model):
                     else:
                         raise UserError(_("La cantidad seleccionada no debe ser igual a cero"))
                 else:
-                    raise UserError(_("La cantidad a vender del producto %s no puede ser mayor al stock actual")%det.product_id.name)
+                    raise UserError(_("La cantidad a vender del producto %s no puede ser mayor al stock actual")%self.product_id.name)
             else:
                 raise UserError(_("El producto %s no puede ser vendido con stock cero o negativo")%self.product_id.name)
 
