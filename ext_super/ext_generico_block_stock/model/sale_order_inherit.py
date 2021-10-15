@@ -10,14 +10,34 @@ class SaleOrderLine(models.Model):
 
     stock=fields.Float(compute='_compute_stock_mano')
 
+    @api.onchange('product_id')
     def _compute_stock_mano(self):
         for selff in self:
             selff.stock=selff.product_id.qty_available
 
-class SaleOrder(models.Model):
-    _inherit = 'sale.order'
+    @api.onchange('product_id','product_uom_qty')
+    #@api.depends('product_id')
+    def valida(self):
+        #raise UserError(_("Prueba"))
+        if not self.product_id.id:
+            pass
+        else:
+            if self.product_id.qty_available>0:
+                if self.product_id.qty_available>=self.product_uom_qty:
+                    if self.product_uom_qty>0:
+                        pass
+                    else:
+                        raise UserError(_("La cantidad seleccionada no debe ser igual a cero"))
+                else:
+                    raise UserError(_("La cantidad a vender del producto %s no puede ser mayor al stock actual")%self.product_id.name)
+            else:
+                raise UserError(_("El producto %s no puede ser vendido con stock cero o negativo")%self.product_id.name)
 
-    def action_confirm(self):
+#class SaleOrder(models.Model):
+    #_inherit = 'sale.order'
+
+
+    """def action_confirm(self):
         super().action_confirm()
         for det in self.order_line:
             if det.product_id.qty_available>0:
@@ -29,4 +49,4 @@ class SaleOrder(models.Model):
                 else:
                     raise UserError(_("La cantidad a vender del producto %s no puede ser mayor al stock actual")%det.product_id.name)
             else:
-                raise UserError(_("El producto %s no puede ser vendido con stock cero")%det.product_id.name)
+                raise UserError(_("El producto %s no puede ser vendido con stock cero")%det.product_id.name)"""
