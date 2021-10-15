@@ -2,16 +2,16 @@
 <odoo>
 
     <report 
-        id="action_sales_merchandise_in_transit" 
+        id="action_merchandise_in_transit" 
         model="wizard.merchandise.transit" 
-        string="Merchandise_in_Transit" 
+        string="mercancia_en_transito" 
         report_type="qweb-pdf"
-        name="sales_merchandise_in_transit.sales_merchandise_in_transit" 
-        file="sales_merchandise_in_transit.sales_merchandise_in_transit" 
+        name="purchase_imports_extend.merchandise_in_transit" 
+        file="purchase_imports_extend.merchandise_in_transit" 
         menu="True" 
         />
 
-    <template id="external_layout_sales_merchandise_in_transit">
+    <template id="external_layout_merchandise_in_transit">
         <div class="header">
             <div class="container">
                 <div class="row">
@@ -19,11 +19,11 @@
                         <img t-if="o.company_id.logo" t-att-src="'data:image/png;base64,%s' % to_text(o.company_id.logo)" style="max-height: 100px; max-width: 200px;"/><br/>
                     </div>
                     <div class="col-6 text-center">
-                        <h3>Merchandise in Transit</h3>
-                        <b style="font-size:12px;">From: <t t-esc="o.date_from.strftime('%d de %B de %Y')"/> To: <t t-esc="o.date_to.strftime('%d de %B de %Y')"/></b><br/>
+                        <h3>Mercancía en Tránsito</h3>
+                        <b style="font-size:12px;">Desde: <t t-esc="o.date_from.strftime('%d de %B de %Y')"/> Hasta: <t t-esc="o.date_to.strftime('%d de %B de %Y')"/></b><br/>
                     </div>
                     <div class="col-3 text-right">
-                        <b style="font-size:12px;">Page <span class="page" style="font-size:12px;"/> / <span class="topage" style="font-size:12px;"/></b><br/>
+                        <b style="font-size:12px;">Página <span class="page" style="font-size:12px;"/> / <span class="topage" style="font-size:12px;"/></b><br/>
                         <b style="font-size:12px;"><t t-esc="o.date_fix().strftime('%d de %B de %Y %r')"/></b><br/>
                     </div>
                 </div>
@@ -38,10 +38,10 @@
         </div>
     </template>
 
-    <template id="sales_merchandise_in_transit">
+    <template id="merchandise_in_transit">
         <t t-call="web.html_container">
             <t t-foreach="docs" t-as="o">
-                <t t-call="sales_merchandise_in_transit.external_layout_sales_merchandise_in_transit">
+                <t t-call="purchase_imports_extend.external_layout_merchandise_in_transit">
                     <div class="page">
 
                         <table>
@@ -62,15 +62,15 @@
                             <!-- Cabeceras -->
                             <thead>
                                 <tr>
-                                    <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle; background-color: #cacaca; font-size:14px;">Quantity</th>
-                                    <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle; background-color: #cacaca; font-size:14px;">Unit of Measure</th>
+                                    <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle; background-color: #cacaca; font-size:14px;">Cantidad</th>
+                                    <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle; background-color: #cacaca; font-size:14px;">Unidad de Medida</th>
                                     <th class="text-center" style="border-right: 3px solid white; border-bottom: 3px solid white; display: table-cell; vertical-align: middle; background-color: #cacaca; font-size:14px;">PR</th>
-                                    <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle; background-color: #cacaca; font-size:14px;">Model</th>
-                                    <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle; background-color: #cacaca; font-size:14px;">Price Unit</th>
-                                    <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle; background-color: #cacaca; font-size:14px;">Pronto Pago Promotion</th>
-                                    <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle; background-color: #cacaca; font-size:14px;">Super Promo Promotion</th>
-                                    <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle; background-color: #cacaca; font-size:14px;">Quantity Set Apart for Seller</th>
-                                    <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle; background-color: #cacaca; font-size:14px;">Quantity Available to Set Apart</th>
+                                    <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle; background-color: #cacaca; font-size:14px;">Modelo</th>
+                                    <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle; background-color: #cacaca; font-size:14px;">Precio</th>
+                                    <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle; background-color: #cacaca; font-size:14px;">Promoción Pronto Pago</th>
+                                    <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle; background-color: #cacaca; font-size:14px;">Promoción Super Promo</th>
+                                    <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle; background-color: #cacaca; font-size:14px;">Cantidad Apartada por Vendedor</th>
+                                    <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle; background-color: #cacaca; font-size:14px;">Cantidad Disponible para Apartar</th>
                                 </tr>
                             </thead>
                             <!-- Fin cabeceras -->
@@ -78,22 +78,22 @@
                             <tbody>
                             
                                 <!-- Lineas -->
-                                <t t-foreach="o.get_merchandise()" t-as="item">
+                                <t t-foreach="o.line_ids" t-as="item">
                                     <tr>
                                         <td class="text-right">
-                                            <span style="font-size:12px;"><t t-esc="item.product_qty" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                            <span style="font-size:12px;"><t t-esc="item.cantidad" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
                                         </td>
                                         <td class="text-center">
-                                            <span style="font-size:12px;"><t t-esc="item.product_uom.name"/></span>
+                                            <span style="font-size:12px;"><t t-esc="item.unidades_id.name"/></span>
                                         </td>
                                         <td class="text-center">
                                             <span style="font-size:12px;"><t t-esc="item.pr"/></span>
                                         </td>
                                         <td class="text-center">
-                                            <span style="font-size:12px;"><t t-esc="item.product_id.modelo"/></span>
+                                            <span style="font-size:12px;"><t t-esc="item.producto_id.modelo"/></span>
                                         </td>
                                         <td class="text-right">
-                                            <span style="font-size:12px;"><t t-esc="item.price_unit" t-options='{"widget": "monetary", "display_currency": item.currency_id}'/></span>
+                                            <span style="font-size:12px;"><t t-esc="item.precio" t-options='{"widget": "monetary", "display_currency": item.moneda_id}'/></span>
                                         </td>
                                         <td class="text-right">
                                             <span style="font-size:12px;"><t t-esc="item.pronto_pago"/></span>
@@ -102,10 +102,10 @@
                                             <span style="font-size:12px;"><t t-esc="item.super_promo"/></span>
                                         </td>
                                         <td class="text-center">
-                                            <span style="font-size:12px;"><t t-esc="item.apart_to_seller" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                            <span style="font-size:12px;"><t t-esc="item.c_apartada" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
                                         </td>
                                         <td class="text-center">
-                                            <span style="font-size:12px;"><t t-esc="item.apart_qty_available" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                            <span style="font-size:12px;"><t t-esc="item.c_disponible" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
                                         </td>
                                     </tr>
                                 </t>
