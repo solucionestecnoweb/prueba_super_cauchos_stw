@@ -12,7 +12,6 @@ class account_payment(models.Model):
     state = fields.Selection(selection_add=[('to_approve', 'To be Approved'), ('approved', 'Approved'), ('refused', 'Refused')])
     
     def post(self):
-        raise ValidationError(_("Nelida hola."))
         xfind = self.env['approval.request'].search([('conciliation_id', '=', self.id)])
         is_company =  self.env['res.company'].search([('partner_id', '=', self.partner_id.id)])
 
