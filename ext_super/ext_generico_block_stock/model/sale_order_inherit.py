@@ -14,10 +14,6 @@ class SaleOrderLine(models.Model):
         for selff in self:
             selff.stock=selff.product_id.qty_available
 
-<<<<<<< HEAD
-class SaleOrder(models.Model):
-    _inherit = 'sale.order'
-=======
     @api.onchange('product_id','product_uom_qty')
     #@api.depends('product_id')
     def valida(self):
@@ -41,7 +37,6 @@ class SaleOrder(models.Model):
 #class SaleOrder(models.Model):
     #_inherit = 'sale.order'
 
->>>>>>> f472bb27d52c9ad605018d68fac04f5a1ffc0801
 
     def action_confirm(self):
         super().action_confirm()
