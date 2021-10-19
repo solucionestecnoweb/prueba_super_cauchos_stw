@@ -86,25 +86,31 @@ class AccountMove(models.Model):
     
     @api.onchange('os_currency_rate')
     def _onchange_custom_rate(self):
+        #pass
         self.actualizar_balance()
 
     @api.constrains('os_currency_rate')
     def _constrains_custom_rate(self):
+        #pass
         self.actualizar_balance()
 
     def actualizar_balance(self):
         for item in self.line_ids:
+            tasa=self.os_currency_rate
             if item.amount_currency > 0:
                 if self.currency_id.id == self.company_id.currency_id.id:
-                    item.debit = item.amount_currency
-                    item.debit_aux = item.amount_currency / self.os_currency_rate
+                    item.debit = item.amount_currency*tasa
+                    item.debit_aux = item.amount_currency / tasa
                 else:
-                    item.debit = item.amount_currency * self.os_currency_rate
+                    if item.payment_id:
+                        if item.payment_id.rate>0:
+                            tasa=item.payment_id.rate
+                    item.debit = item.amount_currency * tasa
                     item.debit_aux = item.amount_currency
             elif item.amount_currency < 0:
                 if self.currency_id.id == self.company_id.currency_id.id:
                     item.credit = (item.amount_currency) * (-1)
-                    item.credit_aux = (item.amount_currency / self.os_currency_rate) * (-1)
+                    item.credit_aux = (item.amount_currency / tasa) * (-1)
                 else:
-                    item.credit = (item.amount_currency * self.os_currency_rate) * (-1)
+                    item.credit = (item.amount_currency * tasa) * (-1)
                     item.credit_aux = (item.amount_currency) * (-1)
