@@ -14,8 +14,34 @@ class SaleOrderLine(models.Model):
         for selff in self:
             selff.stock=selff.product_id.qty_available
 
+<<<<<<< HEAD
 class SaleOrder(models.Model):
     _inherit = 'sale.order'
+=======
+    @api.onchange('product_id','product_uom_qty')
+    #@api.depends('product_id')
+    def valida(self):
+        #raise UserError(_("Prueba"))
+        # ESTE CAMPO is_transit_merch  ES DEL MODULO DE TRANSITO DE OLIVER, QUITAR SI NO SE VA A USAR EL MODULO DE TRANSITO DE MERCANCIA
+        if self.order_id.is_transit_merch==False:
+            if not self.product_id.id:
+                pass
+            else:
+                if self.product_id.qty_available>0:
+                    if self.product_id.qty_available>=self.product_uom_qty:
+                        if self.product_uom_qty>0:
+                            pass
+                        else:
+                            raise UserError(_("La cantidad seleccionada no debe ser igual a cero"))
+                    else:
+                        raise UserError(_("La cantidad a vender del producto %s no puede ser mayor al stock actual")%self.product_id.name)
+                else:
+                    raise UserError(_("El producto %s no puede ser vendido con stock cero o negativo")%self.product_id.name)
+
+#class SaleOrder(models.Model):
+    #_inherit = 'sale.order'
+
+>>>>>>> f472bb27d52c9ad605018d68fac04f5a1ffc0801
 
     def action_confirm(self):
         super().action_confirm()
