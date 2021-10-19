@@ -99,7 +99,7 @@ class AccountMove(models.Model):
             tasa=self.os_currency_rate
             if item.amount_currency > 0:
                 if self.currency_id.id == self.company_id.currency_id.id:
-                    item.debit = item.amount_currency*tasa
+                    item.debit = item.amount_currency
                     item.debit_aux = item.amount_currency / tasa
                 else:
                     if item.payment_id:
