@@ -26,7 +26,7 @@ class PurchaseCompareMultiple(models.Model):
 
     @api.constrains('state')
     def _compute_name(self):
-        if self.name == '/' and self.state == 'done':
+        if self.name == '/':
             self.name = self.env['ir.sequence'].next_by_code('purchase.compare.multiple.sequence')
     
     def _return_date_today(self):
@@ -156,8 +156,8 @@ class PurchaseCompareMultiple(models.Model):
                     'provider_id2': provider_m,
                     'qty2': qtym,
                     'price2': price_m,
-                    'currency_id2': currency_m,
-                    'rate2': rate_m,
+                    'currency_id2': currency_h,
+                    'rate2': rate_h,
                     'provider_id3': provider_h,
                     'qty3': qtyh,
                     'price3': price_h,
@@ -165,7 +165,7 @@ class PurchaseCompareMultiple(models.Model):
                     'rate3': rate_h,
                     'purchase_compare_multiple_id': self.id,
                 }
-                self.env['purchase.compared.prices'].create(values)     
+                self.env['purchase.compared.prices'].create(values)
 
 class PurchaseComparedPrices(models.Model):
     _name = 'purchase.compared.prices'
