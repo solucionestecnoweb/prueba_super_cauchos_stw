@@ -31,6 +31,7 @@ class MerchandiseTransitTemp(models.Model):
     pronto_pago = fields.Char()
     super_promo = fields.Char()
     c_apartada = fields.Float()
+    seller_ids = fields.Many2many(comodel_name='res.partner')
     c_disponible = fields.Float()
     moneda_id = fields.Many2one(comodel_name='res.currency')
     fecha_planeada = fields.Datetime()
@@ -91,6 +92,7 @@ class WizardMerchandiseTransit(models.TransientModel):
         product = ''
         cantidad = 0
         cantidad_dis = 0
+        sellers = []
         regs = len(self.get_merchandise())
         for item in self.get_merchandise().sorted(key= lambda x: x.product_id.id):
             regs -= 1
@@ -107,13 +109,15 @@ class WizardMerchandiseTransit(models.TransientModel):
                         'pronto_pago': pronto_pago,
                         'super_promo': super_promo,
                         'c_apartada': cantidad_apa,
-                        'c_disponible': cantidad_dis,
+                        'seller_ids': sellers,
+                        'c_disponible': (cantidad_dis - cantidad_apa),
                         'moneda_id': moneda,
                         'fecha_planeada': fecha_plan,
                     }
                     t.create(values)
                     cantidad = 0
                     cantidad_dis = 0
+                    sellers = []
                 orden = item.order_id.id
                 unidades = item.product_uom.id
                 pr = item.pr
@@ -125,9 +129,16 @@ class WizardMerchandiseTransit(models.TransientModel):
                 moneda = item.currency_id.id
                 fecha_plan = item.date_planned
                 product = item.product_id.id
+                xfind = self.env['sale.order.line'].sudo().search([
+                    ('state', 'in', ('draft', 'sent')),
+                    ('product_id', '=', item.product_id.id),
+                    ('is_transit_merch', '=', True),
+                ])
+                for seller in xfind:
+                    sellers.append(seller.order_id.seller_id.id)
             
             cantidad += item.product_qty
-            cantidad_dis += item.apart_qty_available
+            cantidad_dis += item.product_qty
             
             if regs == 0:
                 values = {
@@ -141,6 +152,7 @@ class WizardMerchandiseTransit(models.TransientModel):
                     'pronto_pago': item.pronto_pago,
                     'super_promo': item.super_promo,
                     'c_apartada': item.apart_to_seller,
+                    'seller_ids': sellers,
                     'c_disponible': cantidad_dis,
                     'moneda_id': item.currency_id.id,
                     'fecha_planeada': item.date_planned,

@@ -47,15 +47,16 @@
                         <table>
                             <!-- Cantidad de columnas -->
                             <colgroup>
-                                <col span="1" style="width: 11%;"/>
-                                <col span="1" style="width: 11%;"/>
-                                <col span="1" style="width: 11%;"/>
-                                <col span="1" style="width: 12%;"/>
-                                <col span="1" style="width: 11%;"/>
-                                <col span="1" style="width: 11%;"/>
-                                <col span="1" style="width: 11%;"/>
-                                <col span="1" style="width: 11%;"/>
-                                <col span="1" style="width: 11%;"/>
+                                <col span="1" style="width: 10%;"/>
+                                <col span="1" style="width: 10%;"/>
+                                <col span="1" style="width: 10%;"/>
+                                <col span="1" style="width: 10%;"/>
+                                <col span="1" style="width: 10%;"/>
+                                <col span="1" style="width: 10%;"/>
+                                <col span="1" style="width: 10%;"/>
+                                <col span="1" style="width: 10%;"/>
+                                <col span="1" style="width: 10%;"/>
+                                <col span="1" style="width: 10%;"/>
                             </colgroup>
                             <!-- Fin cantidad de columnas -->
 
@@ -70,6 +71,7 @@
                                     <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle; background-color: #cacaca; font-size:14px;">Promoción Pronto Pago</th>
                                     <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle; background-color: #cacaca; font-size:14px;">Promoción Super Promo</th>
                                     <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle; background-color: #cacaca; font-size:14px;">Cantidad Apartada por Vendedor</th>
+                                    <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle; background-color: #cacaca; font-size:14px;">Vendedores</th>
                                     <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle; background-color: #cacaca; font-size:14px;">Cantidad Disponible para Apartar</th>
                                 </tr>
                             </thead>
@@ -103,6 +105,13 @@
                                         </td>
                                         <td class="text-center">
                                             <span style="font-size:12px;"><t t-esc="item.c_apartada" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                        </td>
+                                        <td class="text-center">
+                                            <span style="font-size:12px;">
+                                                <t t-foreach="item.seller_ids" t-as="line">
+                                                    <t t-esc="line.name"/><br/>
+                                                </t>
+                                            </span>
                                         </td>
                                         <td class="text-center">
                                             <span style="font-size:12px;"><t t-esc="item.c_disponible" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
