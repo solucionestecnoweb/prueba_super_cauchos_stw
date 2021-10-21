@@ -48,14 +48,12 @@
                             <!-- Cantidad de columnas -->
                             <colgroup>
                                 <col span="1" style="width: 10%;"/>
+                                <col span="1" style="width: 25%;"/>
                                 <col span="1" style="width: 10%;"/>
                                 <col span="1" style="width: 10%;"/>
                                 <col span="1" style="width: 10%;"/>
                                 <col span="1" style="width: 10%;"/>
-                                <col span="1" style="width: 10%;"/>
-                                <col span="1" style="width: 10%;"/>
-                                <col span="1" style="width: 10%;"/>
-                                <col span="1" style="width: 10%;"/>
+                                <col span="1" style="width: 15%;"/>
                                 <col span="1" style="width: 10%;"/>
                             </colgroup>
                             <!-- Fin cantidad de columnas -->
@@ -64,9 +62,7 @@
                             <thead>
                                 <tr>
                                     <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle; background-color: #cacaca; font-size:14px;">Cantidad</th>
-                                    <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle; background-color: #cacaca; font-size:14px;">Unidad de Medida</th>
-                                    <th class="text-center" style="border-right: 3px solid white; border-bottom: 3px solid white; display: table-cell; vertical-align: middle; background-color: #cacaca; font-size:14px;">PR</th>
-                                    <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle; background-color: #cacaca; font-size:14px;">Modelo</th>
+                                    <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle; background-color: #cacaca; font-size:14px;">Descripción</th>
                                     <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle; background-color: #cacaca; font-size:14px;">Precio</th>
                                     <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle; background-color: #cacaca; font-size:14px;">Promoción Pronto Pago</th>
                                     <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle; background-color: #cacaca; font-size:14px;">Promoción Super Promo</th>
@@ -86,13 +82,7 @@
                                             <span style="font-size:12px;"><t t-esc="item.cantidad" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
                                         </td>
                                         <td class="text-center">
-                                            <span style="font-size:12px;"><t t-esc="item.unidades_id.name"/></span>
-                                        </td>
-                                        <td class="text-center">
-                                            <span style="font-size:12px;"><t t-esc="item.pr"/></span>
-                                        </td>
-                                        <td class="text-center">
-                                            <span style="font-size:12px;"><t t-esc="item.producto_id.modelo"/></span>
+                                            <span style="font-size:12px;"><t t-esc="item.producto_id.display_name"/></span>
                                         </td>
                                         <td class="text-right">
                                             <span style="font-size:12px;"><t t-esc="item.precio" t-options='{"widget": "monetary", "display_currency": item.moneda_id}'/></span>

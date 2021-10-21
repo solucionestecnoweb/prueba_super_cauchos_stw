@@ -135,7 +135,7 @@ class PurchaseCompareMultiple(models.Model):
                 for line in find_lines:
                     price_count += line.price
                 price_count = price_count / len(find_lines)
-                find_mid_price = self.env['purchase.compared.prices.lines'].search([('product_id', '=', item.product_id.id), ('price', '<=', price_count)])
+                find_mid_price = self.env['purchase.compared.prices.lines'].search([('product_id', '=', item.product_id.id), ('price', '<=', price_count)], limit=1)
                 for item in find_mid_price:
                     if price_m < item.price:
                         if provider_l != item.provider_id.id or provider_h != item.provider_id.id:
