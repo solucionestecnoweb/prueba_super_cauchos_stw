@@ -94,13 +94,13 @@ class PurchaseCompareMultiple(models.Model):
                 
                 for line in pfind:
                     #Comparativa de precios
-                    if line.price < price_l or price_l == 0:
-                        if provider_h != provider_l:
-                            price_l = line.price
-                            provider_l = line.provider_id.id
-                            qtyl = line.qty
-                            currency_l = line.currency_id.id
-                            rate_l = line.rate
+                    if line.price < price_l or price_l == 0 or provider_h == provider_l:
+                        # if provider_h != provider_l or price_l == 0:
+                        price_l = line.price
+                        provider_l = line.provider_id.id
+                        qtyl = line.qty
+                        currency_l = line.currency_id.id
+                        rate_l = line.rate
 
                     if line.price > price_h or price_h == 0:
                         price_h = line.price
