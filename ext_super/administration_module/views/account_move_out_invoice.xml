@@ -55,7 +55,7 @@
         ('account_id.internal_type', '=', 'receivable'),
         ('full_reconcile_id', '=', False), 
         ('balance', '!=', 0), 
-        ('account_id.reconcile', '=', True)
+        ('account_id.reconcile', '=', True),
         ]</field>
         <field name="view_id" ref="move_out_invoice_type_payment_view_tree"/>
         <field name="view_mode">tree,form</field>
