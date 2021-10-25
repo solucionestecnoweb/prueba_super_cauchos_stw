@@ -78,6 +78,7 @@ class PurchaseCompareMultiple(models.Model):
 
         for item in xfind.sorted(key=lambda a: a.product_id.id): #Recorremos las lineas y asignamos valor a las variables
             #Evaluación de Registro de Lineas
+
             provider_l = 0
             price_l = 0
             currency_l = 0
@@ -87,27 +88,88 @@ class PurchaseCompareMultiple(models.Model):
             provider_h = 0
             price_h = 0
             currency_h = 0
+
+            temp_currency = 0
+            temp_price1 = 0
+            temp_price2 = 0
+            temp_price3 = 0
+            temp_price4 = 0
             if product_temporal != item.product_id.id: #Aseguramos si cambio de producto
                 product_temporal = item.product_id.id #Asignamos nuevo producto
 
                 pfind = self.env['purchase.compared.prices.lines'].search([('product_id', '=', product_temporal)])
                 
                 for line in pfind:
-                    #Comparativa de precios
-                    if line.price < price_l or price_l == 0 or provider_h == provider_l:
-                        # if provider_h != provider_l or price_l == 0:
-                        price_l = line.price
-                        provider_l = line.provider_id.id
-                        qtyl = line.qty
-                        currency_l = line.currency_id.id
-                        rate_l = line.rate
+                    if line.currency_id.id == 3:
+                        if line.currency_id.id == currency_l or currency_l == 0:
+                            temp_price1 = line.price
+                        else:
+                            temp_price2 = line.price / line.rate
+                    else:
+                        if line.currency_id.id == currency_l or currency_l == 0:
+                            temp_price1 = line.price
+                        else:
+                            temp_price2 = line.price * line.rate
 
-                    if line.price > price_h or price_h == 0:
-                        price_h = line.price
-                        provider_h = line.provider_id.id
-                        qtyh = line.qty
-                        currency_h = line.currency_id.id
-                        rate_h = line.rate
+                    if line.currency_id.id == 3:
+                        if line.currency_id.id == currency_h or currency_h == 0:
+                            temp_price3 = line.price
+                        else:
+                            temp_price4 = line.price / line.rate
+                    else:
+                        if line.currency_id.id == currency_h or currency_h == 0:
+                            temp_price3 = line.price
+                        else:
+                            temp_price4 = line.price * line.rate
+                    
+
+                    #Comparativa de precios
+                    
+                    if currency_l == 3:
+                        if temp_price1 == price_l and temp_price3 == price_h:
+                            price_h = line.price
+                            provider_h = line.provider_id.id
+                            qtyh = line.qty
+                            currency_h = line.currency_id.id
+                            rate_h = line.rate                            
+                    else:
+                        if temp_price2 == price_l and temp_price4 == price_h:
+                            price_h = line.price
+                            provider_h = line.provider_id.id
+                            qtyh = line.qty
+                            currency_h = line.currency_id.id
+                            rate_h = line.rate
+
+
+                    if currency_l == line.currency_id.id or currency_l == 0:
+                        if temp_price1 < price_l or price_l == 0:
+                            price_l = line.price
+                            provider_l = line.provider_id.id
+                            qtyl = line.qty
+                            currency_l = line.currency_id.id
+                            rate_l = line.rate
+                    else:
+                        if temp_price2 < price_l or price_l == 0:
+                            price_l = line.price
+                            provider_l = line.provider_id.id
+                            qtyl = line.qty
+                            currency_l = line.currency_id.id
+                            rate_l = line.rate
+
+                    if currency_h == line.currency_id.id or currency_h == 0:
+                        if temp_price3 > price_h or price_h == 0:
+                            price_h = line.price
+                            provider_h = line.provider_id.id
+                            qtyh = line.qty
+                            currency_h = line.currency_id.id
+                            rate_h = line.rate
+                    else:
+                        if temp_price4 > price_h or price_h == 0:
+                            price_h = line.price
+                            provider_h = line.provider_id.id
+                            qtyh = line.qty
+                            currency_h = line.currency_id.id
+                            rate_h = line.rate
 
                 #Calculo de precio promedio
                 if price_m == 0:
@@ -116,7 +178,7 @@ class PurchaseCompareMultiple(models.Model):
                     for line in find_lines:
                         price_count += line.price
                     price_count = price_count / len(find_lines)
-                    find_mid_price = self.env['purchase.compared.prices.lines'].search([('product_id', '=', product_temporal), ('price', '<=', price_count), ('provider_id', 'not in', (provider_l,provider_h))], limit=1)
+                    find_mid_price = self.env['purchase.compared.prices.lines'].search([('product_id', '=', product_temporal), ('provider_id', 'not in', (provider_l,provider_h))], limit=1)
                     for lines in find_mid_price:
                         price_m = lines.price
                         provider_m = lines.provider_id.id
