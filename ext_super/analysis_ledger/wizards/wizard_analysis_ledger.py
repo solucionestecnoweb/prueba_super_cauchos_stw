@@ -20,12 +20,15 @@ _logger = logging.getLogger(__name__)
 class DataanAlysisLedger(models.TransientModel):
     _name = 'data.analysis.ledger'
 
-    code = fields.Char(string='Code')
+    date = fields.Date(string='Date')
+    comp_number = fields.Char(string='N° Comp.')
+    doc_num = fields.Char(string='Doc Num')    
     description = fields.Char(string='Description')
     previous = fields.Float(string='Previous')
     debit = fields.Float(string='Debit')
     credit = fields.Float(string='Credit')
-    current = fields.Float(string='Current')    
+    current = fields.Float(string='Current')
+    account_id = fields.Many2one(comodel_name='account.account', string='Account')    
 
 class WizardAnalysisLedger(models.TransientModel):
     _name = 'wizard.analysis.ledger'
@@ -34,6 +37,7 @@ class WizardAnalysisLedger(models.TransientModel):
     date_to = fields.Date('Date To', default=lambda *a:(datetime.now() + timedelta(days=(1))).strftime('%Y-%m-%d'))
     date_now = fields.Datetime(string='Date Now', default=lambda *a:datetime.now())
     currency_id = fields.Many2one(comodel_name='res.currency', string='Currency')
+    account_id = fields.Many2one(comodel_name='account.account', string='Cuentas')
 
     state = fields.Selection([('choose', 'choose'), ('get', 'get')],default='choose')
     report = fields.Binary('Prepared file', filters='.xls', readonly=True)
@@ -67,10 +71,9 @@ class WizardAnalysisLedger(models.TransientModel):
     # *******************  BÚSQUEDA DE DATOS ****************************
 
     def get_data(self):
-        xfind = self.env['account.move.line'].search([])
+        xfind = self.env['account.move.line'].search([('account_id', '=', self.account_id.id)])
 
         t = self.env['data.analysis.ledger']
-        account = ''
         for item in xfind.sorted(key=lambda x: x.account_id.id):
             
             previous = 0
@@ -78,59 +81,59 @@ class WizardAnalysisLedger(models.TransientModel):
             debit = 0
             current = 0
 
-            if account != item.account_id.id:
-                account = item.account_id.id
+            caccount = self.env['account.move.line'].search([
+                ('date', '>=', self.date_from),
+                ('date', '<=', self.date_to),
+                ('parent_state', '=', 'posted'),
+                ('id', '=', item.id)
+            ])
+            
+            paccount = self.env['account.move.line'].search([
+                ('date', '<', self.date_from),
+                ('parent_state', '=', 'posted'),
+                ('id', '=', item.id)
+            ])
 
-                caccount = self.env['account.move.line'].search([
-                    ('date', '>=', self.date_from),
-                    ('date', '<=', self.date_to),
-                    ('parent_state', '=', 'posted'),
-                    ('account_id', '=', item.account_id.id)
-                ])
-                
-                paccount = self.env['account.move.line'].search([
-                    ('date', '<', self.date_from),
-                    ('parent_state', '=', 'posted'),
-                    ('account_id', '=', item.account_id.id)
-                ])
+            for line in caccount:
+                rate = line.move_id.os_currency_rate
+                if not rate:
+                    rate = 1
+                if self.currency_id.id == 3:
+                    debit += line.debit
+                    credit += line.credit
+                    
+                    current -= line.debit
+                    current += line.credit
+                else:
+                    debit += line.debit / rate
+                    credit += line.credit / rate
+                    
+                    current -= line.debit / rate
+                    current += line.credit / rate
+            
+            for line in paccount:
+                rate = line.move_id.os_currency_rate
+                if not rate:
+                    rate = 1
+                if self.currency_id.id == 3:
+                    previous -= line.debit
+                    previous += line.credit
+                else:
+                    previous -= line.debit / rate
+                    previous += line.credit / rate
 
-                for line in caccount:
-                    rate = self.env['res.currency.rate'].search([('name', '=', line.date)], limit=1).sell_rate
-                    if not rate:
-                        rate = 1
-                    if self.currency_id.id == 3:
-                        debit += line.debit
-                        credit += line.credit
-                        
-                        current -= line.debit
-                        current += line.credit
-                    else:
-                        debit += line.debit / rate
-                        credit += line.credit / rate
-                        
-                        current -= line.debit / rate
-                        current += line.credit / rate
-                
-                for line in paccount:
-                    rate = self.env['res.currency.rate'].search([('name', '=', line.date)], limit=1).sell_rate
-                    if not rate:
-                        rate = 1
-                    if self.currency_id.id == 3:
-                        previous -= line.debit
-                        previous += line.credit
-                    else:
-                        previous -= line.debit / rate
-                        previous += line.credit / rate
-
-                values = {
-                    'code': item.account_id.code,
-                    'description': item.account_id.name,
-                    'previous': previous,
-                    'debit': debit,
-                    'credit': credit,
-                    'current': current,
-                }
-                t.create(values)
+            values = {
+                'date': item.date,
+                'comp_number': item.move_id.invoice_ctrl_number,
+                'doc_num': item.move_id.invoice_number,
+                'description': item.name,
+                'previous': previous,
+                'debit': debit,
+                'credit': credit,
+                'current': current,
+                'account_id': item.account_id.id
+            }
+            t.create(values)
         self.lines_ids = t.search([])
 
     # *******************  REPORTE EN EXCEL ****************************
