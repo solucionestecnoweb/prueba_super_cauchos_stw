@@ -21,10 +21,3 @@ class SaleOrder(models.Model):
         invoice['payment_condition_id'] = self.payment_condition_id.id
         invoice['seller_id'] = self.seller_id.id
         return invoice
-
-# class SaleAdvancePaymentInv(models.TransientModel):
-#     _inherit = 'sale.advance.payment.inv'
-
-#     def _create_invoice(self, order, so_line, amount):
-#         invoice = super(SaleAdvancePaymentInv, self)._create_invoice(order, so_line, amount)
-#         return invoice
