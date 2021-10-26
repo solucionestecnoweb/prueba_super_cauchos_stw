@@ -11,6 +11,37 @@ class AccountMove(models.Model):
     
     os_currency_rate = fields.Float(string='Tipo de Cambio', default=1 ,digits=(12, 2))
     custom_rate = fields.Boolean(string='¿Usar Tasa de Cambio Personalizada?')
+
+    #@api.model
+    @api.onchange('os_currency_rate','line_ids','custom_rate')
+    @api.depends('os_currency_rate','line_ids','custom_rate')
+    def corrige_tasa(self):
+        #raise UserError(_("opcion %s")%self.custom_rate)
+        if self.custom_rate==True:
+            for det_line in self.line_ids:
+                if det_line.debit!=0:
+                    det_line.debit=det_line.amount_currency*self.os_currency_rate
+                if det_line.credit!=0:
+                    det_line.credit=det_line.amount_currency*self.os_currency_rate
+                if det_line.debit>det_line.debit:
+                    det_line.balance=det_line.amount_currency*self.os_currency_rate
+                    det_line.amount_residual=det_line.amount_currency*self.os_currency_rate
+                else:
+                    det_line.balance=det_line.amount_currency*self.os_currency_rate*(-1)
+                    det_line.amount_residual=det_line.amount_currency*self.os_currency_rate*(-1)
+                #raise UserError(_("Hola %s")%det_line.id)
+
+
+    def action_post(self):
+        if self.custom_rate!=True:
+            self.set_os_currency_rate()
+            rate = self.env['res.currency.rate'].search([('currency_id', '=', self.currency_id.id),('name','=',self.invoice_date)], limit=1).sorted(lambda x: x.name)
+            if rate:
+                for tasa in rate:
+                    self.os_currency_rate=1/tasa.rate
+        super().action_post()
+
+
     
     def _check_balanced(self):
         ''' Assert the move is fully balanced debit = credit.
