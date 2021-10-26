@@ -12,7 +12,7 @@ class AccountMove(models.Model):
     os_currency_rate = fields.Float(string='Tipo de Cambio', default=1 ,digits=(12, 2))
     custom_rate = fields.Boolean(string='¿Usar Tasa de Cambio Personalizada?')
 
-    #@api.model
+    
     @api.onchange('os_currency_rate','line_ids','custom_rate')
     @api.depends('os_currency_rate','line_ids','custom_rate')
     def corrige_tasa(self):
