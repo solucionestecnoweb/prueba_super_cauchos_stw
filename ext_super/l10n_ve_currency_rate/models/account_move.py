@@ -121,8 +121,5 @@ class AccountMove(models.Model):
                         if item.payment_id.rate>0:
                             tasa=item.payment_id.rate
                     item.credit = (item.amount_currency * tasa) * (-1)
-<<<<<<< HEAD
                     item.credit_aux = (item.amount_currency) * (-1)"""
-=======
-                    item.credit_aux = (item.amount_currency) * (-1)
->>>>>>> 8ddb8ec00d5274a331b659a6516d107bce9eac01
+
