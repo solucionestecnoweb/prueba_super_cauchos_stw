@@ -72,9 +72,9 @@ class ProrrateoIva(models.Model):
             ])
         for item in invoice_sale:
             item.sale_prorrateo_iva = self.id
-            self.sale_amount_untaxed_signed += item.amount_untaxed_signed_bs
-            self.sale_amount_tax += item.amount_tax_bs
-            self.sale_amount_total_signed += item.amount_total_signed_aux_bs
+            self.sale_amount_untaxed_signed += item.amount_untaxed_signed
+            self.sale_amount_tax += item.amount_tax
+            self.sale_amount_total_signed += item.amount_total_signed
             for line in item.invoice_line_ids:
                 if self.company_id.currency_id.id == item.currency_id.id:
                         if line.tax_ids[0].aliquot in gravados:
@@ -98,9 +98,9 @@ class ProrrateoIva(models.Model):
             ])
         for item in invoice_purchase:
             item.purchase_prorrateo_iva = self.id
-            self.purchase_amount_untaxed_signed += item.amount_untaxed_signed_bs
-            self.purchase_amount_tax += item.amount_tax_bs
-            self.purchase_amount_total_signed += item.amount_total_signed_aux_bs
+            self.purchase_amount_untaxed_signed += item.amount_untaxed_signed
+            self.purchase_amount_tax += item.amount_tax
+            self.purchase_amount_total_signed += item.amount_total_signed
             for line in item.invoice_line_ids:
                 if line.account_id.prorreatable == True or line.account_id.group_id.prorreatable == True:
                     if line.tax_ids[0].aliquot in gravados:
