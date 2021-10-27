@@ -42,14 +42,14 @@
                         </group>
                     </group>
                     <notebook>
-                        <!--page name="facturas" string="Facturas">
+                        <page name="facturas" string="Facturas">
                             <field name="invoice_ids" readonly="1">
                                 <tree>
                                     <field name="name"/>               
                                     <field name="amount_total" sum="Total"/>               
                                 </tree>
                             </field>
-                        </page-->
+                        </page>
                         <page name="asientos" string="Asientos Contables">
                             <field name="move_ids" readonly="1">
                                 <tree>
