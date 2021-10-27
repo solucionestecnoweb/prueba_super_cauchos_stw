@@ -67,7 +67,7 @@
                                     <field name="invoice_number_cli" string="Nro Factura"/>
                                     <field name="partner_id" string="Cliente"/>
                                     <field name="amount_untaxed_signed" string="Base Imponible"/>
-                                    <field name="amount_tax" string="Impuesto"/>
+                                    <field name="amount_untaxed_signed" string="Impuesto"/>
                                     <field name="amount_total_signed" string="Total Factura"/>
                                     <field name="state" string="Estado"/>
                                 </tree>
@@ -89,7 +89,7 @@
                                     <field name="invoice_number_pro" string="Nro Factura"/>
                                     <field name="partner_id" string="Proveedor"/>
                                     <field name="amount_untaxed_signed" string="Base Imponible"/>
-                                    <field name="amount_tax" string="Impuesto"/>
+                                    <field name="amount_untaxed_signed" string="Impuesto"/>
                                     <field name="amount_total_signed" string="Total Factura"/>
                                     <field name="state" string="Estado"/>
                                 </tree>
