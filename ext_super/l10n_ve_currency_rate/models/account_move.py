@@ -5,29 +5,6 @@ from dateutil.relativedelta import relativedelta
 from odoo import api, fields, models, _
 from odoo.exceptions import UserError, ValidationError
 
-class AccountMoveLine(models.Model):
-    _inherit = "account.move.line"
-
-
-
-    """@api.onchange('price_unit','quantity')
-    def corrige_tasa_line(self):
-        if self.move_id.custom_rate==True:
-            #pass
-            lista=self.env['account.move.line'].search([('move_id','=',self.move_id.move_aux_id)])
-            for det_line in lista:
-                #raise UserError(_("opcion %s")%det_line.amount_currency)
-                if det_line.debit!=0:
-                    det_line.debit=det_line.amount_currency*self.move_id.os_currency_rate
-                if det_line.credit!=0:
-                    det_line.credit=det_line.amount_currency*self.move_id.os_currency_rate
-                if det_line.debit>det_line.debit:
-                    det_line.balance=det_line.amount_currency*self.move_id.os_currency_rate
-                    det_line.amount_residual=det_line.amount_currency*self.move_id.os_currency_rate
-                if det_line.debit<det_line.debit:
-                    det_line.balance=det_line.amount_currency*self.move_id.os_currency_rate*(-1)
-                    det_line.amount_residual=det_line.amount_currency*self.move_id.os_currency_rate*(-1)"""
-            
 
 class AccountMove(models.Model):
     _inherit = "account.move"
@@ -156,27 +133,28 @@ class AccountMove(models.Model):
         self.actualizar_balance()
 
     def actualizar_balance(self):
-        for item in self.line_ids:
+        pass
+        """for item in self.line_ids:
             tasa=self.os_currency_rate
             if item.amount_currency > 0:
                 if self.currency_id.id == self.company_id.currency_id.id:
                     item.debit = item.amount_currency
                     item.debit_aux = item.amount_currency / tasa
-                    item.amount_currency=item.amount_currency/tasa
+                    ##item.amount_currency=item.amount_currency/tasa
                 else:
                     if item.payment_id:
                         if item.payment_id.rate>0:
                             tasa=item.payment_id.rate
                     item.debit = item.amount_currency * tasa
-                    #item.debit_aux = item.amount_currency
+                    item.debit_aux = item.amount_currency
             elif item.amount_currency < 0:
                 if self.currency_id.id == self.company_id.currency_id.id:
                     item.credit = (item.amount_currency) * (-1)
                     item.credit_aux = (item.amount_currency / tasa) * (-1)
-                    item.amount_currency=(item.amount_currency/tasa)*(-1)
+                    ##item.amount_currency=(item.amount_currency/tasa)*(-1)
                 else:
                     if item.payment_id:
                         if item.payment_id.rate>0:
                             tasa=item.payment_id.rate
                     item.credit = (item.amount_currency * tasa) * (-1)
-                    #item.credit_aux = (item.amount_currency) * (-1)
+                    item.credit_aux = (item.amount_currency) * (-1)"""

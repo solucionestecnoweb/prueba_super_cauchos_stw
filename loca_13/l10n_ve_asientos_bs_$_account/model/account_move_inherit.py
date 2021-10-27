@@ -86,28 +86,31 @@ class  AccountMoveLine(models.Model):
         for selff in self:
             if selff.currency_id.id==self.env.company.currency_secundaria_id.id:
                 if selff.credit!=0:
-                    valor=selff.amount_currency
+                    tasa=selff.balance/selff.amount_currency
+                    valor=tasa
             else:
-                lista_tasa = selff.env['res.currency.rate'].search([('currency_id', '=', selff.env.company.currency_secundaria_id.id),('name','<=',selff.move_id.date)],order='id ASC')
+                lista_tasa = selff.env['res.currency.rate'].search([('currency_id', '=', self.env.company.currency_secundaria_id.id),('name','<=',selff.move_id.date)],order='id ASC')
                 if lista_tasa:
                     for det in lista_tasa:
-                        valor=(selff.credit*det.rate)
-            selff.credit_aux=valor
+                        valor=(1/det.rate)
+            selff.credit_aux=selff.credit/(valor+0.0000000000001)
 
 
     def _compute_monto_debit_conversion(self):
         valor=0
+        #self.debit_aux=0
         self.env.company.currency_secundaria_id.id
         for selff in self:
             if selff.currency_id.id==self.env.company.currency_secundaria_id.id:
                 if selff.debit!=0:
-                    valor=selff.amount_currency
+                    tasa=selff.balance/selff.amount_currency
+                    valor=tasa
             else:
-                lista_tasa = selff.env['res.currency.rate'].search([('currency_id', '=', selff.env.company.currency_secundaria_id.id),('name','<=',selff.move_id.date)],order='id ASC')
+                lista_tasa = selff.env['res.currency.rate'].search([('currency_id', '=', self.env.company.currency_secundaria_id.id),('name','<=',selff.move_id.date)],order='id ASC')
                 if lista_tasa:
                     for det in lista_tasa:
-                        valor=(selff.debit*det.rate)
-            selff.debit_aux=valor
+                        valor=(1/det.rate)
+            selff.debit_aux=selff.debit/(valor+0.0000000000001)
 
     def _compute_balance_conversion(self):
         valor=0
