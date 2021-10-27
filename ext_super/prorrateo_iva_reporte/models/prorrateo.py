@@ -61,6 +61,8 @@ class ProrrateoIva(models.Model):
         self.sale_amount_untaxed_signed = 0
         self.sale_amount_tax = 0
         self.sale_amount_total_signed = 0
+        self.ventas_gravadas = 0
+        self.ventas_totales= 0
         invoice_sale = self.env['account.move'].search([
             ('invoice_date','>=',str(self.desde)),
             ('invoice_date','<=',str(self.hasta)),
@@ -85,8 +87,7 @@ class ProrrateoIva(models.Model):
         self.purchase_amount_untaxed_signed = 0
         self.purchase_amount_tax = 0
         self.purchase_amount_total_signed = 0
-        self.ventas_gravadas = 0
-        self.ventas_totales= 0
+
         self.data_prorrateo_id.unlink()
         invoice_purchase = self.env['account.move'].search([
             ('invoice_date','>=',str(self.desde)),
