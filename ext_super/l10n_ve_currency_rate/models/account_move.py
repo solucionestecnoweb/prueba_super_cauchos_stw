@@ -5,16 +5,43 @@ from dateutil.relativedelta import relativedelta
 from odoo import api, fields, models, _
 from odoo.exceptions import UserError, ValidationError
 
+class AccountMoveLine(models.Model):
+    _inherit = "account.move.line"
+
+
+
+    """@api.onchange('price_unit','quantity')
+    def corrige_tasa_line(self):
+        if self.move_id.custom_rate==True:
+            #pass
+            lista=self.env['account.move.line'].search([('move_id','=',self.move_id.move_aux_id)])
+            for det_line in lista:
+                #raise UserError(_("opcion %s")%det_line.amount_currency)
+                if det_line.debit!=0:
+                    det_line.debit=det_line.amount_currency*self.move_id.os_currency_rate
+                if det_line.credit!=0:
+                    det_line.credit=det_line.amount_currency*self.move_id.os_currency_rate
+                if det_line.debit>det_line.debit:
+                    det_line.balance=det_line.amount_currency*self.move_id.os_currency_rate
+                    det_line.amount_residual=det_line.amount_currency*self.move_id.os_currency_rate
+                if det_line.debit<det_line.debit:
+                    det_line.balance=det_line.amount_currency*self.move_id.os_currency_rate*(-1)
+                    det_line.amount_residual=det_line.amount_currency*self.move_id.os_currency_rate*(-1)"""
+            
 
 class AccountMove(models.Model):
     _inherit = "account.move"
     
     os_currency_rate = fields.Float(string='Tipo de Cambio', default=1 ,digits=(12, 2))
     custom_rate = fields.Boolean(string='¿Usar Tasa de Cambio Personalizada?')
+    move_aux_id=fields.Integer(compute='_compute_move_id')
+
+    def _compute_move_id(self):
+        self.move_aux_id=self.id
 
     
-    @api.onchange('os_currency_rate','line_ids','custom_rate')
-    @api.depends('os_currency_rate','line_ids','custom_rate')
+    @api.onchange('os_currency_rate','line_ids','currency_id')
+    @api.depends('os_currency_rate','line_ids','currency_id')
     def corrige_tasa(self):
         #raise UserError(_("opcion %s")%self.custom_rate)
         if self.custom_rate==True:
@@ -26,13 +53,14 @@ class AccountMove(models.Model):
                 if det_line.debit>det_line.debit:
                     det_line.balance=det_line.amount_currency*self.os_currency_rate
                     det_line.amount_residual=det_line.amount_currency*self.os_currency_rate
-                else:
+                if det_line.debit<det_line.debit:
                     det_line.balance=det_line.amount_currency*self.os_currency_rate*(-1)
                     det_line.amount_residual=det_line.amount_currency*self.os_currency_rate*(-1)
                 #raise UserError(_("Hola %s")%det_line.id)
 
 
     def action_post(self):
+        #self.corrige_tasa()
         if self.custom_rate!=True:
             self.set_os_currency_rate()
             rate = self.env['res.currency.rate'].search([('currency_id', '=', self.currency_id.id),('name','=',self.invoice_date)], limit=1).sorted(lambda x: x.name)
@@ -140,7 +168,7 @@ class AccountMove(models.Model):
                         if item.payment_id.rate>0:
                             tasa=item.payment_id.rate
                     item.debit = item.amount_currency * tasa
-                    item.debit_aux = item.amount_currency
+                    #item.debit_aux = item.amount_currency
             elif item.amount_currency < 0:
                 if self.currency_id.id == self.company_id.currency_id.id:
                     item.credit = (item.amount_currency) * (-1)
@@ -151,4 +179,4 @@ class AccountMove(models.Model):
                         if item.payment_id.rate>0:
                             tasa=item.payment_id.rate
                     item.credit = (item.amount_currency * tasa) * (-1)
-                    item.credit_aux = (item.amount_currency) * (-1)
+                    #item.credit_aux = (item.amount_currency) * (-1)
