@@ -53,8 +53,12 @@ class AccountMove(models.Model):
     def _constrains_custom_rate(self):
         self.actualizar_balance()
 
+    
     @api.constrains('payment_id')
-    def _constrains_custom_rate(self):
+    def _os_constrains_payment_id(self):
+        if self.payment_id:
+            if self.payment_id.rate > 0:
+               self.os_currency_rate = self.payment_id.rate
         self.actualizar_balance()
 
     def actualizar_balance(self):
