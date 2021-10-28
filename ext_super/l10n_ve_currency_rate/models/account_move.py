@@ -16,94 +16,10 @@ class AccountMove(models.Model):
     def _compute_move_id(self):
         self.move_aux_id=self.id
 
-    
-    @api.onchange('os_currency_rate','currency_id','line_ids')  #,'line_ids',
-    @api.depends('os_currency_rate','currency_id','line_ids')
-    def corrige_tasa(self):
-        #raise UserError(_("opcion %s")%self.custom_rate)
-        if self.custom_rate==True:
-            ver=self.env['account.move.line'].search([('move_id','=',self.move_aux_id)])
-            for det_line in self.line_ids:
-            #for det_line in ver:
-                if det_line.debit!=0:
-                    det_line.debit=det_line.amount_currency*self.os_currency_rate
-                if det_line.credit!=0:
-                    det_line.credit=det_line.amount_currency*self.os_currency_rate
-                if det_line.debit>det_line.debit:
-                    det_line.balance=det_line.amount_currency*self.os_currency_rate
-                    det_line.amount_residual=det_line.amount_currency*self.os_currency_rate
-                if det_line.debit<det_line.debit:
-                    det_line.balance=det_line.amount_currency*self.os_currency_rate*(-1)
-                    det_line.amount_residual=det_line.amount_currency*self.os_currency_rate*(-1)
-                #raise UserError(_("Hola %s")%det_line.id)
-
-
     def action_post(self):
-        super().action_post()
-        self.corrige_tasa()
-        #self.valida_monto_tasa()
-        if self.custom_rate!=True:
-            self.set_os_currency_rate()
-            rate = self.env['res.currency.rate'].search([('currency_id', '=', self.currency_id.id),('name','=',self.invoice_date)], limit=1).sorted(lambda x: x.name)
-            if rate:
-                for tasa in rate:
-                    self.os_currency_rate=1/tasa.rate
-        
-
-    def valida_monto_tasa(self):
-        for det_line in self.line_ids:
-            acom_credit=det_line.credit
-            acom_debit=det_line.debit
-        if abs(acom_debit)!=abs(acom_credit):
-            raise UserError(_("Existe un descuadre en el haber y en el debe"))
-
-    
-    """def _check_balanced(self):
-        moves = self.filtered(lambda move: move.line_ids)
-        if not moves:
-            return
-        debit = 0 
-        credit = 0 
-        for line in moves.line_ids:
-            debit  = debit  + round(line.debit,moves[0].company_currency_id.decimal_places)  
-            credit = credit + round(line.credit,moves[0].company_currency_id.decimal_places)
-
-        self.env['account.move.line'].flush(self.env['account.move.line']._fields)
-        self.env['account.move'].flush(['journal_id'])
-        self._cr.execute('''
-            SELECT line.move_id, ROUND(SUM(line.debit - line.credit), currency.decimal_places)
-            FROM account_move_line line
-            JOIN account_move move ON move.id = line.move_id
-            JOIN account_journal journal ON journal.id = move.journal_id
-            JOIN res_company company ON company.id = journal.company_id
-            JOIN res_currency currency ON currency.id = company.currency_id
-            WHERE line.move_id IN %s
-            GROUP BY line.move_id, currency.decimal_places
-            HAVING ROUND(SUM(line.debit - line.credit), currency.decimal_places) != 0.0;
-        ''', [tuple(self.ids)])
-
-        query_res = self._cr.fetchall()
-        sums = 0 
-        if query_res:
-            sums = query_res[0][1]
-
-        diff = self.env['account.move.line']
-        if int(sums) > 1:
-            return super(AccountMove, self)._check_balanced()
-        
-        if sums != 0:
-            if debit > credit:
-                diff = self.env['account.move.line'].search([('move_id','=',self.id), ('credit','>','0')],limit=1)
-                amount = round(diff.credit,moves[0].company_currency_id.decimal_places) + sums
-                sql = "UPDATE account_move_line SET credit = " + str(amount ) + " WHERE id = " + str(diff.id)
-                self._cr.execute(sql)
-
-            else :
-                diff = self.env['account.move.line'].search([('move_id','=',self.id), ('debit','>','0')],limit=1)
-                amount = round(diff.debit,moves[0].company_currency_id.decimal_places) + sums
-                sql = "UPDATE account_move_line SET debit = " + str(amount ) + " WHERE id = " + str(diff.id)
-                self._cr.execute(sql)
-        return super(AccountMove, self)._check_balanced()"""
+        res = super().action_post()
+        self.actualizar_balance()
+        return res 
         
     def set_os_currency_rate(self):
         for selff in self:
@@ -121,7 +37,7 @@ class AccountMove(models.Model):
                         exchange_rate =  1 / rate.rate
                         selff.os_currency_rate = exchange_rate
     
-    @api.constrains('invoice_date','currency_id')
+    @api.constrains('invoice_date','currency_id','')
     def _check_os_currency_rate(self):
         self.set_os_currency_rate()
     
@@ -129,14 +45,12 @@ class AccountMove(models.Model):
     def _onchange_os_currency_rate(self):
         self.set_os_currency_rate()
     
-    @api.onchange('os_currency_rate')
+    @api.onchange('os_currency_rate','amount_total')
     def _onchange_custom_rate(self):
-        #pass
         self.actualizar_balance()
 
-    @api.constrains('os_currency_rate')
+    @api.constrains('os_currency_rate','amount_total')
     def _constrains_custom_rate(self):
-        #pass
         self.actualizar_balance()
 
     def actualizar_balance(self):
@@ -149,7 +63,7 @@ class AccountMove(models.Model):
                     ##item.amount_currency=item.amount_currency/tasa
                 else:
                     if item.payment_id:
-                        if item.payment_id.rate>0:
+                        if item.payment_id.rate > 0:
                             tasa=item.payment_id.rate
                     item.debit = item.amount_currency * tasa
                     item.debit_aux = item.amount_currency
