@@ -48,10 +48,7 @@ class AccountMove(models.Model):
 
 
     
-    def _check_balanced(self):
-        ''' Assert the move is fully balanced debit = credit.
-        An error is raised if it's not the case.
-        '''
+    """def _check_balanced(self):
         moves = self.filtered(lambda move: move.line_ids)
         if not moves:
             return
@@ -96,7 +93,7 @@ class AccountMove(models.Model):
                 amount = round(diff.debit,moves[0].company_currency_id.decimal_places) + sums
                 sql = "UPDATE account_move_line SET debit = " + str(amount ) + " WHERE id = " + str(diff.id)
                 self._cr.execute(sql)
-        return super(AccountMove, self)._check_balanced()
+        return super(AccountMove, self)._check_balanced()"""
         
     def set_os_currency_rate(self):
         for selff in self:
