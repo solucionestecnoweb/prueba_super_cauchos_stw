@@ -86,7 +86,7 @@ class  AccountMoveLine(models.Model):
         for selff in self:
             if selff.currency_id.id==self.env.company.currency_secundaria_id.id:
                 if selff.credit!=0:
-                    tasa=selff.balance/selff.amount_currency if selff.amount_currency > 0 else selff.balance
+                    tasa= abs(selff.balance / selff.amount_currency )if  abs(selff.amount_currency) > 0 else selff.balance
                     valor=tasa
             else:
                 lista_tasa = selff.env['res.currency.rate'].search([('currency_id', '=', self.env.company.currency_secundaria_id.id),('name','<=',selff.move_id.date)],order='id ASC')
@@ -103,7 +103,7 @@ class  AccountMoveLine(models.Model):
         for selff in self:
             if selff.currency_id.id==self.env.company.currency_secundaria_id.id:
                 if selff.debit!=0:
-                    tasa=selff.balance/selff.amount_currency if selff.amount_currency > 0 else selff.balance
+                    tasa= abs(selff.balance / selff.amount_currency ) if  abs(selff.amount_currency) > 0 else selff.balance
                     valor=tasa
             else:
                 lista_tasa = selff.env['res.currency.rate'].search([('currency_id', '=', self.env.company.currency_secundaria_id.id),('name','<=',selff.move_id.date)],order='id ASC')
