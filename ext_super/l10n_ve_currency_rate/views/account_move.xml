@@ -9,7 +9,7 @@
                 <xpath expr="//field[@name='journal_id']" position="after"> 
                     <field name="custom_rate"/>
                		<field name="os_currency_rate" attrs="{'readonly': [('custom_rate', '=', False)]}"/>
-                    <field name="move_aux_id"/>
+                    <field name="move_aux_id" invisible="1"/>
                </xpath>
             </field>
         </record>
