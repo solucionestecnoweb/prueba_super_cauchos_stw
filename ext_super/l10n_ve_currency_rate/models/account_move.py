@@ -39,7 +39,8 @@ class AccountMove(models.Model):
 
 
     def action_post(self):
-        ##self.corrige_tasa()
+        super().action_post()
+        self.corrige_tasa()
         #self.valida_monto_tasa()
         if self.custom_rate!=True:
             self.set_os_currency_rate()
@@ -47,7 +48,7 @@ class AccountMove(models.Model):
             if rate:
                 for tasa in rate:
                     self.os_currency_rate=1/tasa.rate
-        super().action_post()
+        
 
     def valida_monto_tasa(self):
         for det_line in self.line_ids:
