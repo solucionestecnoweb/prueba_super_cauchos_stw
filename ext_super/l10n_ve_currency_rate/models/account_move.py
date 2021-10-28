@@ -60,7 +60,6 @@ class AccountMove(models.Model):
             if item.payment_id:
                 if item.payment_id.rate > 0:
                     self.os_currency_rate = item.payment_id.rate
-)
 
     def actualizar_balance(self):
         for move in self:
