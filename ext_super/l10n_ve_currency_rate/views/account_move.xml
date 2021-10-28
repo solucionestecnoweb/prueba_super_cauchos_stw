@@ -9,7 +9,11 @@
                 <xpath expr="//field[@name='journal_id']" position="after"> 
                     <field name="custom_rate"/>
                		<field name="os_currency_rate" attrs="{'readonly': [('custom_rate', '=', False)]}"/>
+                    <field name="move_aux_id" invisible="1"/>
                </xpath>
+               <xpath expr="//button[@id='account_invoice_payment_btn']" position="after">
+                         <button name="corrige_tasa" string="Recalcular" type="object" />
+            </xpath>
             </field>
         </record>
     </data>
