@@ -17,12 +17,14 @@ class AccountMove(models.Model):
         self.move_aux_id=self.id
 
     
-    @api.onchange('os_currency_rate','line_ids','currency_id')
-    @api.depends('os_currency_rate','line_ids','currency_id')
+    @api.onchange('os_currency_rate','currency_id','line_ids')  #,'line_ids',
+    @api.depends('os_currency_rate','currency_id','line_ids')
     def corrige_tasa(self):
         #raise UserError(_("opcion %s")%self.custom_rate)
         if self.custom_rate==True:
+            ver=self.env['account.move.line'].search([('move_id','=',self.move_aux_id)])
             for det_line in self.line_ids:
+            #for det_line in ver:
                 if det_line.debit!=0:
                     det_line.debit=det_line.amount_currency*self.os_currency_rate
                 if det_line.credit!=0:
@@ -37,7 +39,8 @@ class AccountMove(models.Model):
 
 
     def action_post(self):
-        #self.corrige_tasa()
+        ##self.corrige_tasa()
+        #self.valida_monto_tasa()
         if self.custom_rate!=True:
             self.set_os_currency_rate()
             rate = self.env['res.currency.rate'].search([('currency_id', '=', self.currency_id.id),('name','=',self.invoice_date)], limit=1).sorted(lambda x: x.name)
@@ -46,6 +49,12 @@ class AccountMove(models.Model):
                     self.os_currency_rate=1/tasa.rate
         super().action_post()
 
+    def valida_monto_tasa(self):
+        for det_line in self.line_ids:
+            acom_credit=det_line.credit
+            acom_debit=det_line.debit
+        if abs(acom_debit)!=abs(acom_credit):
+            raise UserError(_("Existe un descuadre en el haber y en el debe"))
 
     
     """def _check_balanced(self):
