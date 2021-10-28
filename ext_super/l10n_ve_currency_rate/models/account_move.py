@@ -133,8 +133,7 @@ class AccountMove(models.Model):
         self.actualizar_balance()
 
     def actualizar_balance(self):
-        pass
-        """for item in self.line_ids:
+        for item in self.line_ids:
             tasa=self.os_currency_rate
             if item.amount_currency > 0:
                 if self.currency_id.id == self.company_id.currency_id.id:
@@ -157,4 +156,4 @@ class AccountMove(models.Model):
                         if item.payment_id.rate>0:
                             tasa=item.payment_id.rate
                     item.credit = (item.amount_currency * tasa) * (-1)
-                    item.credit_aux = (item.amount_currency) * (-1)"""
+                    item.credit_aux = (item.amount_currency) * (-1)
