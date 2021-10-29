@@ -12,13 +12,13 @@
                     <field name="fuel_type"/>
                 </xpath>
                 <xpath expr="//field[@name='liter']" position="replace">
-                    <field name="cistern_lts"/>
+                    <field name="cistern_lts" invisible="1"/>
                 </xpath>
                 <xpath expr="//field[@name='price_per_liter']" position="replace">
                     <field name="vehicle_consume"/>
                 </xpath>
                 <xpath expr="//field[@name='amount']" position="replace">
-                    <field name="cistern_lts_ava"/>
+                    <field name="cistern_lts_ava" invisible="1"/>
                 </xpath>
                 <xpath expr="//field[@name='vendor_id']" position="after">
                     <field name="lts_cistern"/>

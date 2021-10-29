@@ -53,8 +53,38 @@ class AccountMove(models.Model):
     def _constrains_custom_rate(self):
         self.actualizar_balance()
 
-    
-    @api.constrains('payment_id')
+    def actualizar_balance(self):
+        for move in self:
+            for item in move.line_ids:
+                tasa = move.os_currency_rate
+                if item.amount_currency > 0:
+                    if move.currency_id.id == move.company_id.currency_id.id:
+                        item.debit = item.amount_currency
+                        item.debit_aux = item.amount_currency / tasa
+                        ##item.amount_currency=item.amount_currency/tasa
+                    else:
+
+                        item.debit = item.amount_currency * tasa
+                        item.debit_aux = item.amount_currency
+                elif item.amount_currency < 0:
+                    if move.currency_id.id == move.company_id.currency_id.id:
+                        item.credit = (item.amount_currency) * (-1)
+                        item.credit_aux = (item.amount_currency / tasa) * (-1)
+                        ##item.amount_currency=(item.amount_currency/tasa)*(-1)
+                    else:
+                        item.credit = (item.amount_currency * tasa) * (-1)
+                        item.credit_aux = (item.amount_currency) * (-1)
+
+
+class AccountPayment(models.Model):
+    _inherit = "account.payment"
+
+    @api.constrains('move_id','state')
+    def _os_constrains_move_id_rate(self):
+        if len(self.move_line_ids) > 0:
+            self.move_line_ids[0].move_id.os_currency_rate = self.rate
+
+    """@api.constrains('payment_id')
     def _os_constrains_payment_id(self):
         for item in self.line_ids:
             if item.payment_id:
@@ -86,4 +116,4 @@ class AccountMove(models.Model):
                             if item.payment_id.rate>0:
                                 tasa=item.payment_id.rate
                         item.credit = (item.amount_currency * tasa) * (-1)
-                        item.credit_aux = (item.amount_currency) * (-1)
+                        item.credit_aux = (item.amount_currency) * (-1)"""
