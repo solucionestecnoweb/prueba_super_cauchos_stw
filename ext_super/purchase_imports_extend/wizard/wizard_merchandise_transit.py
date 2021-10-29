@@ -133,6 +133,7 @@ class WizardMerchandiseTransit(models.TransientModel):
                     ('state', 'in', ('draft', 'sent')),
                     ('product_id', '=', item.product_id.id),
                     ('is_transit_merch', '=', True),
+                    ('order_id.seller_id', '!=', False),
                 ])
                 for seller in xfind:
                     sellers.append(seller.order_id.seller_id.id)
