@@ -5,9 +5,8 @@ from datetime import datetime, date, timedelta
 import base64
 from io import StringIO
 from odoo import api, fields, models
-from odoo.exceptions import UserError, ValidationError
+from odoo.exceptions import UserError, ValidationError, Warning
 from odoo.tools.float_utils import float_round
-from odoo.exceptions import Warning
 
 import time
 
@@ -21,7 +20,7 @@ class FlotaCombustible(models.Model):
 
     fuel_type = fields.Selection(string='Tipo de Combustible', selection=[('gasolina', 'Gasolina'), ('gasoil', 'Gasoil')])
     cistern_lts = fields.Float(string='Litros Cisterna')
-    vehicle_consume = fields.Float(string='Consumo Vehículo')
+    vehicle_consume = fields.Float(string='Consumo Vehículo',default=0)
     cistern_lts_ava = fields.Float(string='Disponible Litros Cisterna')
     lts_cistern = fields.Float(string='Cisterna Litros')
 
@@ -38,51 +37,55 @@ class FlotaCombustible(models.Model):
         if self.fuel_type == 'gasolina':
             product_gas = self.env['product.template'].search([('name','=','GASOLINA')])
             gasolina = self.env['product.product'].search([('name','=','GASOLINA')])
-            # print("\n\n\n ==================> location_id:  {} \n\n\n".format(self.env['stock.picking.type'].search([('sequence_code','=','IN')])[0].default_location_src_id))
-            
-            note = "CONSUMO DE COMBUSTIBLE: {} | DESDE FLOTA POR EL VEHICULO: {} ".format(self.fuel_type.upper(), self.vehicle_id.name,)
-            transfer = self.env['stock.picking'].create({
-                'picking_type_id': self.env['stock.picking.type'].search([('sequence_code','=','OUT')])[0].id,
-                'location_id': self.env['stock.picking.type'].search([('sequence_code','=','OUT')])[0].default_location_src_id.id,
-                'location_dest_id' : self.env['stock.location'].search([('usage','=','production')])[0].id,
-                'partner_id' : self.env.company.id,
-                'note' : note
-                })
+            if not product_gas:
+                raise Warning('No existe un producto \'GASOLINA\', por favor añadalo a su inventario de esa misma manera.')
+            else:
+                # print("\n\n\n ==================> location_id:  {} \n\n\n".format(self.env['stock.quant'].search([('product_id','=',gasolina.id)], order='quantity desc')[0].location_id))
+                
+                note = "CONSUMO DE COMBUSTIBLE: {} | DESDE FLOTA POR EL VEHICULO: {} ".format(self.fuel_type.upper(), self.vehicle_id.name,)
+                transfer = self.env['stock.picking'].create({
+                    'picking_type_id': self.env['stock.picking.type'].search([('sequence_code','=','OUT')])[0].id,
+                    'location_id': self.env['stock.quant'].search([('product_id','=',gasolina.id),('location_id.usage','=','internal'),], order='quantity desc')[0].location_id.id,
+                    'location_dest_id' : self.env['stock.location'].search([('usage','=','customer')])[0].id,
+                    'partner_id' : self.env.company.id,
+                    'note' : note
+                    })
 
-            transfer['move_lines'] = [(0,0, {
-                'name' : note,
-                'quantity_done' : self.vehicle_consume,
-                'product_id' : gasolina.id,
-                "product_uom" : product_gas.uom_id.id,
-                "location_id" : self.env['stock.picking.type'].search([('sequence_code','=','OUT')])[0].default_location_src_id.id,
-                "location_dest_id" : self.env['stock.location'].search([('usage','=','production')])[0].id
-                })]
-            transfer.action_confirm()
-            transfer.button_validate()
+                transfer['move_lines'] = [(0,0, {
+                    'name' : note,
+                    'quantity_done' : self.vehicle_consume,
+                    'product_id' : gasolina.id,
+                    "product_uom" : product_gas.uom_id.id,
+                    "location_id" : self.env['stock.quant'].search([('product_id','=',gasolina.id),('location_id.usage','=','internal'),], order='quantity desc')[0].location_id.id,
+                    "location_dest_id" : self.env['stock.location'].search([('usage','=','customer')])[0].id
+                    })]
+                transfer.action_confirm()
+                transfer.button_validate()
         elif self.fuel_type == 'gasoil':
             product_die = self.env['product.template'].search([('name','=','GASOIL')])
             gasoil = self.env['product.product'].search([('name','=','GASOIL')])
-            # print("\n\n\n ==================> location_id:  {} \n\n\n".format(self.env['stock.picking.type'].search([('sequence_code','=','IN')])[0].default_location_src_id))
-            
-            note = "CONSUMO DE COMBUSTIBLE: {} | DESDE FLOTA POR EL VEHICULO: {} ".format(self.fuel_type.upper(), self.vehicle_id.name,)
-            transfer = self.env['stock.picking'].create({
-                'picking_type_id': self.env['stock.picking.type'].search([('sequence_code','=','OUT')])[0].id,
-                'location_id': self.env['stock.picking.type'].search([('sequence_code','=','OUT')])[0].default_location_src_id.id,
-                'location_dest_id' : self.env['stock.location'].search([('usage','=','production')])[0].id,
-                'partner_id' : self.env.company.id,
-                'note' : note
-                })
+            if not product_die:
+                raise Warning('No existe un producto \'GASOIL\', por favor añadalo a su inventario de esa misma manera.')
+            else:
+                note = "CONSUMO DE COMBUSTIBLE: {} | DESDE FLOTA POR EL VEHICULO: {} ".format(self.fuel_type.upper(), self.vehicle_id.name,)
+                transfer = self.env['stock.picking'].create({
+                    'picking_type_id': self.env['stock.picking.type'].search([('sequence_code','=','OUT')])[0].id,
+                    'location_id': self.env['stock.quant'].search([('product_id','=',gasoil.id),('location_id.usage','=','internal'),], order='quantity desc')[0].location_id.id,
+                    'location_dest_id' : self.env['stock.location'].search([('usage','=','customer')])[0].id,
+                    'partner_id' : self.env.company.id,
+                    'note' : note
+                    })
 
-            transfer['move_lines'] = [(0,0, {
-                'name' : note,
-                'quantity_done' : self.vehicle_consume,
-                'product_id' : gasoil.id,
-                "product_uom" : product_die.uom_id.id,
-                "location_id" : self.env['stock.picking.type'].search([('sequence_code','=','OUT')])[0].default_location_src_id.id,
-                "location_dest_id" : self.env['stock.location'].search([('usage','=','production')])[0].id
-                })]
-            transfer.action_confirm()
-            transfer.button_validate()
+                transfer['move_lines'] = [(0,0, {
+                    'name' : note,
+                    'quantity_done' : self.vehicle_consume,
+                    'product_id' : gasoil.id,
+                    "product_uom" : product_die.uom_id.id,
+                    "location_id" : self.env['stock.quant'].search([('product_id','=',gasoil.id),('location_id.usage','=','internal'),], order='quantity desc')[0].location_id.id,
+                    "location_dest_id" : self.env['stock.location'].search([('usage','=','customer')])[0].id
+                    })]
+                transfer.action_confirm()
+                transfer.button_validate()
 
 
 
@@ -104,16 +107,6 @@ class FlotaOrdenesEntrega(models.Model):
     fleet_assign = fields.Many2one('fleet.vehicle.log.assignment.control',string='Asignación de Flota', domain="[('status', '=', 'confirmed'), ('date_ini', '<=', scheduled_date), ('date_end', '>=', scheduled_date)]")
     fleet_driver_id = fields.Many2one('res.partner',string='Conductor', related='fleet_assign.driver_id')
     fleet_vehicle_id = fields.Many2one('fleet.vehicle',string='Vehiculo', related='fleet_assign.vehicle_id') 
-
-class StockMove(models.Model):
-    _inherit = 'stock.move'
-
-    quantity_done = fields.Float('Quantity Done', compute='_quantity_done_compute', digits='Stock Weight', inverse='_quantity_done_set')
-
-class StockMoveLine(models.Model):
-    _inherit = 'stock.move.line'
-
-    qty_done = fields.Float('Done', default=0.0, digits='Stock Weight', copy=False)
 
 
 class FlotaAsignaciones(models.Model):
