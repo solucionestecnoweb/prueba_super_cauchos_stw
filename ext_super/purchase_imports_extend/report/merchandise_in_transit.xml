@@ -94,7 +94,11 @@
                                             <span style="font-size:12px;"><t t-esc="item.super_promo"/></span>
                                         </td>
                                         <td class="text-center">
-                                            <span style="font-size:12px;"><t t-esc="item.c_apartada" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                            <span style="font-size:12px;">
+                                                <t t-foreach="item.amount_ids" t-as="line">
+                                                    <t t-esc="line.amount" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/><br/>
+                                                </t>
+                                            </span>
                                         </td>
                                         <td class="text-center">
                                             <span style="font-size:12px;">

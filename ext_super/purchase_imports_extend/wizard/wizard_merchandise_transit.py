@@ -32,6 +32,7 @@ class MerchandiseTransitTemp(models.Model):
     super_promo = fields.Char()
     c_apartada = fields.Float()
     seller_ids = fields.Many2many(comodel_name='res.partner')
+    amount_ids = fields.Many2many(comodel_name='seller.amount')
     c_disponible = fields.Float()
     moneda_id = fields.Many2one(comodel_name='res.currency')
     fecha_planeada = fields.Datetime()
@@ -53,7 +54,12 @@ class MerchandiseTransitTemp(models.Model):
     #     purchases.pronto_pago = self.pronto_pago
     #     purchases.super_promo = self.super_promo
     #     purchases.date_planned = self.fecha_planeada
-    
+
+class SellerAmount(models.TransientModel):
+    _name = 'seller.amount'
+
+    amount = fields.Float(string='amount')
+      
 class WizardMerchandiseTransit(models.TransientModel):
     _name = 'wizard.merchandise.transit'
 
@@ -88,11 +94,13 @@ class WizardMerchandiseTransit(models.TransientModel):
 
     def get_data(self):
         t = self.env['temp.merchandise.transit']
+        q = self.env['seller.amount']
         t.search([]).unlink()
         product = ''
         cantidad = 0
         cantidad_dis = 0
         sellers = []
+        amounts = []
         regs = len(self.get_merchandise())
         for item in self.get_merchandise().sorted(key= lambda x: x.product_id.id):
             regs -= 1
@@ -110,6 +118,7 @@ class WizardMerchandiseTransit(models.TransientModel):
                         'super_promo': super_promo,
                         'c_apartada': cantidad_apa,
                         'seller_ids': sellers,
+                        'amount_ids': amounts,
                         'c_disponible': (cantidad_dis - cantidad_apa),
                         'moneda_id': moneda,
                         'fecha_planeada': fecha_plan,
@@ -118,6 +127,7 @@ class WizardMerchandiseTransit(models.TransientModel):
                     cantidad = 0
                     cantidad_dis = 0
                     sellers = []
+                    amounts = []
                 orden = item.order_id.id
                 unidades = item.product_uom.id
                 pr = item.pr
@@ -137,6 +147,10 @@ class WizardMerchandiseTransit(models.TransientModel):
                 ])
                 for seller in xfind:
                     sellers.append(seller.order_id.seller_id.id)
+                    val = {
+                        'amount': seller.product_uom_qty
+                    }
+                    amounts.append(q.create(val).id)
             
             cantidad += item.product_qty
             cantidad_dis += item.product_qty
@@ -154,6 +168,7 @@ class WizardMerchandiseTransit(models.TransientModel):
                     'super_promo': item.super_promo,
                     'c_apartada': item.apart_to_seller,
                     'seller_ids': sellers,
+                    'amount_ids': amounts,
                     'c_disponible': cantidad_dis,
                     'moneda_id': item.currency_id.id,
                     'fecha_planeada': item.date_planned,
