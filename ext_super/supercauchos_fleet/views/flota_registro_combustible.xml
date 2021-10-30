@@ -21,7 +21,6 @@
                     <field name="cistern_lts_ava" invisible="1"/>
                 </xpath>
                 <xpath expr="//field[@name='vendor_id']" position="after">
-                    <field name="lts_cistern"/>
                     <field name="price_per_liter"/>
                     <field name="amount"/>                    
                 </xpath>
@@ -47,7 +46,6 @@
                 </xpath>
                 <xpath expr="//field[@name='amount']" position="replace">
                     <field name="cistern_lts_ava"/>
-                    <field name="lts_cistern"/>
                     <field name="amount"/>                    
                 </xpath>
 
