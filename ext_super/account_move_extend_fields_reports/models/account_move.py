@@ -41,7 +41,7 @@ class AccountMoveExtend(models.Model):
 		return {'type': 'ir.actions.report','report_name': 'account_move_extend_fields_reports.account_move_invoice_extend_multirepuestos_bs','report_type':"qweb-pdf"}
 	
 	def invoice_half_bs(self):
-		return {'type': 'ir.actions.report','report_name': 'account_move_extend_fields_reports.account_move_invoice_extend_supercauchos_bs','report_type':"qweb-pdf"}
+    		return {'type': 'ir.actions.report','report_name': 'account_move_extend_fields_reports.account_move_invoice_extend_supercauchos_bs','report_type':"qweb-pdf"}
 
 	def invoice_letter_usd(self):
 		return {'type': 'ir.actions.report','report_name': 'account_move_extend_fields_reports.account_move_invoice_extend_multirepuestos_usd','report_type':"qweb-pdf"}
