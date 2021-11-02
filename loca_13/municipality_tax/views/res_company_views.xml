@@ -11,11 +11,6 @@
                     <field name="nit"/>
                     <field name="econ_act_license"/>
                     <field name="nifg"/>
-                    <field name="muni_wh_agent"/>
-                    <field name="purchase_jrl_id"/>
-                    <field name="sale_jrl_id"/>
-                    <field name="account_ret_muni_receivable_id"/>
-                    <field name="account_ret_muni_payable_id"/>
                 </group>
             </xpath>
         </field>

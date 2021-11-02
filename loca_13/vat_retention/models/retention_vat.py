@@ -499,20 +499,19 @@ class RetentionVat(models.Model):
             signed_amount_total=(-1*amont_totall)
 
         if self.type=="out_invoice" or self.type=="out_refund" or self.type=="out_receipt":
-            id_journal=self.company_id.ret_jrl_id.id
-            rate_valor=self.company_id.vat_retention_rate
+            id_journal=self.partner_id.ret_jrl_id.id
+            rate_valor=self.partner_id.vat_retention_rate
         if self.type=="in_invoice" or self.type=="in_refund" or self.type=="in_receipt":
             if self.env.company.confg_ret_proveedores=="c":#loca14
-                id_journal=self.env.company.ret_jrl_id.id#loca14
-                rate_valor=self.env.company.vat_retention_rate#loca14
+                id_journal=self.env.company.partner_id.ret_jrl_id.id#loca14
+                rate_valor=self.env.company.partner_id.vat_retention_rate#loca14
             if self.env.company.confg_ret_proveedores=="p":#loca14
-                id_journal=self.company_id.ret_jrl_id.id
-                rate_valor=self.company_id.vat_retention_rate
+                id_journal=self.partner_id.ret_jrl_id.id
+                rate_valor=self.partner_id.vat_retention_rate
         #raise UserError(_('papa = %s')%signed_amount_total)
         value = {
             'name': name,
             'date': self.move_id.date,#listo
-            #'amount_total':self.vat_retentioned,# LISTO
             'partner_id': self.partner_id.id, #LISTO
             'journal_id':id_journal,
             'ref': "Retención del %s %% IVA de la Factura %s" % (rate_valor,self.move_id.name),
@@ -521,11 +520,17 @@ class RetentionVat(models.Model):
             'type': "entry",# estte campo es el que te deja cambiar y almacenar valores
             'vat_ret_id': self.id,
             'company_id':self.env.company.id,#loca14
+            #'amount_total':self.move_id.amount_tax,  #self.vat_retentioned,# LISTO
             #'currency_id':self.invoice_id.currency_id.id,
         }
         #raise UserError(_('value= %s')%value)
         move_obj = self.env['account.move']
-        move_id = move_obj.create(value)    
+        move_id = move_obj.create(value)  
+        self.env['account.move'].search([('id','=',move_id.id)]).write({
+            'custom_rate':self.invoice_id.custom_rate,
+            'currency_id':self.invoice_id.currency_id.id,
+            'os_currency_rate':self.move_id.os_currency_rate, # para el modulo de jose gregorio de moneda
+            })
         #raise UserError(_('move_id= %s')%move_id) 
         return move_id
 
@@ -536,24 +541,24 @@ class RetentionVat(models.Model):
         #raise UserError(_('valores = %s')%valores)
         cero = 0.0
         if self.type=="out_invoice" or self.type=="out_refund" or self.type=="out_receipt":
-            cuenta_ret_cliente=self.company_id.account_ret_receivable_id.id# cuenta retencion cliente
-            cuenta_ret_proveedor=self.company_id.account_ret_payable_id.id#cuenta retencion proveedores
+            cuenta_ret_cliente=self.partner_id.account_ret_receivable_id.id# cuenta retencion cliente
+            cuenta_ret_proveedor=self.partner_id.account_ret_payable_id.id#cuenta retencion proveedores
             cuenta_clien_cobrar=self.partner_id.property_account_receivable_id.id
             cuenta_prove_pagar = self.partner_id.property_account_payable_id.id
-            rate_valor=self.company_id.vat_retention_rate
+            rate_valor=self.partner_id.vat_retention_rate
         if self.type=="in_invoice" or self.type=="in_refund" or self.type=="in_receipt":
             if self.env.company.confg_ret_proveedores=="c":#loca14
-                cuenta_ret_cliente=self.env.company.company_id.account_ret_receivable_id.id# loca14 cuenta retencion cliente
-                cuenta_ret_proveedor=self.env.company.company_id.account_ret_payable_id.id# loca14 cuenta retencion proveedores
+                cuenta_ret_cliente=self.env.company.partner_id.account_ret_receivable_id.id# loca14 cuenta retencion cliente
+                cuenta_ret_proveedor=self.env.company.partner_id.account_ret_payable_id.id# loca14 cuenta retencion proveedores
                 cuenta_clien_cobrar=self.env.company.partner_id.property_account_receivable_id.id #loca14
                 cuenta_prove_pagar = self.env.company.partner_id.property_account_payable_id.id #loca14
                 rate_valor=self.env.company.partner_id.vat_retention_rate #loca14
             if self.env.company.confg_ret_proveedores=="p": #loca14
-                cuenta_ret_cliente=self.company_id.account_ret_receivable_id.id# cuenta retencion cliente
-                cuenta_ret_proveedor=self.company_id.account_ret_payable_id.id#cuenta retencion proveedores
+                cuenta_ret_cliente=self.partner_id.account_ret_receivable_id.id# cuenta retencion cliente
+                cuenta_ret_proveedor=self.partner_id.account_ret_payable_id.id#cuenta retencion proveedores
                 cuenta_clien_cobrar=self.partner_id.property_account_receivable_id.id
                 cuenta_prove_pagar = self.partner_id.property_account_payable_id.id
-                rate_valor=self.company_id.vat_retention_rate
+                rate_valor=self.partner_id.vat_retention_rate
 
         tipo_empresa=self.move_id.type
         #raise UserError(_('papa = %s')%tipo_empresa)
@@ -580,8 +585,8 @@ class RetentionVat(models.Model):
              'date': self.move_id.date,
              'partner_id': self.partner_id.id,
              'account_id': cuenta_haber,
-             #'currency_id':self.invoice_id.currency_id.id,
-             #'amount_currency': 0.0,
+             #'currency_id':self.invoice_id.currency_id.id if self.invoice_id.currency_id.id==self.env.company.currency_secundaria_id.id else 0,
+             #'amount_currency': -1*self.invoice_id.amount_tax if self.invoice_id.currency_id.id==self.env.company.currency_secundaria_id.id else 0.0,
              #'date_maturity': False,
              'credit': valores,
              'debit': 0.0, # aqi va cero   EL DEBITO CUNDO TIENE VALOR, ES QUE EN ACCOUNT_MOVE TOMA UN VALOR
@@ -597,6 +602,8 @@ class RetentionVat(models.Model):
 
         balances=valores-cero
         value['account_id'] = cuenta_debe
+        #value['currency_id'] = self.invoice_id.currency_id.id if self.invoice_id.currency_id.id==self.env.company.currency_secundaria_id.id else 0
+        #value['amount_currency'] = self.invoice_id.amount_tax if self.invoice_id.currency_id.id==self.env.company.currency_secundaria_id.id else 0.0
         value['credit'] = 0.0 # aqui va cero
         value['debit'] = valores
         value['balance'] = valores
@@ -605,6 +612,16 @@ class RetentionVat(models.Model):
         value['price_total'] = balances
 
         move_line_id2 = move_line_obj.create(value)
+
+        if self.invoice_id.currency_id.id==self.env.company.currency_secundaria_id.id:
+            self.env['account.move.line'].search([('id','=',move_line_id1.id)]).write({
+                #'amount_currency':-1*self.invoice_id.amount_tax if self.invoice_id.currency_id.id==self.env.company.currency_secundaria_id.id else 0.0,
+                'currency_id':self.invoice_id.currency_id.id,
+                })
+            self.env['account.move.line'].search([('id','=',move_line_id2.id)]).write({
+                #'amount_currency':self.invoice_id.amount_tax if self.invoice_id.currency_id.id==self.env.company.currency_secundaria_id.id else 0.0,
+                'currency_id':self.invoice_id.currency_id.id,
+                })
 
     def concilio_saldo_pendiente(self):
         id_retention=self.id
