@@ -21,6 +21,8 @@ class AccountMove(models.Model):
     monto_anticipo = fields.Monetary(string='Anticipo Disponible', compute='_compute_monto')
     payment_ids = fields.Many2many('account.payment', string='Anticipos')
     usar_anticipo = fields.Boolean(defaul=False)
+    es_igtf = fields.Boolean(default=False)
+    payment_origen_igtf_id = fields.Many2one('account.payment', string='Pogo origen para el igtf.')
 
     #rel_field = fields.Char(string='Name', related='payment_id.amount')
 
