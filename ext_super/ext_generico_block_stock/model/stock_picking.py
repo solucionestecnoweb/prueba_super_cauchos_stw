@@ -35,7 +35,8 @@ class SaleOrder(models.Model):
                         else:
                             raise UserError(_("La cantidad a transferir no debe ser cero"))
                     else:
-                        raise UserError(_("La cantidad a transferir del producto %s no puede ser mayor al stock actual del almacen de origen")%det.product_id.name)
+                        pass
+                        #raise UserError(_("La cantidad a transferir del producto %s no puede ser mayor al stock actual del almacen de origen")%det.product_id.name)
                 else:
                     raise UserError(_("El producto %s no puede ser movido con stock cero del almacen de origen")%det.product_id.name)
 
@@ -50,6 +51,7 @@ class SaleOrder(models.Model):
                         else:
                             raise UserError(_("La cantidad a transferir no debe ser cero %s")%det.stock)
                     else:
-                        raise UserError(_("La cantidad a transferir del producto %s no puede ser mayor al stock actual del almacen de origen")%det.product_id.name)
+                        pass
+                        #raise UserError(_("La cantidad a transferir del producto %s no puede ser mayor al stock actual del almacen de origen")%det.product_id.name)
                 else:
                     raise UserError(_("El producto %s no puede ser movido con stock cero del almacen de origen")%det.product_id.name)
