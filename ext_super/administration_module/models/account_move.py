@@ -48,8 +48,8 @@ class AccountMoveInvoicePayment(models.Model):
             item.amount_payed = 0
             item.amount_payed_usd = 0
 
-            if item.date and item.exp_date_today:
-                days = (item.exp_date_today - item.date)
+            if item.date_maturity and item.exp_date_today:
+                days = (item.exp_date_today - item.date_maturity)
                 if days.days >= 0 and days.days <=30:
                     item.delay_1_30 = item.amount_residual
                 elif days.days >= 31 and days.days <=60:
@@ -69,3 +69,13 @@ class AccountMoveInvoicePayment(models.Model):
                     item.amount_payed_usd = item.move_id.amount_total - item.move_id.amount_residual
                 item.delay_total = item.delay_1_30 + item.delay_31_60 + item.delay_61_90 + item.delay_91_120 + item.delay_older
                 item.delay_total_usd = item.delay_total / item.rate
+            else:
+                if item.move_id.currency_id.id == 3:
+                    item.amount_payed = item.move_id.amount_total - item.move_id.amount_residual
+                    item.amount_payed_usd = (item.move_id.amount_total - item.move_id.amount_residual) / item.rate
+                else:
+                    item.amount_payed = (item.move_id.amount_total - item.move_id.amount_residual) * item.rate
+                    item.amount_payed_usd = item.move_id.amount_total - item.move_id.amount_residual
+                item.delay_total = item.amount_residual
+                item.delay_total_usd = item.delay_total / item.rate
+

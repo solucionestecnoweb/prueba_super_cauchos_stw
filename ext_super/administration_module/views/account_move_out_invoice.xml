@@ -8,11 +8,12 @@
         <field name="arch" type="xml">
             <tree>
                 <field name="move_id"/>
+                <field name="nro_doc"/>
                 <field name="date"/>
                 <field name="date_maturity" optional="hide"/>
                 <field name="journal_id"/>
                 <field name="account_id"/>
-                <field name="exp_date_today"/>
+                <field name="date_maturity"/>
                 <field name="delay_1_30"/>
                 <field name="delay_31_60"/>
                 <field name="delay_61_90"/>
