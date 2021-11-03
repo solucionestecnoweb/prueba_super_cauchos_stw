@@ -260,7 +260,7 @@
             model="account.move" 
             string="Factura Forma Libre/ME Bs." 
             report_type="qweb-pdf"
-            paperformat="account_move_extend_fields_reports.paperformat_matrix"
+            paperformat="account_move_extend_fields_reports.paperformat_agroruedas"
             name="account_move_extend_fields_reports.account_move_invoice_extend_matrix_bs" 
             file="account_move_extend_fields_reports.account_move_invoice_extend_matrix_bs" 
             menu="False" 

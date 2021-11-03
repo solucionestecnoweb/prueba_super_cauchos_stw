@@ -2,7 +2,7 @@
 <odoo>
     <data >
         <!-- Formato Agroruedas -->
-        <record id="paperformat_matrix" model="report.paperformat">
+        <record id="paperformat_agroruedas" model="report.paperformat">
             <field name="name">Carta Extendida</field>
             <!-- <field name="default" eval="True"/> -->
             <field name="format">custom</field>
