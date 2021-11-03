@@ -1,0 +1,16 @@
+<odoo>
+  <data>
+
+    <record id="account_move_line_inerhit_apunt_conta" model="ir.ui.view">
+        <field name="name">account.move.line.inerhit.apunt.cont</field>
+        <field name="model">account.move.line</field>
+        <field name="inherit_id" ref="account.view_move_line_tree"/>
+        <field name="arch" type="xml">
+           <xpath expr="//field[@name='account_id']" position="before">  
+                <field name="nro_comprobante" sum="Nro Documento"/>
+            </xpath>
+        </field>
+    </record>
+
+  </data>
+</odoo>
