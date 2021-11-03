@@ -420,7 +420,7 @@
 
 
 <!-- Report action -->
-    <!-- <report
+    <report
             id="action_vat_report"
             string="Comprobante de ISLR"
             model="isrl.retention"
@@ -428,7 +428,7 @@
             name="isrl_retention.template_vat_isrl_voucher"
             file="isrl_retention.template_vat_isrl_voucher"
             paperformat="isrl_retention.paperformat_isrl_retention"
-            />
+            /><!--paperformat="isrl_retention.paperformat_isrl_retention"-->
     <report
             id="action_report_arc"
             string="ARC "
@@ -437,7 +437,7 @@
             name="isrl_retention.report_arc"
             file="isrl_retention.report_arc"
             paperformat="isrl_retention.paperformat_isrl_arc"
-            /> -->
+            /><!-- paperformat="isrl_retention.paperformat_isrl_arc" -->
 
 
 </odoo>

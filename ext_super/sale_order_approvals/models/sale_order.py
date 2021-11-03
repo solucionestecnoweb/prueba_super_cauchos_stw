@@ -10,8 +10,7 @@ class SaleOrderApproval(models.Model):
 
     is_approved = fields.Boolean(default=False)
     approver_ids = fields.Many2many(comodel_name='res.users', string='Approvers')
-    pay_condition = fields.Char(string='Pay Condition', related='payment_condition_id.name')
-
+    
     def _action_confirm(self):
         if not self.order_line:
             raise UserError(_("No puede enviar una orden de venta sin lineas de pedidos. Por favor agregue lineas a la orden"))

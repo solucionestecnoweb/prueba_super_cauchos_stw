@@ -71,7 +71,7 @@ class PurchasePayOrder(models.Model):
 
     @api.constrains('state')
     def _compute_name(self):
-        if self.name == '/':
+        if self.name == '/' and self.state == 'confirmed':
             self.name = self.env['ir.sequence'].next_by_code('purchase.pay.orders.sequence')
     
     def reset_draft(self):

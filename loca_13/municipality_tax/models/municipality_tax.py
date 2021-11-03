@@ -332,12 +332,12 @@ class MUnicipalityTax(models.Model):
             signed_amount_total=-1*self.amount #(-1*self.conv_div_extranjera(self.amount))
 
         if self.type=="out_invoice" or self.type=="out_refund" or self.type=="out_receipt":
-            id_journal=self.company_id.purchase_jrl_id.id
+            id_journal=self.partner_id.purchase_jrl_id.id
         if self.type=="in_invoice" or self.type=="in_refund" or self.type=="in_receipt":
             if self.env.company.confg_ret_proveedores=="c":#loca14
-                id_journal=self.env.company.purchase_jrl_id.id#loca14
+                id_journal=self.env.company.partner_id.purchase_jrl_id.id#loca14
             if self.env.company.confg_ret_proveedores=="p":#loca14
-                id_journal=self.company_id.purchase_jrl_id.id
+                id_journal=self.partner_id.purchase_jrl_id.id
 
         value = {
             'name': name,
@@ -362,22 +362,22 @@ class MUnicipalityTax(models.Model):
         valores = self.amount #self.conv_div_extranjera(self.amount) #VALIDAR CONDICION
         cero = 0.0
         if self.type=="out_invoice" or self.type=="out_refund" or self.type=="out_receipt":
-            cuenta_ret_cliente=self.company_id.account_ret_muni_receivable_id.id# cuenta retencion cliente
-            cuenta_ret_proveedor=self.company_id.account_ret_muni_payable_id.id#cuenta retencion proveedores
-            cuenta_clien_cobrar=self.company_id.partner_id.property_account_receivable_id.id
-            cuenta_prove_pagar = self.company_id.partner_id.property_account_payable_id.id
+            cuenta_ret_cliente=self.partner_id.account_ret_muni_receivable_id.id# cuenta retencion cliente
+            cuenta_ret_proveedor=self.partner_id.account_ret_muni_payable_id.id#cuenta retencion proveedores
+            cuenta_clien_cobrar=self.partner_id.property_account_receivable_id.id
+            cuenta_prove_pagar = self.partner_id.property_account_payable_id.id
 
         if self.type=="in_invoice" or self.type=="in_refund" or self.type=="in_receipt":
             if self.env.company.confg_ret_proveedores=="c":#loca14
-                cuenta_ret_cliente=self.env.company.account_ret_muni_receivable_id.id#loca14 cuenta retencion cliente
-                cuenta_ret_proveedor=self.env.company.account_ret_muni_payable_id.id#loca14cuenta retencion proveedores
-                cuenta_clien_cobrar=self.company_id.partner_id.property_account_receivable_id.id #loca14
-                cuenta_prove_pagar = self.company_id.partner_id.property_account_payable_id.id #loca14
+                cuenta_ret_cliente=self.env.company.partner_id.account_ret_muni_receivable_id.id#loca14 cuenta retencion cliente
+                cuenta_ret_proveedor=self.env.company.partner_id.account_ret_muni_payable_id.id#loca14cuenta retencion proveedores
+                cuenta_clien_cobrar=self.env.company.partner_id.property_account_receivable_id.id #loca14
+                cuenta_prove_pagar = self.env.company.partner_id.property_account_payable_id.id #loca14
             if self.env.company.confg_ret_proveedores=="p": #loca14
-                cuenta_ret_cliente=self.company_id.account_ret_muni_receivable_id.id# cuenta retencion cliente
-                cuenta_ret_proveedor=self.company_id.account_ret_muni_payable_id.id#cuenta retencion proveedores
-                cuenta_clien_cobrar=self.company_id.partner_id.property_account_receivable_id.id
-                cuenta_prove_pagar = self.company_id.partner_id.property_account_payable_id.id
+                cuenta_ret_cliente=self.partner_id.account_ret_muni_receivable_id.id# cuenta retencion cliente
+                cuenta_ret_proveedor=self.partner_id.account_ret_muni_payable_id.id#cuenta retencion proveedores
+                cuenta_clien_cobrar=self.partner_id.property_account_receivable_id.id
+                cuenta_prove_pagar = self.partner_id.property_account_payable_id.id
 
         tipo_empresa=self.type
         #raise UserError(_('darrell = %s')%tipo_empresa)
@@ -438,7 +438,6 @@ class MUnicipalityTax(models.Model):
 
 
     def get_name(self):
-        
         '''metodo que crea el Nombre del asiento contable si la secuencia no esta creada, crea una con el
         nombre: 'l10n_ve_cuenta_retencion_iva'''
 

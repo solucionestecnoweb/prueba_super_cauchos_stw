@@ -27,7 +27,7 @@
                             <b style="font-size:16px;">Pedido ME <t t-esc="o.name"/></b><br/>
                             <span style="font-size:12px;">Emisión: <t t-esc="o.date_order"/></span><br/>
                             <span style="font-size:12px;">Vencimiento: <t t-esc="o.validity_date"/></span><br/>
-                            <span style="font-size:12px;">Vendedor: <t t-esc="o.seller_id.name"/></span><br/>
+                            <span style="font-size:12px;">Vendedor: <t t-esc="o.user_id.name"/></span><br/>
                             <span style="font-size:12px;">Cond. de Pago: <t t-esc="o.payment_condition_id.name"/></span>                                
                         </div>
                     </div>

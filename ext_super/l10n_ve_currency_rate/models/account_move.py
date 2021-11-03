@@ -9,7 +9,7 @@ from odoo.exceptions import UserError, ValidationError
 class AccountMove(models.Model):
     _inherit = "account.move"
     
-    os_currency_rate = fields.Float(string='Tipo de Cambio', default=1 ,digits=(12, 2))
+    os_currency_rate = fields.Float(string='Tipo de Cambio', default=1 ,digits=(12, 4))
     custom_rate = fields.Boolean(string='¿Usar Tasa de Cambio Personalizada?')
     move_aux_id=fields.Integer(compute='_compute_move_id')
 

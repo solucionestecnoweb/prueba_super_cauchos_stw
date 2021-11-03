@@ -15,8 +15,7 @@
                     <field name="is_approved" invisible="1"/>
                 </xpath>
                 <xpath expr="//field[@name='arrive_date']" position="after">
-                    <field name="pay_condition" invisible="1"/>
-                    <field name="approver_ids" widget="many2many_tags" attrs="{'required': [('pay_condition', 'not in', ('Contado', 'CONTADO', 'contado'))]}"/>
+                    <field name="approver_ids" widget="many2many_tags" required="1"/>
                 </xpath>
             </field>
         </record>

@@ -22,8 +22,8 @@
                             <b style="font-size:12px;">R.I.F: <t t-esc="o.rif"/></b><br/>
                             <b style="font-size:12px;">Dirección: <t t-esc="o.partner_id.city"/> <t t-esc="o.partner_id.state_id.name"/></b><br/>
                             <b style="font-size:12px;">Teléfono: <t t-esc="o.partner_id.phone"/></b><br/>
-                            <b style="font-size:12px;">Vendedor: <t t-esc="o.seller_id.name"/></b><br/>
-                            <b style="font-size:12px;">Teléfono: <t t-esc="o.seller_id.phone"/></b><br/>
+                            <b style="font-size:12px;">Vendedor: <t t-esc="o.user_id.name"/></b><br/>
+                            <b style="font-size:12px;">Teléfono: <t t-esc="o.user_id.phone"/></b><br/>
                         </div>
                         <div class="col-2">
                         </div>
