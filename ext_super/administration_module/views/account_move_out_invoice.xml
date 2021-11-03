@@ -49,8 +49,6 @@
         <field name="domain">[
         ('display_type', 'not in', ('line_section', 'line_note')), 
         ('move_id.state', '=', 'posted'), 
-        ('move_id.type', 'in', ('out_invoice', 'entry')), 
-        ('move_id.journal_id.type', 'in', ('bank', 'sale')), 
         ('amount_residual', '!=', 0), 
         ('account_id.internal_type', '=', 'receivable'),
         ('full_reconcile_id', '=', False), 
