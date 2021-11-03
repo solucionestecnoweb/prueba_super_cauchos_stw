@@ -28,6 +28,24 @@
         </field>
     </record>
 
+    <record id="vat_retention_company_view" model="ir.ui.view">
+        <field name="name">vat_retention_company_view</field>
+        <field name="model">res.company</field>
+        <field name="inherit_id" ref="base.view_company_form"/>
+        <field name="arch" type="xml">
+            <field name="parent_id" position="after">
+                <group string="Agente ISLR.">
+                    <field name="ret_agent_isrl" string="Agente de Retención ISLR"/>
+                    <field name="sale_isrl_id"  attrs="{'readonly': [('ret_agent_isrl', '=', False)]}" />
+                    <field name="account_isrl_receivable_id" attrs="{'readonly': [('ret_agent_isrl', '=', False)]}" string="Cuenta ISLR Retencion a Cobrar (Clientes)"/>
+                    <field name="account_isrl_payable_id" attrs="{'readonly': [('ret_agent_isrl', '=', False)]}" string="Cuenta ISLR Retencion a Pagar (Proveedores)"/>   
+                </group>
+
+            </field>
+        </field>
+    </record>
+
+
 
 
 </odoo>

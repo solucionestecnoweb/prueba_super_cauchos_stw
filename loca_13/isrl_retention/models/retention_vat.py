@@ -105,7 +105,7 @@ class RetentionVat(models.Model):
         customer = ('out_invoice','out_refund','out_receipt')
         vendor   = ('in_invoice','in_refund','in_receipt')
         #name_asiento = self.env['ir.sequence'].next_by_code('purchase.isrl.retention.account')
-        if self.invoice_id.company_id.partner_id.sale_isrl_id.id:
+        if self.invoice_id.company_id.sale_isrl_id.id:
 
             self.state =  'done' 
             if self.invoice_id.type in vendor:
@@ -171,11 +171,11 @@ class RetentionVat(models.Model):
             signed_amount_total=-1*self.total_ret() #self.conv_div_extranjera(self.total_ret()) #(-1*self.vat_retentioned)
 
         if self.invoice_id.type=="out_invoice" or self.invoice_id.type=="out_refund" or self.invoice_id.type=="out_receipt":
-            id_journal=self.partner_id.sale_isrl_id.id
+            id_journal=self.company_id.sale_isrl_id.id
             name_retenido=self.invoice_id.company_id.partner_id.name
             #rate_valor=self.partner_id.vat_retention_rate
         if self.invoice_id.type=="in_invoice" or self.invoice_id.type=="in_refund" or self.invoice_id.type=="in_receipt":
-            id_journal=self.invoice_id.company_id.partner_id.sale_isrl_id.id
+            id_journal=self.invoice_id.company_id.sale_isrl_id.id
             name_retenido=self.partner_id.name            
             #rate_valor=self.company_id.partner_id.vat_retention_rate
         #raise UserError(_('papa = %s')%signed_amount_total)
@@ -193,12 +193,7 @@ class RetentionVat(models.Model):
         }
         #raise UserError(_('value= %s')%value)
         move_obj = self.env['account.move']
-        move_id = move_obj.create(value)  
-        self.env['account.move'].search([('id','=',move_id.id)]).write({
-            'custom_rate':self.invoice_id.custom_rate,
-            'currency_id':self.invoice_id.currency_id.id,
-            'os_currency_rate':self.invoice_id.os_currency_rate, # para el modulo de jose gregorio de moneda
-            })  
+        move_id = move_obj.create(value)    
         #raise UserError(_('move_id= %s')%move_id) 
         return move_id
 
@@ -209,15 +204,15 @@ class RetentionVat(models.Model):
         cero = 0.0
         #raise UserError(_('valores = %s')%valores)
         if self.invoice_id.type=="out_invoice" or self.invoice_id.type=="out_refund" or self.invoice_id.type=="out_receipt":
-            cuenta_ret_cliente=self.partner_id.account_isrl_receivable_id.id# cuenta retencion cliente
-            cuenta_ret_proveedor=self.partner_id.account_isrl_payable_id.id#cuenta retencion proveedores
+            cuenta_ret_cliente=self.company_id.account_isrl_receivable_id.id# cuenta retencion cliente
+            cuenta_ret_proveedor=self.company_id.account_isrl_payable_id.id#cuenta retencion proveedores
             cuenta_clien_cobrar=self.partner_id.property_account_receivable_id.id
             cuenta_prove_pagar = self.partner_id.property_account_payable_id.id
             name_retenido=self.invoice_id.company_id.partner_id.name
             #rate_valor=self.partner_id.vat_retention_rate
         if self.type=="in_invoice" or self.type=="in_refund" or self.type=="in_receipt":
-            cuenta_ret_cliente=self.invoice_id.company_id.partner_id.account_isrl_receivable_id.id# cuenta retencion cliente
-            cuenta_ret_proveedor=self.invoice_id.company_id.partner_id.account_isrl_payable_id.id#cuenta retencion proveedores
+            cuenta_ret_cliente=self.invoice_id.company_id.account_isrl_receivable_id.id# cuenta retencion cliente
+            cuenta_ret_proveedor=self.invoice_id.company_id.account_isrl_payable_id.id#cuenta retencion proveedores
             cuenta_clien_cobrar=self.invoice_id.company_id.partner_id.property_account_receivable_id.id
             cuenta_prove_pagar = self.invoice_id.company_id.partner_id.property_account_payable_id.id
             name_retenido=self.partner_id.name
@@ -281,17 +276,6 @@ class RetentionVat(models.Model):
         value['price_total'] = balances
 
         move_line_id2 = move_line_obj.create(value)
-
-        if self.invoice_id.currency_id.id==self.env.company.currency_secundaria_id.id:
-            self.env['account.move.line'].search([('id','=',move_line_id1.id)]).write({
-                #'amount_currency':-1*self.invoice_id.amount_tax if self.invoice_id.currency_id.id==self.env.company.currency_secundaria_id.id else 0.0,
-                'currency_id':self.invoice_id.currency_id.id,
-                })
-            self.env['account.move.line'].search([('id','=',move_line_id2.id)]).write({
-                #'amount_currency':self.invoice_id.amount_tax if self.invoice_id.currency_id.id==self.env.company.currency_secundaria_id.id else 0.0,
-                'currency_id':self.invoice_id.currency_id.id,
-                })
-
     
     def formato_fecha2(self,date):
         fecha = str(date)
