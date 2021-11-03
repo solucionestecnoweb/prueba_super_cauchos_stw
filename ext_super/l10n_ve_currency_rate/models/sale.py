@@ -12,7 +12,7 @@ from odoo.tools.misc import formatLang, get_lang
 class SaleOrder(models.Model):
     _inherit = 'sale.order'
 
-    rate = fields.Float(string='Tasa', default=1 ,digits=(12, 2))
+    rate = fields.Float(string='Tasa', default=lambda x: x.env['res.currency.rate'].search([('name', '<=', fields.Date.today()), ('currency_id', '=', 2)], limit=1).sell_rate ,digits=(12, 2))
 
     def _create_invoices(self, grouped=False, final=False):
         invoice = super(SaleOrder, self)._create_invoices(grouped, final)

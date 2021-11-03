@@ -41,15 +41,16 @@ class WizardOutInvoice(models.TransientModel):
                 ('partner_id', 'in', self.partner_ids.ids),
                 ('display_type', 'not in', ('line_section', 'line_note')),
                 ('move_id.state', '!=', 'cancel'),
-                ('move_id.invoice_payment_state', '!=', 'paid'),
-                ('move_id.type', 'in', ('out_invoice', 'entry')),
-                ('move_id.journal_id.type', 'in', ('bank', 'sale')),
+                # ('move_id.invoice_payment_state', '!=', 'paid'),
+                # ('move_id.type', 'in', ('out_invoice', 'entry')),
+                # ('move_id.journal_id.type', 'in', ('bank', 'sale')),
                 ('move_id.state', '=', 'posted'),
                 ('amount_residual', '!=', 0),
                 ('full_reconcile_id', '=', False),
                 ('balance', '!=', 0),
                 ('account_id.reconcile', '=', True),
                 ('account_id.internal_type', '=', 'receivable'),
+                # ('account_id.user_type_id.type', '=', 'receivable'),
             ])
         else:
             xfind = self.env['account.move.line'].search([
@@ -57,9 +58,9 @@ class WizardOutInvoice(models.TransientModel):
                 ('date','<=',self.date_to),
                 ('display_type', 'not in', ('line_section', 'line_note')),
                 ('move_id.state', '!=', 'cancel'),
-                ('move_id.invoice_payment_state', '!=', 'paid'),
-                ('move_id.type', 'in', ('out_invoice', 'entry')),
-                ('move_id.journal_id.type', 'in', ('bank', 'sale')),
+                # ('move_id.invoice_payment_state', '!=', 'paid'),
+                # ('move_id.type', 'in', ('out_invoice', 'entry')),
+                # ('move_id.journal_id.type', 'in', ('bank', 'sale')),
                 ('move_id.state', '=', 'posted'),
                 ('amount_residual', '!=', 0),
                 ('full_reconcile_id', '=', False),
@@ -176,8 +177,8 @@ class WizardOutInvoice(models.TransientModel):
                     ws1.write(row,col+9, temp_older,right)
                     ws1.write(row,col+10, temp_total,right)
                     ws1.write(row,col+11, temp_total_usd,right)
-                    ws1.write(row,col+10, temp_total_abono,right)
-                    ws1.write(row,col+11, temp_total_abono_usd,right)
+                    ws1.write(row,col+13, temp_total_abono,right)
+                    ws1.write(row,col+14, temp_total_abono_usd,right)
                     row += 1
                 ws1.write_merge(row,row, 0, 11, item.partner_id.name, sub_header_style)
                 partner = item.partner_id.name
