@@ -29,10 +29,6 @@
                 <field name="target">new</field>
             </record>
 
-             <menuitem  name="ARC Proveedores" 
-                        parent="account.menu_finance_reports" 
-                        id="menu_account_arc_wizard" 
-                        action="action_account_arc_wizard"/>
 
     </data>
 </odoo>

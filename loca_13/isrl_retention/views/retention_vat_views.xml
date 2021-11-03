@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-
+     <data noupdate="0">
     <!-- isrl.retention tree view -->
     <record id="isrl_retention_view_tree" model="ir.ui.view">
         <field name="name">isrl.retention.view.tree</field>
@@ -137,5 +137,5 @@
             <field name="name">ISLR</field>
             <field name="digits">2</field>
         </record>
-   
+     </data> 
 </odoo>
