@@ -173,7 +173,10 @@ class account_payment(models.Model):
                             move_name=det_pago.move_name
                             tipo_pago=det_pago.payment_type
                             tipo_persona=det_pago.partner_type
-                            monto_total=det_pago.amount
+                            if self.currency_id.id==self.env.company.currency_secundaria_id.id:
+                                monto_total=det_pago.amount*det_pago.rate
+                            else:
+                                monto_total=det_pago.amount
                             #raise UserError(_('El monto_total = %s')%monto_total)
                             if tipo_pago=='outbound':
                                 if tipo_persona=='supplier':
@@ -203,7 +206,7 @@ class account_payment(models.Model):
                                 'payment_igtf_id':self.id,
                                 'move_igtf_id':self.move_itf_id.id,
                                 }
-                                move_igtf.create(value) 
+                                move_igtf.create(value)
 
 
 
@@ -226,16 +229,18 @@ class account_payment(models.Model):
             'ref': "Comisión del %s %% del pago %s por comisión" % (igtf_porcentage,name),
             'es_igtf':True,
             'payment_origen_igtf_id':self.id,
+            'custom_rate':True,
+            'os_currency_rate':self.rate,
             #'name': "Comisión del %s %% del pago %s por comisión" % (igtf_porcentage,name),
 
         }
         move_obj = self.env['account.move']
         move_id = move_obj.create(value)
         self.env['account.move'].search([('id','=',move_id.id)]).write({
-            'custom_rate':self.move_itf_id.custom_rate,
-            'currency_id':self.move_itf_id.currency_id.id,
-            'os_currency_rate':self.move_id.os_currency_rate, # para el modulo de jose gregorio de moneda
-            })    
+            #'custom_rate':self.move_itf_id.custom_rate,
+            'currency_id':self.currency_id.id,
+            #'os_currency_rate':self.move_itf_id.os_currency_rate, # para el modulo de jose gregorio de moneda
+            })
         return move_id
 
     def registro_movimiento_linea_pago_igtf(self,igtf_porcentage,id_movv,total_monto,igtf_nombre,idd_pago):
@@ -251,7 +256,7 @@ class account_payment(models.Model):
              'date': self.payment_date,
              'partner_id': self.partner_id.id,
              'journal_id': self.journal_id.id,
-             'account_id': self.journal_id.default_debit_account_id.id,
+             'account_id': self.env.company.account_wh_itf_id.id,#self.journal_id.default_debit_account_id.id,
              'amount_currency': 0.0,
              'date_maturity': False,
              #'credit': float(amount_itf),
