@@ -337,14 +337,14 @@ class MaintenanceLineRequest(models.Model):
     @api.onchange('product_id')
     def product_id_change(self):
         if not self.product_id:
-            return
+            return ''
         vals = {}
         if not self.product_uom_id or (self.product_id.uom_id.id != self.product_uom_id.id):
             vals['product_uom_id'] = self.product_id.uom_id.id
             vals['product_qty'] = self.product_qty or 1.0
         product = self.product_id.with_context(
-            lang=get_lang(self.env, self.maintenance_id.driver_id.lang or self.urser_id.partner_id.lang).code,
-            partner=self.maintenance_id.driver_id or self.maintenance_id.urser_id.partner_id,
+            lang=get_lang(self.env, self.maintenance_id.driver_id.lang or self.maintenance_id.user_id.partner_id.lang).code,
+            partner=self.maintenance_id.driver_id or self.maintenance_id.user_id.partner_id,
             quantity=vals.get('product_qty') or self.product_qty,
             date=self.maintenance_id.request_date,
             uom=self.product_uom_id.id
@@ -371,10 +371,10 @@ class MaintenanceLineRequest(models.Model):
     @api.onchange('product_uom_id', 'product_qty')
     def product_uom_change(self):
         if not self.product_uom_id or not self.product_id:
-            return
-        if self.maintenance_id.driver_id or self.maintenance_id.urser_id.partner_id.id:
+            return ''
+        if self.maintenance_id.driver_id or self.maintenance_id.user_id.partner_id.id:
             product = self.product_id.with_context(
-                lang=self.maintenance_id.driver_id.lang or self.maintenance_id.urser_id.partner_id.lang,
+                lang=self.maintenance_id.driver_id.lang or self.maintenance_id.user_id.partner_id.lang,
                 partner=self.maintenance_id.driver_id or self.maintenance_id.urser_id.partner_id,
                 quantity=self.product_qty,
                 date=self.maintenance_id.request_date,
@@ -424,7 +424,7 @@ class MaintenanceLineRequest(models.Model):
             'date_planned': self.maintenance_id.request_date,
             'route_ids': self.route_id,
             'warehouse_id': self.maintenance_id.warehouse_id or False,
-            'partner_id': self.maintenance_id.driver_id.id or self.maintenance_id.urser_id.partner_id.id,
+            'partner_id': self.maintenance_id.driver_id.id or self.maintenance_id.user_id.partner_id.id,
             'company_id': self.maintenance_id.company_id,
         })
         return values
@@ -459,7 +459,7 @@ class MaintenanceLineRequest(models.Model):
             'name': self.maintenance_id.name,
             'move_type': self.maintenance_id.picking_policy,
             'maintenance_id': self.maintenance_id.id,
-            'partner_id': self.maintenance_id.driver_id.id or self.maintenance_id.urser_id.partner_id.id,
+            'partner_id': self.maintenance_id.driver_id.id or self.maintenance_id.user_id.partner_id.id,
         }
 
     def _action_launch_stock_rule(self, previous_product_uom_qty=False):
