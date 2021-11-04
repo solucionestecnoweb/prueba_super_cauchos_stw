@@ -14,10 +14,13 @@
 
                 </xpath>
                 <xpath expr="//field[@name='order_id']" position="after">
-                    <field name="is_approved" string="Solicitud aprovada" readonly="1"/>
+                    <field name="is_approved" string="Solicitud aprobada" readonly="1"/>
                     <field name="is_rejected" string="Solicitud rechazada" readonly="1"/>
-                    <field name="approver_id" required="1" attrs="{'readonly': [('state', 'in', ['done','cancel'])]}"/>
+                    <field name="approver_id" required="1"/>
                 </xpath>
+                 <xpath expr="//button[@name='action_confirmed']" position="attributes">
+                     <attribute name="attrs">{'invisible': [('is_approved', '=', False)]}</attribute>
+                 </xpath>
             </field>
         </record>
     </data>

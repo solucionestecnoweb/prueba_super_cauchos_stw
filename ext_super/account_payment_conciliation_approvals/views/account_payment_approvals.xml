@@ -13,11 +13,13 @@
                     <button string="Request Approval" name="approvals_request_conciliation" type="object" class="oe_highlight" states="draft"/>
                 </xpath>
                 <xpath expr="//field[@name='company_id']" position="after">
-                    <field name="is_approved" string="Solicitud aprovada" readonly="1"/>
+                    <field name="is_approved" string="Solicitud aprobada" readonly="1"/>
                     <field name="is_rejected" string="Solicitud rechazada" readonly="1"/>
+                    <field name="approver_id"/>
                 </xpath>
                 <xpath expr="//button[@name='post']" position="attributes">
-                    <attribute name="attrs">{'invisible': ['|', ('is_approved', '=', False), ('is_rejected', '=', True)]}</attribute>
+                    <attribute name="attrs">{'invisible': ['|', ('is_approved', '=', False), ('is_rejected', '=')]}</attribute>
+                    <attribute name="states">''</attribute>
                 </xpath>
             </field>
         </record>

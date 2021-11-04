@@ -8,9 +8,10 @@ from odoo.tools.float_utils import float_round
 class account_payment(models.Model):
     _inherit = 'account.payment'
 
-    is_approved = fields.Boolean(string='Solicitud aprovada', copy=False)
+    is_approved = fields.Boolean(string='Solicitud aprobada', copy=False)
     is_rejected = fields.Boolean(string='Solicitud rechazada', copy=False)
-    state = fields.Selection(selection_add=[('to_approve', 'To be Approved'), ('approved', 'Approved'), ('refused', 'Refused')])
+    # state = fields.Selection(selection_add=[('to_approve', 'To be Approved'), ('approved', 'Approved'), ('refused', 'Refused')])
+    approver_id = fields.Many2one('res.users', string='Aprovador')
     
     # def post(self):
     #     xfind = self.env['approval.request'].search([('conciliation_id', '=', self.id)])
@@ -58,7 +59,6 @@ class account_payment(models.Model):
     #     else:
     #         raise ValidationError(_("Cannot confirm until an approval request is approved for this payment."))
 
-
     def approvals_request_conciliation(self):
         xfind = self.env['approval.request'].search([('conciliation_id', '=', self.id), ('request_status', 'not in', ['cancel'])])
         if len(xfind) == 0:
@@ -76,14 +76,14 @@ class account_payment(models.Model):
                     'request_status': 'pending'
                 }
                 t = self.env['approval.request'].create(values)
-                for item in approval.user_ids:
+                for item in self.approver_id:
                     t.approver_ids += self.env['approval.approver'].new({
                         'user_id': item.id,
                         'request_id': t.id,
                         'status': 'new'
                     })
                 t.action_confirm()
-                self.state = 'to_approve'
+                #self.state = 'to_approve'
             else:
                 raise ValidationError(_("There is no approval category for this type record. Go to Approvals/Config/Approval type."))
         else:

@@ -8,7 +8,7 @@ from odoo.tools.float_utils import float_round
 class SaleOrderApproval(models.Model):
     _inherit = 'sale.order'
 
-    is_approved = fields.Boolean(string='Solicitud aprovada', copy=False)
+    is_approved = fields.Boolean(string='Solicitud aprobada', copy=False)
     is_rejected = fields.Boolean(string='Solicitud rechazada', copy=False)
     approver_ids = fields.Many2many(comodel_name='res.users', string='Approvers')
     pay_condition = fields.Char(string='Pay Condition', related='payment_condition_id.name')

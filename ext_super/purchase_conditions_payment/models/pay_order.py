@@ -4,6 +4,7 @@ import base64
 from odoo.exceptions import UserError, ValidationError, Warning, except_orm
 from odoo.tools.float_utils import float_round
 
+
 class PurchasePayOrder(models.Model):
     _name = 'purchase.pay.order'
     _inherit = ['mail.thread', 'mail.activity.mixin']
@@ -92,6 +93,7 @@ class PurchasePayOrder(models.Model):
     def action_cancel(self):
         for item in self:
             item.state = 'cancel'
+
 
 class PurchasePayOrderLines(models.Model):
     _name = 'purchase.pay.order.lines'

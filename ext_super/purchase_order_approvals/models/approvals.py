@@ -14,25 +14,25 @@ class ApprovalsRequestPurchaseExtend(models.Model):
     has_purchase_order = fields.Selection(related="category_id.has_purchase_order")
 
     def action_approve(self):
-        res = super(ApprovalsRequestPurchaseExtend, self).action_approve()
+        # res = super(ApprovalsRequestPurchaseExtend, self).action_approve()
         for ap in self:
             if ap.purchase_order_id.id:
                 order_obj = ap.env['purchase.order'].search([('id', '=', ap.purchase_order_id.id)])
                 order_obj.write({'is_approved': True})
-        return res
+        return super(ApprovalsRequestPurchaseExtend, self).action_approve()
 
     def action_refuse(self):
-        res = super(ApprovalsRequestPurchaseExtend, self).action_refuse()
+        # res = super(ApprovalsRequestPurchaseExtend, self).action_refuse()
         for ap in self:
             if ap.purchase_order_id.id:
                 order_obj = ap.env['sale.order'].search([('id', '=', ap.purchase_order_id.id)])
                 order_obj.write({'is_approved': False, 'is_rejected': True})
-        return res
+        return super(ApprovalsRequestPurchaseExtend, self).action_approve()
 
     def action_cancel(self):
-        res = super(ApprovalsRequestPurchaseExtend, self).action_cancel()
+        #res = super(ApprovalsRequestPurchaseExtend, self).action_cancel()
         for ap in self:
             if ap.purchase_order_id.id:
                 order_obj = ap.env['sale.order'].search([('id', '=', ap.purchase_order_id.id)])
                 order_obj.write({'is_approved': False, 'is_rejected': True})
-        return res
+        return super(ApprovalsRequestPurchaseExtend, self).action_approve()

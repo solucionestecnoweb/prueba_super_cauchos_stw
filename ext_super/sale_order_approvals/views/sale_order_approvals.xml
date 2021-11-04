@@ -19,7 +19,7 @@
                 </xpath>
 
                 <xpath expr="//field[@name='payment_term_id']" position="after">
-                    <field name="is_approved" string="Solicitud aprovada" readonly="1"/>
+                    <field name="is_approved" string="Solicitud aprobada" readonly="1"/>
                     <field name="is_rejected" string="Solicitud rechazada" readonly="1"/>
                 </xpath>
                 <xpath expr="//button[@name='action_confirm'][1]" position="attributes">

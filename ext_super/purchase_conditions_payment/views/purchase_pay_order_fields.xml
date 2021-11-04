@@ -28,7 +28,7 @@
                 <form>
                     <header>
                         <button name="reset_draft" type="object" string="Reset to Draft" states="cancel,confirmed" class="btn-primary"/>
-                        <button name="action_confirmed" type="object" string="Confirm" states="draft" class="btn-primary" groups="base.group_user"/>
+                        <button name="action_confirmed" type="object" string="Confirm" class="btn-primary" groups="base.group_user"/>
                         <button name="action_done" type="object" string="Done" states="confirmed" class="btn-primary"/>
                         <button name="action_cancel" type="object" states="draft" string="Cancel" groups="base.group_user"/>
                         <field name="state" widget="statusbar" string="confirm"  statusbar_visible="draft,confirmed,done,cancel"/>

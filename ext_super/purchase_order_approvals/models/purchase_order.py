@@ -9,7 +9,7 @@ from odoo.exceptions import Warning
 class PurchaseOrderApproval(models.Model):
     _inherit = 'purchase.order'
 
-    is_approved = fields.Boolean(string='Solicitud aprovada', copy=False)
+    is_approved = fields.Boolean(string='Solicitud aprobada', copy=False)
     is_rejected = fields.Boolean(string='Solicitud rechazada', copy=False)
     approver_ids = fields.Many2many(comodel_name='res.users', string='Approvers')
     #

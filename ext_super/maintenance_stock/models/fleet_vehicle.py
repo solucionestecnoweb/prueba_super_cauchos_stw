@@ -1,7 +1,7 @@
 # -*- coding: utf-8
 
 from odoo import models, fields, api
-from odoo.exceptions import UserError, ValidationError, Warning
+from odoo.exceptions import UserError, Warning
 
 
 class FleetVehicle(models.Model):
@@ -18,7 +18,9 @@ class FleetVehicle(models.Model):
 class FlotaCombustible(models.Model):
     _inherit = "fleet.vehicle.log.fuel"
 
-    fuel_types = fields.Many2one('product.product', string='Tipo de combustible',domain=[('product_tmpl_id.categ_id.combustible_check', '=', True)],help="Se verán reflejados los productos que sean de sean combustible")
+    fuel_types = fields.Many2one('product.product', string='Tipo de combustible',
+                                 domain=[('product_tmpl_id.categ_id.combustible_check', '=', True)],
+                                 help="Se verán reflejados los productos que sean de sean combustible")
     cistern_lts = fields.Float(string='Litros Cisterna')
     vehicle_consume = fields.Float(string='Consumo Vehículo',default=0)
     cistern_lts_ava = fields.Float(string='Disponible Litros Cisterna')
@@ -34,40 +36,31 @@ class FlotaCombustible(models.Model):
 
     @api.constrains('vehicle_consume')
     def fuel_consumption(self):
-        stock_producto = self.env['stock.quant'].search([('product_id','=',self.fuel_types.id),('location_id.usage','=','internal'),], order='quantity desc')
-        if len(stock_producto) == False or 0:
-            raise Warning ("No hay stock para éste poducto")
+        stock_producto = self.env['stock.quant'].search([
+            ('product_id', '=', self.fuel_types.id),
+            ('location_id.usage', '=', 'internal')], order='quantity desc')
+        if not len(stock_producto) or 0:
+            raise Warning("No hay stock para éste poducto")
         else:
             note = "CONSUMO DE COMBUSTIBLE: {} | DESDE FLOTA POR EL VEHICULO: {} ".format(''.join(self.fuel_types.mapped('name')), self.vehicle_id.name,)
             transfer = self.env['stock.picking'].create({
-                'picking_type_id': self.env['stock.picking.type'].search([('sequence_code','=','OUT')])[0].id,
+                'picking_type_id': self.env['stock.picking.type'].search([('sequence_code', '=', 'OUT')])[0].id,
                 'location_id': stock_producto[0].location_id.id,
-                'location_dest_id' : self.env['stock.location'].search([('usage','=','customer')])[0].id,
-                'partner_id' : self.env.company.id,
+                'location_dest_id': self.env['stock.location'].search([('usage', '=', 'customer')])[0].id,
+                'partner_id': self.env.company.id,
                 'note' : note
                 })
 
             transfer['move_lines'] = [(0,0, {
-                'name' : note,
-                'quantity_done' : self.vehicle_consume,
-                'product_id' : self.fuel_types.id,
-                "product_uom" : self.fuel_types.product_tmpl_id.uom_id.id,
-                "location_id" : stock_producto[0].location_id.id,
-                "location_dest_id" : self.env['stock.location'].search([('usage','=','customer')])[0].id
+                'name': note,
+                'quantity_done': self.vehicle_consume,
+                'product_id': self.fuel_types.id,
+                "product_uom": self.fuel_types.product_tmpl_id.uom_id.id,
+                "location_id": stock_producto[0].location_id.id,
+                "location_dest_id": self.env['stock.location'].search([('usage', '=', 'customer')])[0].id
                 })]
             transfer.action_confirm()
             transfer.button_validate()
-
-class ProductCategory(models.Model):
-    _inherit = "product.category"
-    combustible_check = fields.Boolean('Combustible',help='Marque éste campo si el producto es un combustible')
-
-    def action_combustible_check(self):
-        check = self.combustible_check
-        if check == False:
-            check = True
-        else:
-            check = False
 
 
 class FlotaAsignaciones(models.Model):

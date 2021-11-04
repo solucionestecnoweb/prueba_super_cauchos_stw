@@ -14,7 +14,7 @@
                     <button string="Approval Request" name="approvals_request_purchase" type="object" class="oe_highlight" states="sent"/>
                 </xpath>
                 <xpath expr="//field[@name='priority']" position="after">
-                    <field name="is_approved" string="Solicitud aprovada" readonly="1"/>
+                    <field name="is_approved" string="Solicitud aprobada" readonly="1"/>
                     <field name="is_rejected" string="Solicitud rechazada" readonly="1"/>
                     <field name="approver_ids" widget="many2many_tags" required="1"/>
                 </xpath>
