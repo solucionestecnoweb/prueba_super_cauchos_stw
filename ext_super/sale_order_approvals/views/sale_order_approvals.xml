@@ -12,11 +12,21 @@
                 <xpath expr="//field[@name='authorized_transaction_ids']" position="after">
                     <button string="Approval Request" name="approvals_request_sale" type="object" class="oe_highlight" states="draft"/>
                     <button string="Approval Request" name="approvals_request_sale" type="object" class="oe_highlight" states="sent"/>
-                    <field name="is_approved" invisible="1"/>
                 </xpath>
                 <xpath expr="//field[@name='arrive_date']" position="after">
                     <field name="pay_condition" invisible="1"/>
                     <field name="approver_ids" widget="many2many_tags" attrs="{'required': [('pay_condition', 'not in', ('Contado', 'CONTADO', 'contado'))]}"/>
+                </xpath>
+
+                <xpath expr="//field[@name='payment_term_id']" position="after">
+                    <field name="is_approved" string="Solicitud aprovada" readonly="1"/>
+                    <field name="is_rejected" string="Solicitud rechazada" readonly="1"/>
+                </xpath>
+                <xpath expr="//button[@name='action_confirm'][1]" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </xpath>
+                <xpath expr="//button[@name='action_confirm'][2]" position="attributes">
+                    <attribute name="attrs">{'invisible': ['|', ('is_approved', '=', False), ('is_rejected', '=', True)]}</attribute>
                 </xpath>
             </field>
         </record>
