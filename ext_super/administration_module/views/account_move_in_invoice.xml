@@ -8,10 +8,11 @@
         <field name="arch" type="xml">
             <tree>
                 <field name="move_id"/>
+                <field name="nro_doc"/>
                 <field name="date"/>
                 <field name="journal_id"/>
                 <field name="account_id"/>
-                <field name="exp_date_today"/>
+                <field name="date_maturity"/>
                 <field name="delay_1_30"/>
                 <field name="delay_31_60"/>
                 <field name="delay_61_90"/>
@@ -29,7 +30,7 @@
         <field name="res_model">account.move.line</field>
         <field name="domain">[
         ('display_type', 'not in', ('line_section', 'line_note')), 
-        ('move_id.state', '!=', 'cancel'), 
+        ('move_id.state', '=', 'posted'), 
         ('amount_residual', '!=', 0), 
         ('account_id.internal_type', '=', 'payable'),
         ('full_reconcile_id', '=', False), 
