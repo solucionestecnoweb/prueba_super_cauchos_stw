@@ -59,8 +59,8 @@ class FlotaCombustible(models.Model):
                 "location_id": stock_producto[0].location_id.id,
                 "location_dest_id": self.env['stock.location'].search([('usage', '=', 'customer')])[0].id
                 })]
-            transfer.action_confirm()
-            transfer.button_validate()
+            #transfer.action_confirm()
+            #transfer.button_validate()
 
 
 class FlotaAsignaciones(models.Model):
