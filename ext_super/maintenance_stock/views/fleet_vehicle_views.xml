@@ -37,7 +37,7 @@
                 <field name="cistern_lts" invisible="1"/>
             </xpath>
             <xpath expr="//field[@name='price_per_liter']" position="replace">
-                <field name="vehicle_consume" attrs="{'readonly': [('vehicle_consume', '!=', False)]}"/>
+                <field name="vehicle_consume"/>
             </xpath>
             <xpath expr="//field[@name='amount']" position="replace">
                 <field name="cistern_lts_ava" invisible="1"/>
