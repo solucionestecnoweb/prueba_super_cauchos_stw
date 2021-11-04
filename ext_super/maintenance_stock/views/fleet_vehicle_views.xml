@@ -31,13 +31,13 @@
         <field name="inherit_id" ref="fleet.fleet_vehicle_log_fuel_view_form"/>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='vehicle_id']" position="after">
-                <field name="fuel_type"/>
+                <field name="fuel_types"/>
             </xpath>
             <xpath expr="//field[@name='liter']" position="replace">
                 <field name="cistern_lts" invisible="1"/>
             </xpath>
             <xpath expr="//field[@name='price_per_liter']" position="replace">
-                <field name="vehicle_consume"/>
+                <field name="vehicle_consume" attrs="{'readonly': [('vehicle_consume', '!=', False)]}"/>
             </xpath>
             <xpath expr="//field[@name='amount']" position="replace">
                 <field name="cistern_lts_ava" invisible="1"/>
@@ -50,13 +50,27 @@
         </field>
     </record>
 
+<record id="product_template_form_view" model="ir.ui.view">
+            <field name="name">product.category.inherit.view.form</field>
+            <field name="model">product.category</field>
+            <field name="inherit_id" ref="product.product_category_form_view"/>
+            <field name="arch" type="xml">
+                <!-- Add your xpath here -->
+                <xpath expr="//div[@name='button_box']" position='inside'>
+                    <button class="oe_stat_button" name="action_combustible_check" type="object" string="Tipo Combustible" >
+                        <field name="combustible_check" widget="boolean_toggle"/>
+                    </button>
+                    </xpath>
+                </field>
+        </record>
+
     <record model="ir.ui.view" id="fleet_vehicle_log_fuel_tree">
         <field name="name">fleet.vehicle.log.fuel.tree</field>
         <field name="model">fleet.vehicle.log.fuel</field>
         <field name="inherit_id" ref="fleet.fleet_vehicle_log_fuel_view_tree"/>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='vehicle_id']" position="after">
-                <field name="fuel_type"/>
+                <field name="fuel_types"/>
             </xpath>
             <xpath expr="//field[@name='liter']" position="replace">
                 <field name="liter" invisible="1"/>
