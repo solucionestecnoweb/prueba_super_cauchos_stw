@@ -7,9 +7,9 @@
         <field name="inherit_id" ref="sale.view_order_form"/>
         <field name="arch" type="xml">
             <!-- Add your xpath here -->
-            <xpath expr="//field[@name='pricelist_id']" position="after">
+            <!-- <xpath expr="//field[@name='pricelist_id']" position="after">
                 <field name="rate"/>
-            </xpath>
+            </xpath> -->
         </field>
     </record>
 </odoo>

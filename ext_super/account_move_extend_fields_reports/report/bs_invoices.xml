@@ -64,7 +64,7 @@
                                     </tr>
                                     <tr>
                                         <td><span>C.I. / R.I.F</span></td>
-                                        <td>: <t t-esc="o.partner_id.doc_type + o.partner_id.vat"/></td>
+                                        <td>: <t t-if="o.partner_id.doc_type" t-esc="o.partner_id.doc_type.upper()"/>-<t t-esc="o.partner_id.vat"/></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -190,7 +190,7 @@
                                     </tr>
                                     <tr>
                                         <td><span>C.I. / R.I.F</span></td>
-                                        <td>: <t t-esc="o.partner_id.doc_type + o.partner_id.vat"/></td>
+                                        <td>: <t t-if="o.partner_id.doc_type" t-esc="o.partner_id.doc_type.upper()"/>-<t t-esc="o.partner_id.vat"/></td>
                                     </tr>
                                 </tbody>
                             </table>

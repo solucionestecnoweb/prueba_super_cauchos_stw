@@ -5,7 +5,7 @@
     'maintainer': 'OasisConsultora',
     'website': 'oasisconsultora.com',
     'license': 'AGPL-3',
-    'depends': ['account', 'approvals', 'l10n_ve_igtf'],
+    'depends': ['account', 'approvals','l10n_ve_igtf'],
     'data': [
         'views/approval_fields_extend.xml',
         'views/account_payment_approvals.xml',

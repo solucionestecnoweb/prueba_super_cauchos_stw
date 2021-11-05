@@ -8,6 +8,7 @@
         <field name="arch" type="xml">
            <xpath expr="//field[@name='account_id']" position="before">  
                 <field name="nro_doc" sum="Nro Documento"/>
+                <field name="nro_doc_aux" invisible="1"/>
             </xpath>
         </field>
     </record>
@@ -19,6 +20,7 @@
         <field name="arch" type="xml">
            <xpath expr="//form[1]/sheet[1]/notebook[1]/page[2]/field[@name='line_ids']/tree[1]/field[@name='currency_id']" position="after">  
                 <field name="nro_doc" sum="Nro Documento"/>
+                <field name="nro_doc_aux" invisible="1"/>
             </xpath>
         </field>
     </record>

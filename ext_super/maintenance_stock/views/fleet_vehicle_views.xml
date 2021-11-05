@@ -31,7 +31,7 @@
         <field name="inherit_id" ref="fleet.fleet_vehicle_log_fuel_view_form"/>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='vehicle_id']" position="after">
-                <field name="fuel_types"/>
+                <field name="fuel_type"/>
             </xpath>
             <xpath expr="//field[@name='liter']" position="replace">
                 <field name="cistern_lts" invisible="1"/>
@@ -56,7 +56,7 @@
         <field name="inherit_id" ref="fleet.fleet_vehicle_log_fuel_view_tree"/>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='vehicle_id']" position="after">
-                <field name="fuel_types"/>
+                <field name="fuel_type"/>
             </xpath>
             <xpath expr="//field[@name='liter']" position="replace">
                 <field name="liter" invisible="1"/>

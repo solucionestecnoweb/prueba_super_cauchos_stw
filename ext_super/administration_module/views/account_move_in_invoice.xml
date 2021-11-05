@@ -13,6 +13,7 @@
                 <field name="journal_id"/>
                 <field name="account_id"/>
                 <field name="date_maturity"/>
+                <field name="exp_date_today" invisible="1"/>
                 <field name="delay_1_30"/>
                 <field name="delay_31_60"/>
                 <field name="delay_61_90"/>

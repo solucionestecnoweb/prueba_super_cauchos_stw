@@ -187,6 +187,7 @@ class MaintenanceLineRequest(models.Model):
     @api.model_create_multi
     def create(self, vals_list):
         lines = super(MaintenanceLineRequest, self).create(vals_list)
+        #for values in vals_list:
         lines.filtered(lambda line: line.state == 'process')._action_launch_stock_rule()
         return lines
 

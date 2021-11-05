@@ -32,7 +32,7 @@
                 <xpath expr="//field[@name='maintenance_type']" position="before">
                     <field name="type_equipment" widget="radio"/>
                     <field name="equipment_id"  attrs="{'invisible': [('type_equipment', '!=', 'maquinas y herramientas')]}"/>
-                    <field name="user_id" required="1"/>
+                    <field name="user_id" attrs="{'invisible': [('type_equipment', '!=', 'flota de vehículos')]}"/>
                 </xpath>
 
                 <xpath expr="//field[@name='description']" position="attributes">
@@ -90,7 +90,7 @@
 
                         <page string="Reporte">
                             <group>
-                                <field name="report_succes"/>
+                                <field name="report_succes" attrs="{'required': [('work_order', '=', True)]}"/>
                             </group>
                         </page>
 
