@@ -33,7 +33,8 @@ class libro_compras(models.TransientModel):
             for det_tasa in tasa:
                 monto_nativo=det_tasa.amount_untaxed_signed
                 monto_extran=det_tasa.amount_untaxed
-                valor_aux=abs(monto_nativo/monto_extran)
+                #valor_aux=abs(monto_nativo/monto_extran)
+                valor_aux=det_tasa.os_currency_rate
             rate=round(valor_aux,3)  # LANTA
             #rate=round(valor_aux,2)  # ODOO SH
             resultado=valor*rate
@@ -56,34 +57,34 @@ class libro_compras(models.TransientModel):
             if det.invoice_id.ocultar_libros!=True:
                 values={
                 'name':det.fecha_fact,
-	            'document':det.invoice_id.name,
-	            'partner':det.invoice_id.partner_id.id,
-	            'invoice_number': det.invoice_id.invoice_number,#darrell
-	            'tipo_doc': det.tipo_doc,
-	            'invoice_ctrl_number': det.invoice_id.invoice_ctrl_number,
-	            'sale_total': self.conv_div_nac(det.total_con_iva,det),
-	            'base_imponible': self.conv_div_nac(det.total_base,det),
-	            'iva' : self.conv_div_nac(det.total_valor_iva,det),
-	            'iva_retenido': self.conv_div_nac(det.total_ret_iva,det),
-	            'retenido': det.vat_ret_id.name,
-	            'retenido_date':det.vat_ret_id.voucher_delivery_date,
-	            'state_retantion': det.vat_ret_id.state,
-	            'state': det.invoice_id.state,
-	            'currency_id':det.invoice_id.currency_id.id,
-	            'ref':det.invoice_id.ref,
-	            'total_exento':self.conv_div_nac(det.total_exento,det),
-	            'alicuota_reducida':self.conv_div_nac(det.alicuota_reducida,det),
-	            'alicuota_general':self.conv_div_nac(det.alicuota_general,det),
-	            'alicuota_adicional':self.conv_div_nac(det.alicuota_adicional,det),
-	            'base_adicional':self.conv_div_nac(det.base_adicional,det),
-	            'base_reducida':self.conv_div_nac(det.base_reducida,det),
-	            'base_general':self.conv_div_nac(det.base_general,det),
-	            'retenido_reducida':self.conv_div_nac(det.retenido_reducida,det),
-	            'retenido_adicional':self.conv_div_nac(det.retenido_adicional,det),
-	            'retenido_general':self.conv_div_nac(det.retenido_general,det),
-	            'vat_ret_id':det.vat_ret_id.id,
-	            'invoice_id':det.invoice_id.id,
-	            'tax_id':det.tax_id.id,
+                'document':det.invoice_id.name,
+                'partner':det.invoice_id.partner_id.id,
+                'invoice_number': det.invoice_id.invoice_number,#darrell
+                'tipo_doc': det.tipo_doc,
+                'invoice_ctrl_number': det.invoice_id.invoice_ctrl_number,
+                'sale_total': self.conv_div_nac(det.total_con_iva,det),
+                'base_imponible': self.conv_div_nac(det.total_base,det),
+                'iva' : self.conv_div_nac(det.total_valor_iva,det),
+                'iva_retenido': self.conv_div_nac(det.total_ret_iva,det),
+                'retenido': det.vat_ret_id.name,
+                'retenido_date':det.vat_ret_id.voucher_delivery_date,
+                'state_retantion': det.vat_ret_id.state,
+                'state': det.invoice_id.state,
+                'currency_id':det.invoice_id.currency_id.id,
+                'ref':det.invoice_id.ref,
+                'total_exento':self.conv_div_nac(det.total_exento,det),
+                'alicuota_reducida':self.conv_div_nac(det.alicuota_reducida,det),
+                'alicuota_general':self.conv_div_nac(det.alicuota_general,det),
+                'alicuota_adicional':self.conv_div_nac(det.alicuota_adicional,det),
+                'base_adicional':self.conv_div_nac(det.base_adicional,det),
+                'base_reducida':self.conv_div_nac(det.base_reducida,det),
+                'base_general':self.conv_div_nac(det.base_general,det),
+                'retenido_reducida':self.conv_div_nac(det.retenido_reducida,det),
+                'retenido_adicional':self.conv_div_nac(det.retenido_adicional,det),
+                'retenido_general':self.conv_div_nac(det.retenido_general,det),
+                'vat_ret_id':det.vat_ret_id.id,
+                'invoice_id':det.invoice_id.id,
+                'tax_id':det.tax_id.id,
                 'company_id':det.company_id.id,#loca14
                 }
                 pdf_id = t.create(values)
@@ -103,7 +104,10 @@ class libro_ventas(models.TransientModel):
             tasa= self.env['account.move'].search([('id','=',selff.invoice_id.id)],order="id asc")
             for det_tasa in tasa:
                 monto_nativo=det_tasa.amount_untaxed_signed
-                monto_extran=det_tasa.amount_untaxed
+                if det_tasa.amount_untaxed!=0:
+                    monto_extran=det_tasa.amount_untaxed
+                else:
+                    monto_extran=1
                 valor_aux=abs(monto_nativo/monto_extran)
             rate=round(valor_aux,3)  # LANTA
             #rate=round(valor_aux,2)  # ODOO SH
@@ -156,36 +160,36 @@ class libro_ventas(models.TransientModel):
                     total_base=det.total_base
                     total_exento=det.total_exento
                 values={
-               	'name':det.fecha_fact,
-	            'document':det.invoice_id.name,
-	            'partner':det.invoice_id.partner_id.id,
-	            'invoice_number': det.invoice_id.invoice_number,#darrell
-	            'tipo_doc': det.tipo_doc,
-	            'invoice_ctrl_number': det.invoice_id.invoice_ctrl_number,
-	            'sale_total': self.conv_div_nac(total_con_iva,det),
-	            'base_imponible':self.conv_div_nac(total_base,det),
-	            'iva' : self.conv_div_nac(det.total_valor_iva,det),
-	            'iva_retenido': self.conv_div_nac(det.total_ret_iva,det),
-	            'retenido': det.vat_ret_id.name,
-	            'retenido_date':det.vat_ret_id.voucher_delivery_date,
-	            'state_retantion': det.vat_ret_id.state,
-	            'state': det.invoice_id.state,
-	            'currency_id':det.invoice_id.currency_id.id,
-	            'ref':det.invoice_id.ref,
-	            'total_exento':self.conv_div_nac(total_exento,det),
-	            'alicuota_reducida':self.conv_div_nac(alicuota_reducida,det),
-	            'alicuota_general':self.conv_div_nac(alicuota_general,det),
-	            'alicuota_adicional':self.conv_div_nac(alicuota_adicional,det),
-	            'base_adicional':self.conv_div_nac(base_adicional,det),
-	            'base_reducida':self.conv_div_nac(base_reducida,det),
-	            'base_general':self.conv_div_nac(base_general,det),
-	            'retenido_reducida':self.conv_div_nac(det.retenido_reducida,det),
-	            'retenido_adicional':self.conv_div_nac(det.retenido_adicional,det),
-	            'retenido_general':self.conv_div_nac(det.retenido_general,det),
-	            'vat_ret_id':det.vat_ret_id.id,
-	            'invoice_id':det.invoice_id.id,
+                'name':det.fecha_fact,
+                'document':det.invoice_id.name,
+                'partner':det.invoice_id.partner_id.id,
+                'invoice_number': det.invoice_id.invoice_number,#darrell
+                'tipo_doc': det.tipo_doc,
+                'invoice_ctrl_number': det.invoice_id.invoice_ctrl_number,
+                'sale_total': self.conv_div_nac(total_con_iva,det),
+                'base_imponible':self.conv_div_nac(total_base,det),
+                'iva' : self.conv_div_nac(det.total_valor_iva,det),
+                'iva_retenido': self.conv_div_nac(det.total_ret_iva,det),
+                'retenido': det.vat_ret_id.name,
+                'retenido_date':det.vat_ret_id.voucher_delivery_date,
+                'state_retantion': det.vat_ret_id.state,
+                'state': det.invoice_id.state,
+                'currency_id':det.invoice_id.currency_id.id,
+                'ref':det.invoice_id.ref,
+                'total_exento':self.conv_div_nac(total_exento,det),
+                'alicuota_reducida':self.conv_div_nac(alicuota_reducida,det),
+                'alicuota_general':self.conv_div_nac(alicuota_general,det),
+                'alicuota_adicional':self.conv_div_nac(alicuota_adicional,det),
+                'base_adicional':self.conv_div_nac(base_adicional,det),
+                'base_reducida':self.conv_div_nac(base_reducida,det),
+                'base_general':self.conv_div_nac(base_general,det),
+                'retenido_reducida':self.conv_div_nac(det.retenido_reducida,det),
+                'retenido_adicional':self.conv_div_nac(det.retenido_adicional,det),
+                'retenido_general':self.conv_div_nac(det.retenido_general,det),
+                'vat_ret_id':det.vat_ret_id.id,
+                'invoice_id':det.invoice_id.id,
                 'company_id':det.company_id.id,#loca14
-	            }
+                }
                 pdf_id = t.create(values)
         #   temp = self.env['account.wizard.pdf.ventas'].search([])
         self.line = self.env['account.wizard.pdf.ventas'].search([])

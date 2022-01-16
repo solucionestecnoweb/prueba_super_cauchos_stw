@@ -14,6 +14,8 @@
             'account_accountant',
             'base',
             'l10n_ve_fiscal_requirements',
+            'l10n_ve_currency_rate',
+            'sale'
             ],
         'data': [
             'security/ir.model.access.csv',

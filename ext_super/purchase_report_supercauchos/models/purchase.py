@@ -16,7 +16,7 @@ class PurchaseOrderExtend(models.Model):
 
 	date_end = fields.Date(string='End Date')
 	priority = fields.Selection(string='Priority', selection=[('very_low', 'Very Low'), ('low', 'Low'), ('meddium', 'Meddium'), ('high', 'High')], default="low")
-	rate = fields.Float(string='Rate')
+	rate = fields.Float(string='Rate',digits=(12, 4))
 	
 	def _date_now_purchase(self):
 		xdate = datetime.now() - timedelta(hours=4)

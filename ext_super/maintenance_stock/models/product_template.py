@@ -20,7 +20,6 @@ class ProductTemplate(models.Model):
         help='Ordered Quantity: Invoice quantities ordered by the customer.\n'
              'Delivered Quantity: Invoice quantities delivered to the customer.',
         default='order')
-    combustible_check = fields.Boolean('Combustible', help='Marque este campo si el producto es un combustible')
 
     @api.onchange('type')
     def _onchange_type(self):
@@ -31,3 +30,9 @@ class ProductTemplate(models.Model):
                 self.maintenance_invoice_policy = 'order'
             self.service_type = 'manual'
         return res
+
+
+class ProductCategory(models.Model):
+    _inherit = "product.category"
+
+    combustible_check = fields.Boolean('Combustible', help='Marque este campo si el producto es un combustible')

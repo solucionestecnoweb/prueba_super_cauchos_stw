@@ -23,7 +23,7 @@ class WizardInInvoice(models.TransientModel):
     date_from = fields.Date(string='Date From', default=lambda *a:datetime.now().strftime('%Y-%m-%d'))
     date_to = fields.Date('Date To', default=lambda *a:(datetime.now() + timedelta(days=(1))).strftime('%Y-%m-%d'))
     date_now = fields.Datetime(string='Date Now', default=lambda *a:datetime.now())
-    partner_ids = fields.Many2many(comodel_name='res.partner', string='Proveedores')
+    partner_ids = fields.Many2many(comodel_name='res.partner', string='Clientes')
 
     state = fields.Selection([('choose', 'choose'), ('get', 'get')],default='choose')
     report = fields.Binary('Prepared file', filters='.xls', readonly=True)

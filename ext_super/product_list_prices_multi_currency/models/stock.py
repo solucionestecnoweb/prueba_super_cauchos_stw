@@ -46,3 +46,13 @@ class TemplatePricesList(models.Model):
                     item.prices_list_item_ids += line
                 elif line.applied_on == '1_product' and item in (line.product_tmpl_id):
                     item.prices_list_item_ids += line
+
+class ProductCategory(models.Model):
+    _inherit = 'product.category'
+
+    sequence_report = fields.Float(string='Secuencia de lista de precios')
+
+class ProductBrand(models.Model):
+    _inherit = 'product.brand'
+
+    sequence_report = fields.Integer(string='Secuencia de lista de precios')

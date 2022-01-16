@@ -292,8 +292,64 @@ class RetentionVat(models.Model):
         else:
             raise ValidationError("Debe cancelar primero la factura")
 
-    #@api.model
     def cargar_fact(self):
+        if not self.invoice_id.id:
+            raise UserError(_(' Debe Seleccionar una Factura Interna'))
+        if self.invoice_id.id:
+            map_id = self.env['account.move'].search([('id','=',self.invoice_id.id)],order="id asc")
+            if map_id.vat_ret_id.state=='posted':
+                raise UserError(_(' Esta Factura ya tiene asignado un comprobante de retencion publicada'))
+            if not map_id.partner_id.ret_agent:
+                raise UserError(_(' La empresa %s no esta configurada como agente de retencion iva')%map_id.partner_id.name)
+
+        self.partner_id=self.invoice_id.partner_id.id
+        self.rif=self.invoice_id.partner_id.vat
+        self.invoice_number=self.invoice_id.invoice_number
+        #raise UserError(_(' map_id:%s')%self.invoice_id.type)
+        if self.invoice_id.type=="out_invoice" or self.invoice_id.type=="out_refund" or self.invoice_id.type=="out_receipt":
+            tipo_fact="cliente"
+            por_ret=self.partner_id.vat_retention_rate
+            type_tax_use='sale'
+        if self.invoice_id.type=="in_invoice" or self.invoice_id.type=="in_refund" or self.invoice_id.type=="in_receipt":
+            tipo_fact="proveedor"
+            if self.invoice_id.company_id.confg_ret_proveedores=="p":
+                #raise UserError(_('proveedor'))
+                por_ret=self.invoice_id.partner_id.vat_retention_rate
+            if self.invoice_id.company_id.confg_ret_proveedores=="c":
+                #raise UserError(_('compañia'))
+                por_ret=self.invoice_id.company_id.partner_id.vat_retention_rate
+            type_tax_use='purchase'
+        lista_movline = self.invoice_id.invoice_line_ids
+        #raise UserError(_(' map_id x: %s')%lista_movline)
+        for det_mov_line in lista_movline:
+            if det_mov_line.product_id:
+                importe_base=det_mov_line.price_subtotal
+                monto_total=det_mov_line.price_total
+                monto_iva=(monto_total-importe_base)
+                monto_retenido=(monto_iva*por_ret/100)
+                #raise UserError(_('self.tax_ids = %s')%det_mov_line.tax_ids.id)
+                ret_lines = self.env['vat.retention.invoice.line']
+                values = {
+                'name': self.name,
+                'invoice_id': self.invoice_id.id,
+                'move_id': self.invoice_id.id,
+                'invoice_number': self.invoice_id.invoice_number,
+                'amount_untaxed':self.invoice_id.conv_div_nac(importe_base),
+                'retention_amount':self.invoice_id.conv_div_nac(monto_retenido),
+                'amount_vat_ret':self.invoice_id.conv_div_nac(monto_iva),
+                'retention_rate':por_ret,
+                'retention_id':self.id,
+                'tax_id':det_mov_line.tax_ids.id,
+                }
+                ret_line = ret_lines.create(values)
+        self.invoice_id.write({'vat_ret_id':self.id})
+        # NUEVO CODIGO
+        self.invoice_id.unifica_alicuota_iguales_iva(type_tax_use)
+        self.invoice_id.actualiza_voucher(self.id,tipo_fact)
+
+
+
+    """def cargar_fact(self):
 
         if not self.invoice_id.id:
             raise UserError(_(' Debe Seleccionar una Factura Interna'))
@@ -351,7 +407,7 @@ class RetentionVat(models.Model):
                 map_id.write({
                     'vat_ret_id':self.id,
 
-                    })
+                    })"""
     
 
 
@@ -459,12 +515,14 @@ class RetentionVat(models.Model):
         partners=vals['type']
         #partners=vals['partners']
         #del vals['partners']
-
+        if self.invoice_id.vat_ret_id.id:
+                raise UserError(_(' Esta Factura ya tiene asignado un comprobante de retencion 2'))
         if vals.get('name', 'New') == 'New':
             _logger.info("\n\n\n vals.get.tpye %s \n\n\n", vals.get('type', 'in_invoice'))
             if partners=='in_invoice' or partners=='in_refund' or partners=='in_receipt':
-                vals['name'] = self.env['ir.sequence'].next_by_code('purchase.vat.retention.voucher.number') or '/'
-                _logger.info("\n\n\n vals[name] %s \n\n\n",vals['name'])
+                if not self.invoice_id.vat_ret_id.id:
+                    vals['name'] = self.env['ir.sequence'].next_by_code('purchase.vat.retention.voucher.number') or '/'
+                    _logger.info("\n\n\n vals[name] %s \n\n\n",vals['name'])
             else:
                 vals['name']= '00000000'
         return super().create(vals)

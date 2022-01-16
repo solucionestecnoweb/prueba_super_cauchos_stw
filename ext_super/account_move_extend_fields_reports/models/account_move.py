@@ -17,6 +17,7 @@ class AccountMoveExtend(models.Model):
 	seller_id = fields.Many2one(comodel_name='res.partner', string='Seller')
 	payment_condition_id = fields.Many2one(comodel_name='account.condition.payment', string='Payment Condition')
 	paperformat = fields.Selection(string='Invoice Format', selection=[('letter', 'Letter'), ('half', 'Half Letter')], related='company_id.paperformat')
+	reason = fields.Char(string='Razón de Nota')
 
 	@api.onchange('partner_id')
 	def _onchange_partner_id(self):
@@ -41,13 +42,25 @@ class AccountMoveExtend(models.Model):
 		return {'type': 'ir.actions.report','report_name': 'account_move_extend_fields_reports.account_move_invoice_extend_multirepuestos_bs','report_type':"qweb-pdf"}
 	
 	def invoice_half_bs(self):
-    		return {'type': 'ir.actions.report','report_name': 'account_move_extend_fields_reports.account_move_invoice_extend_supercauchos_bs','report_type':"qweb-pdf"}
+		return {'type': 'ir.actions.report','report_name': 'account_move_extend_fields_reports.account_move_invoice_extend_supercauchos_bs','report_type':"qweb-pdf"}
 
 	def invoice_letter_usd(self):
 		return {'type': 'ir.actions.report','report_name': 'account_move_extend_fields_reports.account_move_invoice_extend_multirepuestos_usd','report_type':"qweb-pdf"}
 
 	def invoice_half_usd(self):
 		return {'type': 'ir.actions.report','report_name': 'account_move_extend_fields_reports.account_move_invoice_extend_supercauchos_usd','report_type':"qweb-pdf"}
+
+	def validate_seq(self, seq):
+		new_seq = ''
+		for item in seq:
+			if item.isdigit():
+				new_seq += item
+		
+		return new_seq
+
+	def vencimiento_real(self, dias, fecha):
+		new_date = fecha + timedelta(days=dias)
+		return new_date
 
 class AccountConditionPayment(models.Model):
 	_name = 'account.condition.payment'
@@ -62,15 +75,13 @@ class AccountPaymentExtend(models.Model):
 	payment_concept = fields.Char(string='Payment Concept')
 	payment_notes = fields.Text(string='Notes')
 
-	def get_currency_rate(self):
-		xfind = self.env['res.currency.rate'].search([
-			('name', '<=', self.payment_date)
-		], limit=1).sell_rate
-		if xfind:
-			return xfind
-		else:
-			xfind = 0
-			return xfind
+	def current_date_format(self,date):
+		months = ("Enero", "Febrero", "Marzo", "Abri", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre")
+		day = date.day
+		month = months[date.month - 1]
+		year = date.year
+		messsage = "{} de {} del {}".format(day, month, year)
+		return messsage
 
 	def get_debt_amount(self, partner):
 		debt = 0

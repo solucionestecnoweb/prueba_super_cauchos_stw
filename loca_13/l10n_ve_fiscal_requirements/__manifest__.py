@@ -11,6 +11,7 @@
         'account_accountant',
         'base',
         'base_vat',
+        'sale',
     ],
     'data': [
         'security/ir.model.access.csv',

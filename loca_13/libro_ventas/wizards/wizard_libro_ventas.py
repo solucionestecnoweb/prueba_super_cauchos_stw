@@ -233,7 +233,7 @@ class libro_ventas(models.TransientModel):
                 ('fecha_fact','<=',self.date_to),
                 ('state','in',('posted','cancel' )),
                 ('type','in',('out_invoice','out_refund','out_receipt')),
-                ('company_id','=',self.env.company.id)#loca14
+                ('company_id','in',self.env.companies.ids)#loca14
                 ])
         if accion=="voucher":
             cursor_resumen = self.env['account.move.line.resumen'].search([
@@ -243,7 +243,7 @@ class libro_ventas(models.TransientModel):
                 #('fecha_fact','>=',self.date_to),
                 ('state_voucher_iva','=','posted'),
                 ('type','in',('out_invoice','out_refund','out_receipt')),
-                ('company_id','=',self.env.company.id)#loca14
+                ('company_id','in',self.env.companies.ids)#loca14
                 ])
         #raise UserError(_('cursor_resumen: %s')%cursor_resumen)
         for det in cursor_resumen:

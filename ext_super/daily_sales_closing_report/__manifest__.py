@@ -5,7 +5,7 @@
     'maintainer': 'OasisConsultora',
     'website': 'oasisconsultora.com',
     'license': 'AGPL-3',
-    'depends': ['base', 'account', 'l10n_ve_check_printing'],
+    'depends': ['base', 'account', 'l10n_ve_currency_rate'],
     'data': [
         'security/ir.model.access.csv',
         'views/wizard_daily_sales_closing_report.xml',

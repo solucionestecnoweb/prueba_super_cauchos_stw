@@ -22,6 +22,9 @@ class AccountMoveInvoicePayment(models.Model):
     seller_id = fields.Many2one(comodel_name='res.partner', string='Seller')
     seller_true = fields.Boolean(compute='_compute_seller')
     
+    def recalcular(self):
+        self._amount_residual()
+
     def _compute_seller(self):
         for item in self:
             if item.seller_id:
@@ -37,6 +40,8 @@ class AccountMoveInvoicePayment(models.Model):
     ### Compute Functions ###
     def _compute_delay(self):
         for item in self:
+            #item.recalcular()
+            
             item.exp_date_today = fields.Date.today()
             item.delay_1_30 = 0
             item.delay_31_60 = 0
@@ -47,7 +52,8 @@ class AccountMoveInvoicePayment(models.Model):
             item.delay_total_usd = 0
             item.amount_payed = 0
             item.amount_payed_usd = 0
-            amount_no_exp = 0
+            n_delay = 0
+            amount = item.debit + item.credit
 
             if item.date_maturity and item.exp_date_today:
                 days = (item.exp_date_today - item.date_maturity)
@@ -62,24 +68,23 @@ class AccountMoveInvoicePayment(models.Model):
                 elif days.days > 120:
                     item.delay_older = item.amount_residual
                 else:
-                    amount_no_exp = item.amount_residual
-
+                    n_delay = item.amount_residual
 
                 if item.move_id.currency_id.id == 3:
-                    item.amount_payed = item.move_id.amount_total - item.move_id.amount_residual
-                    item.amount_payed_usd = (item.move_id.amount_total - item.move_id.amount_residual) / item.rate
+                    item.amount_payed = amount - item.amount_residual
+                    item.amount_payed_usd = (amount - item.amount_residual) / item.rate
                 else:
-                    item.amount_payed = (item.move_id.amount_total - item.move_id.amount_residual) * item.rate
-                    item.amount_payed_usd = item.move_id.amount_total - item.move_id.amount_residual
-                item.delay_total = item.delay_1_30 + item.delay_31_60 + item.delay_61_90 + item.delay_91_120 + item.delay_older + amount_no_exp
+                    item.amount_payed = (amount - item.amount_residual) * item.rate
+                    item.amount_payed_usd = amount - item.amount_residual
+                item.delay_total = item.delay_1_30 + item.delay_31_60 + item.delay_61_90 + item.delay_91_120 + item.delay_older + n_delay
                 item.delay_total_usd = item.delay_total / item.rate
             else:
                 if item.move_id.currency_id.id == 3:
-                    item.amount_payed = item.move_id.amount_total - item.move_id.amount_residual
-                    item.amount_payed_usd = (item.move_id.amount_total - item.move_id.amount_residual) / item.rate
+                    item.amount_payed = amount - item.amount_residual
+                    item.amount_payed_usd = (amount - item.amount_residual) / item.rate
                 else:
-                    item.amount_payed = (item.move_id.amount_total - item.move_id.amount_residual) * item.rate
-                    item.amount_payed_usd = item.move_id.amount_total - item.move_id.amount_residual
+                    item.amount_payed = (amount - item.amount_residual) * item.rate
+                    item.amount_payed_usd = amount - item.amount_residual
                 item.delay_total = item.amount_residual
                 item.delay_total_usd = item.delay_total / item.rate
 

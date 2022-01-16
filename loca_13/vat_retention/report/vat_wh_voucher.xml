@@ -82,7 +82,7 @@
                                                     <span t-esc="o.company_id.name"/>
                                                 </td>
                                                 <td style="text-align:center;border:1px solid #000;">                               	
-                                                    <span t-esc="o.doc_cedula(o.company_id.id)"/>
+                                                    <span t-esc="o.doc_cedula(o.company_id.partner_id.id)"/>
                                                 </td>
                                                 <td style="text-align:center;border:1px solid #000;">
                                                     <span t-esc="o.get_company_address()"/>

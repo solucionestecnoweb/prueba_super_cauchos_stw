@@ -12,9 +12,12 @@
                         <group >
                             <group >
                                 <field name="date_from" required="1"/>
+                                <field name="partner_ids" domain="[('is_seller', '=', True)]" widget="many2many_tags" />
+                                <field name="user_ids" widget="many2many_tags"/>
                             </group>
                             <group >
                                 <field name="date_to" required="1"/>
+                                <field name="journal_ids" domain="[('type', '=', 'sale')]"  widget="many2many_tags"/>
                             </group>
                         </group>
                     </div>
@@ -44,12 +47,11 @@
             <field name="view_id" ref="wizard_daily_sales_report"/>
             <field name="target">new</field>
         </record>
-
-        <menuitem   name="Daily sales closing report" 
-                    parent="account.menu_finance_receivables" 
-                    id="daily_sales_report_menu" 
-                    action="action_daily_sales_report"
-                    sequence="30"
-                    />
+        
+        <menuitem   id="admin_daily_sales_close_report_menu"
+                    name="Reporte de Cierre de Ventas Diario"
+                    parent="administration_module.admin_billing_menu"
+                    sequence="35"
+                    action="action_daily_sales_report"/>
     </data>
 </odoo>

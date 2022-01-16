@@ -18,6 +18,14 @@ import xlwt
 
 _logger = logging.getLogger(__name__)
 
+class DailySalesJournal(models.Model):
+    _name = 'daily.sales.journal'
+
+    journal_id = fields.Many2one(comodel_name='account.journal', string='Diario')
+    amount  = fields.Float(string='Monto', )
+    amount_dollar  = fields.Float(string='Monto $', )
+    report_id = fields.Many2one(comodel_name='daily.sales.report', string='Totales')
+
 class DailySales(models.Model):
     _name = 'daily.sales'
 
@@ -27,7 +35,14 @@ class DailySales(models.Model):
     currency_rate = fields.Float(string='Rate')
     total_bs = fields.Float(string='Total Bs. Operation')
     total_usd = fields.Float(string='Total $ Operation')
-    payment_condition_id = fields.Many2one(comodel_name='account.payment.method', string='Payment Condition')
+    efectivo_bs = fields.Float(string='Efectivo Bs')
+    efectivo_dollar = fields.Float(string='Efectivo $')
+    banco_bs = fields.Float(string='Banco Bs')
+    banco_dollar = fields.Float(string='Banco $')
+    asiento_dollar = fields.Float(string='Asiento $')
+    asiento_bs = fields.Float(string='Asiento Bs')
+
+    journal_id = fields.Many2one(comodel_name='account.journal', string='Diario')
     amount = fields.Float(string='Amount')
     currency_id = fields.Many2one(comodel_name='res.currency', string='Currency')
 
@@ -42,6 +57,10 @@ class DailySalesReport(models.Model):
     report = fields.Binary('Prepared file', filters='.xls', readonly=True)
     name = fields.Char('File Name', size=50)
     company_id = fields.Many2one('res.company','Company',default=lambda self: self.env.user.company_id.id)
+    total_ids = fields.One2many('daily.sales.journal', 'report_id', string='Reporte')
+    partner_ids = fields.Many2many('res.partner', string='Vendedores')
+    journal_ids = fields.Many2many('account.journal', string='Diarios')
+    user_ids = fields.Many2many('res.users', string='Usuario')
 
     # *******************  FORMATOS ****************************
 
@@ -64,36 +83,54 @@ class DailySalesReport(models.Model):
             'report_type':"qweb-pdf"
             }
 
-    def get_methods(self):
-        xfind = self.env['account.payment.method'].search([
+    def get_journals(self):
+        xfind = self.env['account.journal'].search([
                 ('sales_report', '=', True),
             ])
         return xfind
 
     def get_invoice(self):
-        xfind = self.env['account.move'].search([
+        buscar = [
             ('invoice_date', '>=', self.date_from),
             ('invoice_date', '<=', self.date_to),
-            ('type', '=', 'out_invoice'),
+            #('type', 'in', ('out_invoice', 'out_receipt', 'out_refund')),
+            #('type', '=', 'out_invoice'),
             ('invoice_payment_state', '=', 'paid'),
-        ])
-        
+            ('company_id','=',self.env.company.id)
+        ]
+        if len(self.partner_ids) > 0:
+            buscar.append(('seller_id','in',self.partner_ids.ids))
+        if len(self.journal_ids) > 0:
+            buscar.append(('journal_id','in',self.journal_ids.ids))
+        else :
+            buscar.append(('type', '=', 'out_invoice'))
+        if len(self.user_ids) >0:
+            buscar.append(('create_uid','in',self.user_ids.ids))
+
+        xfind = self.env['account.move'].search(buscar)
+        journal_id_temp = self.env['daily.sales.journal'].search([
+                            ('report_id','=',self.id)
+                            ])
+        journal_id_temp.unlink()
         for item in xfind:
             # Tasa y montos en bs/$
-            rate = 0.00
-            if item.currency_id.id == 3:
+            rate = 1
+            efectivo_bs = 0
+            efectivo_dollar = 0
+            banco_bs = 0
+            banco_dollar = 0
+            asiento_dollar = 0
+            asiento_bs = 0
+            
+
+            if item.custom_rate:
+                rate = item.os_currency_rate
+            else:
                 rates = item.env['res.currency.rate'].search([
-                    ('name', '=', item.invoice_date)
+                    ('name', '<=', item.invoice_date)
                 ], limit=1).sell_rate
                 if rates > 0:
                     rate = rates
-                else:
-                    rate = 1
-            else:
-                if item.os_currency_rate > 0:
-                    rate = item.os_currency_rate
-                else:
-                    rate = 1
 
             if item.currency_id.id == 3:
                 total_bs = item.amount_total
@@ -101,24 +138,79 @@ class DailySalesReport(models.Model):
             else:
                 total_bs =round (item.amount_total * item.os_currency_rate, 2)
                 total_usd = item.amount_total
-
-            # Metodos de pago admitidos
-            methods = []
-            for line in self.get_methods():
-                methods.append(line.id)
-
-            if item.invoice_payments_widget:
+            
+            if item.invoice_payments_widget :
                 parse_dict = json.loads(item.invoice_payments_widget)
                 if parse_dict:
                     for pay in parse_dict.get('content'):
-                        varx = pay['account_payment_id']
-            if varx:
-                payment_condition = self.env['account.payment'].search([
-                    ('id', '=', varx)
-                ]).payment_method_id.id
-            else:
-                payment_condition = varx
-                
+                        move_id = self.env['account.move'].search([('id', '=', pay['move_id'])])
+                        journal_id = self.env['daily.sales.journal'].search([
+                            ('journal_id', '=', move_id.journal_id.id),
+                            ('report_id','=',self.id)
+                            ])
+                        if len(journal_id) == 0 :
+                             journal_id = self.env['daily.sales.journal'].create({
+                                 'journal_id':move_id.journal_id.id,
+                                 'report_id':self.id
+                             })
+
+                        if move_id.journal_id.type == 'cash':
+
+                            if move_id.journal_id.currency_id.id == False and item.currency_id.id != item.company_id.currency_id.id:
+                                efectivo_bs = pay['amount'] * move_id.os_currency_rate
+                                journal_id.amount += efectivo_bs
+                                journal_id.amount_dollar += pay['amount'] 
+                            
+                            elif move_id.journal_id.currency_id.id  and item.currency_id.id != item.company_id.currency_id.id:
+                                efectivo_dollar = pay['amount']
+                                journal_id.amount += efectivo_dollar * move_id.os_currency_rate
+                                journal_id.amount_dollar += efectivo_dollar 
+                            
+                            elif move_id.journal_id.currency_id.id == False  and item.currency_id.id == item.company_id.currency_id.id:
+                                efectivo_bs = pay['amount']
+                                journal_id.amount += efectivo_bs
+                                journal_id.amount_dollar += efectivo_dollar / move_id.os_currency_rate
+
+                        elif move_id.journal_id.type == 'bank':
+                            if move_id.journal_id.currency_id.id == False and item.currency_id.id != item.company_id.currency_id.id:
+                                banco_bs = pay['amount'] * move_id.os_currency_rate
+                                journal_id.amount += banco_bs
+                                journal_id.amount_dollar += pay['amount']
+                            
+                            elif move_id.journal_id.currency_id.id  and item.currency_id.id != item.company_id.currency_id.id:
+                                banco_dollar = pay['amount']
+                                journal_id.amount += banco_dollar 
+                                journal_id.amount_dollar += pay['amount']  / move_id.os_currency_rate
+
+                            elif move_id.journal_id.currency_id.id == False  and item.currency_id.id == item.company_id.currency_id.id:
+                                banco_bs = pay['amount']
+                                journal_id.amount += banco_bs
+                                journal_id.amount_dollar += pay['amount']  / move_id.os_currency_rate
+                            else :
+                               # banco_dollar = pay['amount'] / move_id.os_currency_rate
+                                journal_id.amount += pay['amount']
+                                journal_id.amount_dollar += pay['amount']  / move_id.os_currency_rate
+                        else:
+                            if move_id.journal_id.currency_id.id == False and item.currency_id.id != item.company_id.currency_id.id:
+                                asiento_bs = pay['amount'] / move_id.os_currency_rate
+                                journal_id.amount += asiento_bs
+                                journal_id.amount_dollar += pay['amount'] 
+                            
+                            elif move_id.journal_id.currency_id.id  and item.currency_id.id != item.company_id.currency_id.id:
+                                asiento_dollar = pay['amount']
+                                journal_id.amount += asiento_dollar * move_id.os_currency_rate
+                                journal_id.amount_dollar += pay['amount']
+                            
+                            elif move_id.journal_id.currency_id.id == False  and item.currency_id.id == item.company_id.currency_id.id:
+                                asiento_bs = pay['amount'] 
+                                journal_id.amount += asiento_bs
+                                journal_id.amount_dollar += pay['amount'] * move_id.os_currency_rate
+                            else :
+                                asiento_dollar = pay['amount'] / move_id.os_currency_rate
+                                journal_id.amount += pay['amount']
+                                journal_id.amount_dollar += pay['amount'] / move_id.os_currency_rate
+
+          
             #Valores finales para crear
             values = {
                 'name': item.invoice_date,
@@ -127,7 +219,13 @@ class DailySalesReport(models.Model):
                 'currency_rate': rate,
                 'total_bs': total_bs,
                 'total_usd': total_usd,
-                'payment_condition_id': payment_condition,
+                'efectivo_bs':efectivo_bs,
+                'efectivo_dollar':efectivo_dollar,
+                'banco_bs': banco_bs,
+                'banco_dollar':banco_dollar,
+                'asiento_bs': asiento_bs,
+                'asiento_dollar':asiento_dollar,
+                'journal_id': item.journal_id.id,
                 'amount': item.amount_total,
                 'currency_id': item.currency_id.id,
             }
@@ -182,7 +280,7 @@ class DailySalesReport(models.Model):
         ws1.write(row,col+5, _("Total $ Operation"),header_content_style)
         ws1.col(col+5).width = int((len('xxx.xxx.xxx.xxx,xx')+2)*256)
         col_auto = 5
-        for item in self.get_methods():
+        for item in self.get_journals():
             col_auto += 1
             ws1.write(row,col_auto, item.name,header_content_style)
 
@@ -226,9 +324,9 @@ class DailySalesReport(models.Model):
                 ws1.write(row,col+5,'',lines_style_right)
 
             col_auto = 5
-            for line in self.get_methods():
+            for line in self.get_journals():
                 col_auto += 1
-                if item.payment_condition_id.id == line.id:
+                if item.journal_id.id == line.id:
                     ws1.write(row,col_auto, self.float_format(item.amount),lines_style_right)
                     ws1.col(col_auto).width = int(len('xxx.xxx.xxx,xx')*256)
                 else:
@@ -239,14 +337,14 @@ class DailySalesReport(models.Model):
             total_usd += item.total_usd
                 
         row += 1
-        ws1.write(row,col+4, total_bs,lines_style_right)
-        ws1.write(row,col+5, total_usd,lines_style_right)
+        ws1.write(row,col+4, self.float_format(total_bs),lines_style_right)
+        ws1.write(row,col+5, self.float_format(total_usd),lines_style_right)
         col_auto = 5
-        for line in self.get_methods():
+        for line in self.get_journals():
             total_amount = 0
             col_auto += 1
             for item in self.get_lines():
-                if item.payment_condition_id.id == line.id:
+                if item.journal_id.id == line.id:
                     total_amount += item.amount
             ws1.write(row,col_auto, total_amount,lines_style_right)
 
@@ -254,11 +352,11 @@ class DailySalesReport(models.Model):
         ws1.write(row,col+3, '',lines_style_center)
         ws1.write(row,col+4, _('$ Amount'),lines_style_center)
         ws1.write(row,col+5, _('Bs. Amount'),lines_style_center)
-        for line in self.get_methods():
+        for line in self.get_journals():
             total_bs = 0
             total_usd = 0
             for item in self.get_lines():
-                if item.payment_condition_id.id == line.id:
+                if item.journal_id.id == line.id:
                     total_bs += item.total_bs
                     total_usd += item.total_usd
                     total_final_bs += item.total_bs

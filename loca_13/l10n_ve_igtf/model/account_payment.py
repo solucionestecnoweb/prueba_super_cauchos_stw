@@ -21,7 +21,6 @@ class account_payment(models.Model):
     _name = 'account.payment'
     _inherit = 'account.payment'
     #name =fields.Char(compute='_valor_anticipo')
-    darrell = fields.Char()
 
     #Este campo es para el modulo IGTF
     move_itf_id = fields.Many2one('account.move', 'Asiento contable')
@@ -31,8 +30,16 @@ class account_payment(models.Model):
     anticipo = fields.Boolean(defaul=False)
     usado = fields.Boolean(defaul=False)
     anticipo_move_id = fields.Many2one('account.move', 'Id de Movimiento de anticipo donde pertenece dicho pago')
-    saldo_disponible = fields.Monetary(string='Saldo Disponible')
+    saldo_disponible = fields.Monetary(string='Saldo Disponible') # valor en bs/$
+    saldo_disponible_signed = fields.Float() # valor solo en bs #fields.Float(compute='_compute_saldo')
     move_id = fields.Many2one('account.move', 'Id de Movimiento o factura donde pertenece dicho pago')
+
+    """def _compute_saldo(self):
+        for selff in self:
+            if selff.currency_id.id!=self.env.company.currency_id.id:
+                selff.saldo_disponible_signed=selff.saldo_disponible*selff.rate
+            else:
+                selff.saldo_disponible_signed=selff.saldo_disponible"""
 
     def _valor_anticipo(self):
         nombre=self.name
@@ -144,6 +151,7 @@ class account_payment(models.Model):
                             })
                     #raise UserError(_('cuenta id = %s')%cursor_move_line.account_id.id)
                 self.saldo_disponible=self.amount
+                self.saldo_disponible_signed=self.amount if self.currency_id.id==self.env.company.currency_id.id else self.amount*self.rate
         else:
             return 0
 

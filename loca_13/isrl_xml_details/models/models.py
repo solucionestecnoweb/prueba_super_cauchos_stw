@@ -50,7 +50,8 @@ class XmlLines(models.Model):
 
     def generar_xml(self):
         periodo = str(self.date_from.year) 
-        rif= self.env.company.vat
+        rif= self.env.company.partner_id.doc_type+self.env.company.vat
+        rif=rif.replace('-', '')
         if  10 > int(self.date_from.month)   :
             periodo += '0'+ str(self.date_from.month)
         else :
@@ -126,13 +127,23 @@ class WiizarXml(models.TransientModel):
                 else :
                     doc += str(item.partner_id.vat)
 
+                entero=int(line.base)
+                decimal=round(line.base-entero,2)
+                decimal=str(decimal)
+                decimal=decimal.replace('.','')
+                cuenta=decimal
+                cuenta=len(decimal)
+                if cuenta<=2:
+                    valor=str(round(line.base,2))+"0"
+                else:
+                    valor=str(round(line.base,2))
                 linea = self.env['account.xml.detalle.line'].create({
                 'rif_retenido': str(doc),
                 'numero_factura': str(item.invoice_id.invoice_number),
                 'numero_control': str(item.invoice_id.invoice_ctrl_number.replace('-', '')),
                 'fecha_operacion': item.date_isrl,
                 'codigo_concepto' : str(line.code),
-                'monto_operacion' : str(line.base),
+                'monto_operacion' : valor,#str(round(line.base,2)),
                 'porcentaje_retencion' : str(int(line.cantidad)),
                 'detalle_id' : documento.id
                 })

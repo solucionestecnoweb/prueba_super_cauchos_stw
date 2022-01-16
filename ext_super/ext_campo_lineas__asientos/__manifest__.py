@@ -13,7 +13,7 @@
     'category': 'Campos adicionales en flineas asientos super cauchos',
 
     # any module necessary for this one to work correctly
-    'depends': ['product','account'],
+    'depends': ['product','account','vat_retention','l10n_ve_fiscal_requirements'],
 
     # always loaded
     'data': [

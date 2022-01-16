@@ -8,10 +8,12 @@
     "author": "Ing Gregorio Blanco",
     "website": "https://gregoriocode.com",
     "license": "AGPL-3",
-    "depends": ['base', 'stock', 'fleet'],
+    "depends": ['base', 'stock', 'fleet', 'web'],
     "data": [
+       # "static/src/js/subst.xml",
         "security/ir.model.access.csv",
         "views/inventory_products.xml",
+        "views/brands_views.xml",
         "report/inventario_toma_fisica.xml",
         "report/inventario_picking_salidas.xml",
         "views/wizard_inventory_picking_salida.xml",
